@@ -7,13 +7,19 @@ CONFIG    -= release  # ist DEBUG aktiv
 
 CONFIG    += staticlib
 
-INCLUDEPATH = ./Header
+INCLUDEPATH += ../sst_rec04_lib/Header
+INCLUDEPATH += ../sst_misc01_lib/Header
+INCLUDEPATH += ../sst_str01_lib/Header
+INCLUDEPATH += ./Header
 
 HEADERS		+= ./Header/sstQt01Lib.h
+HEADERS		+= sstQt01LibInt.h
 
-SOURCES		+= sstTemplateLib.cpp
+SOURCES		+= sstQt01Tab.cpp \
+             sstQt01PathStorage.cpp \
+             sstQt01PathElementCsv.cpp
 
-OTHER_FILES += readme.txt
+OTHER_FILES += README.md
 
 debug{
   TARGET		= sstQt01Lib_d
