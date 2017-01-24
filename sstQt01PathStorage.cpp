@@ -51,13 +51,17 @@ int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
   sstQt01PathElementCsvCls oShapeItemCsv;
   dREC04RECNUMTYP dRecNo = 0;
 
-
   int iStat1  = 0;
   int iStat = 0;
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
   iStat = oPainterCsvFile.fopenRd(0,oFilNam.c_str());
+
+  // Read and test title row
+  iStat = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
+  iStat =oCsvStr.compare(oShapeItemCsv.GetCsvFileTitle());
+  if (iStat != 0) assert(0);
 
   // load csv file into sst record table
   iStat1 = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
@@ -87,6 +91,10 @@ int sstQt01PathStorageCls::StoreAllPathToFile (int iKey, std::string oFilNam)
 
   iStat = oPainterCsvFile.fopenWr(0, oFilNam.c_str());
   assert(iStat == 0);
+
+  // Write Title row to file
+  oCsvStr = oShapeItemCsv.GetCsvFileTitle();
+  oPainterCsvFile.Wr_StrDS1(0,&oCsvStr);
 
   for (dREC04RECNUMTYP ll=1; ll <= this->poShapeItemRecTable->count(); ll++)
   {
@@ -186,6 +194,51 @@ int sstQt01PathStorageCls::ReadNextPath(int iKey, QPainterPath *oTmpPath, QColor
   this->dActualReadPos = this->poShapeItemRecTable->count() + 1;
 
   return 0;
+}
+//=============================================================================
+dREC04RECNUMTYP sstQt01PathStorageCls::RecordCount() const
+{
+  return this->poShapeItemRecTable->count();
+}
+//=============================================================================
+int sstQt01PathStorageCls::ReadRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr) const
+{
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  iStat = this->poShapeItemRecTable->Read( iKey, dRecNo, vRecAdr);
+  return iStat;
+}
+//=============================================================================
+int sstQt01PathStorageCls::WriteRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr)
+{
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  iStat = this->poShapeItemRecTable->Writ( iKey, vRecAdr, dRecNo);
+  return iStat;
+}
+//=============================================================================
+int sstQt01PathStorageCls::DeleteRecPos (int iKey, dREC04RECNUMTYP dRecNo)
+{
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  iStat = this->poShapeItemRecTable->RecSetDeleted(iKey,dRecNo);
+  return iStat;
+}
+//=============================================================================
+int sstQt01PathStorageCls::WriteNew (int iKey, dREC04RECNUMTYP *dRecNo, void* vRecAdr)
+{
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  iStat = this->poShapeItemRecTable->WritNew( iKey, vRecAdr, dRecNo);
+  return iStat;
 }
 //=============================================================================
 

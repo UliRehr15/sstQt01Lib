@@ -80,6 +80,16 @@ int sstQt01PathElementCsvCls::WriteToCsv(int iKey, std::string *oCsvStr, std::st
   return iStat;
 }
 //=============================================================================
+std::string sstQt01PathElementCsvCls::GetCsvFileTitle()
+{
+  std::string oLocStr;
+  //-----------------------------------------------------------------------------
+
+  oLocStr = "iType;iXX;iYY;iColR;iColG;iColB";
+
+  return oLocStr;
+}
+//=============================================================================
 void sstQt01PathElementCsvCls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol)
 {
   int iTmpColR = 0;

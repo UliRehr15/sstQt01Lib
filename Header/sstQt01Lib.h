@@ -86,6 +86,15 @@ class sstQt01PathElementCsvCls
      int WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr);
      //==============================================================================
      /**
+     * @brief // Get Title row for PainterPath Csv file <BR>
+     * oTitleRowStr = oPathElement.GetCsvFileTitle();
+     *
+     * @return Title row string
+     */
+     // ----------------------------------------------------------------------------
+     std::string GetCsvFileTitle();
+     //==============================================================================
+     /**
      * @brief // set all data to path element object <BR>
      * iStat = oPathElement.setAll( iType, iXX, iYY, oColor);
      *
@@ -241,7 +250,8 @@ class sstQt01PathStorageCls
     ~sstQt01PathStorageCls();  // Destructor
      //==============================================================================
      /**
-     * @brief // Load all pathes from csv file in sst table object.  <BR>
+     * @brief // Load all pathes record rows from csv file in sst table object.  <BR>
+     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
      *
      * @param iKey    [in] For the moment 0
      * @param oFilNam [in] File name
@@ -256,6 +266,7 @@ class sstQt01PathStorageCls
      //==============================================================================
      /**
      * @brief // store all pathes from sst table object into csv file.  <BR>
+     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
      *
      * @param iKey    [in] For the moment 0
      * @param oFilNam [in] File name
@@ -270,6 +281,7 @@ class sstQt01PathStorageCls
      //==============================================================================
      /**
      * @brief // append one QPainterPath at end of sst table object  <BR>
+     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
      *
      * @param iKey   [in] For the moment 0
      * @param oPath  [in] QPainterPath object to store
@@ -285,6 +297,7 @@ class sstQt01PathStorageCls
      //==============================================================================
      /**
      * @brief // read next QPainterPath object from sst table object.  <BR>
+     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
      *
      * @param iKey   [in] For the moment 0
      * @param oPath  [out] QPainterPath object
@@ -297,6 +310,78 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int ReadNextPath(int iKey,  QPainterPath *oPath, QColor *oColor);
+     //==============================================================================
+     /**
+     * @brief // return number of stored records  <BR>
+     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
+     *
+     * @return Number of stored records
+     */
+     // ----------------------------------------------------------------------------
+     dREC04RECNUMTYP RecordCount() const;
+     //==============================================================================
+     /**
+     * @brief // read QPainterPath record from sst table object.  <BR>
+     * iStat = oPathStorage.ReadRecPos (iKey, dRecNo, vRecAdr);
+     *
+     * @param iKey    [in]  For the moment 0
+     * @param dRecNo  [in]  Record number
+     * @param vRecAdr [out] return Path record at adress
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int ReadRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr) const;
+     //==============================================================================
+     /**
+     * @brief // write QPainterPath record to sst table object.  <BR>
+     * iStat = oPathStorage.WriteRecPos (iKey, dRecNo, vRecAdr);
+     *
+     * @param iKey    [in] For the moment 0
+     * @param dRecNo  [out] record number
+     * @param vRecAdr [out] write path record from adress
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int WriteRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr);
+     //==============================================================================
+     /**
+     * @brief // mark deleted QPainterPath record in sst table object.  <BR>
+     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
+     *
+     * @param iKey   [in] For the moment 0
+     * @param dRecNo [in] record number
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int DeleteRecPos (int iKey, dREC04RECNUMTYP dRecNo);
+     //==============================================================================
+     /**
+     * @brief // write next QPainterPath record into sst table object.  <BR>
+     * iStat = oPathStorage.WriteNew (iKey, &dRecNo, vRecAdr);
+     *
+     * @param iKey    [in] For the moment 0
+     * @param dRecNo  [out] new record number
+     * @param vRecAdr [in] path record at adress for writing
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int WriteNew (int iKey, dREC04RECNUMTYP *dRecNo, void* vRecAdr);
 // ----------------------------------------------------------------------------
   private:  // Private functions
      sstRec04Cls *poShapeItemRecTable;  /**< painter path element table */

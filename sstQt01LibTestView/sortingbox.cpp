@@ -74,7 +74,7 @@ SortingBox::SortingBox()
 
     if (iStat < 0)
     {
-      // create square, triangle and circle item from templates and add to list
+      // store existing square, triangle and circle item to path list
       iStat = this->ItemsCreate(0);
     }
     else
@@ -649,36 +649,12 @@ int SortingBox::ItemsCreate (int iKey) // v  -> For the moment 0
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
-
-//  oPos = initialItemPosition(circlePath);
-//  oColor = initialItemColor();
-//  QPainterPath oTmpPath = circlePath;
-//  oTmpPath.translate(oPos.x(),oPos.y());
-//  this->oPathStorage.AppendPath(0,oTmpPath,oColor);
-//  createShapeItem(circlePath, tr("Circle"), oPos, oColor);
-
-//  oPos = initialItemPosition(squarePath);
-//  oColor = initialItemColor();
-//  oTmpPath = squarePath;
-//  oTmpPath.translate(oPos.x(),oPos.y());
-//  this->oPathStorage.AppendPath(0,oTmpPath,oColor);
-//  createShapeItem(squarePath, tr("Square"), oPos, oColor);
-
-//  oPos = initialItemPosition(trianglePath);
-//  oColor = initialItemColor();
-//  oTmpPath = trianglePath;
-//  oTmpPath.translate(oPos.x(),oPos.y());
-//  this->oPathStorage.AppendPath(0,oTmpPath,oColor);
-//  createShapeItem(trianglePath, tr("Triangle"), oPos , oColor);
-
   createShapeItem(circlePath, tr("Circle"), initialItemPosition(circlePath),
                   initialItemColor());
   createShapeItem(squarePath, tr("Square"), initialItemPosition(squarePath),
                   initialItemColor());
   createShapeItem(trianglePath, tr("Triangle"),
                   initialItemPosition(trianglePath), initialItemColor());
-
-  // this->oPathStorage.StoreAllPathToFile(0,"paint2.csv");
 
   return iRet;
 }
