@@ -26,6 +26,7 @@
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
+#include <sstQt01Lib.h>
 
 #include "dialog.h"
 #include "sst_qt_lib_test_tab.h"

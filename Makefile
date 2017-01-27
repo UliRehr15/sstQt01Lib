@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -fPIC -D_REENTRANT -Wall -W $(DEFINES)
 CXXFLAGS      = -pipe -g -fPIC -D_REENTRANT -Wall -W $(DEFINES)
-INCPATH       = -I. -I../sst_rec04_lib/Header -I../sst_misc01_lib/Header -I../sst_str01_lib/Header -IHeader -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I../sst_rec04_lib/Header -I../sst_misc01_lib/Header -I../sst_str01_lib/Header -IHeader -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/i386-linux-gnu/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -47,10 +47,15 @@ OBJECTS_DIR   = ./
 
 SOURCES       = sstQt01Tab.cpp \
 		sstQt01PathStorage.cpp \
-		sstQt01PathElementCsv.cpp 
+		sstQt01PathElementCsv.cpp \
+		sstQt01TabView.cpp \
+		sstQt01ShapeItem.cpp moc_sstQt01Lib.cpp
 OBJECTS       = sstQt01Tab.o \
 		sstQt01PathStorage.o \
-		sstQt01PathElementCsv.o
+		sstQt01PathElementCsv.o \
+		sstQt01TabView.o \
+		sstQt01ShapeItem.o \
+		moc_sstQt01Lib.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -101,6 +106,7 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/resources.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/moc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/unix/opengl.prf \
+		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/uic.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/unix/thread.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/testcase_targets.prf \
@@ -110,7 +116,9 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		sstQt01Lib.pro Header/sstQt01Lib.h \
 		sstQt01LibInt.h sstQt01Tab.cpp \
 		sstQt01PathStorage.cpp \
-		sstQt01PathElementCsv.cpp
+		sstQt01PathElementCsv.cpp \
+		sstQt01TabView.cpp \
+		sstQt01ShapeItem.cpp
 QMAKE_TARGET  = sstQt01Lib_d
 DESTDIR       = ../libs/#avoid trailing-slash linebreak
 TARGET        = libsstQt01Lib_d.a
@@ -198,6 +206,7 @@ Makefile: sstQt01Lib.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/resources.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/moc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/unix/opengl.prf \
+		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/uic.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/unix/thread.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/testcase_targets.prf \
@@ -205,6 +214,7 @@ Makefile: sstQt01Lib.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf \
 		sstQt01Lib.pro \
+		/usr/lib/i386-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/i386-linux-gnu/libQt5Gui.prl \
 		/usr/lib/i386-linux-gnu/libQt5Core.prl
 	$(QMAKE) -spec linux-g++ CONFIG+=debug -o Makefile sstQt01Lib.pro
@@ -258,6 +268,7 @@ Makefile: sstQt01Lib.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/resources.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/moc.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/unix/opengl.prf:
+/usr/lib/i386-linux-gnu/qt5/mkspecs/features/uic.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/unix/thread.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/warn_on.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/testcase_targets.prf:
@@ -265,6 +276,7 @@ Makefile: sstQt01Lib.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf:
 sstQt01Lib.pro:
+/usr/lib/i386-linux-gnu/libQt5Widgets.prl:
 /usr/lib/i386-linux-gnu/libQt5Gui.prl:
 /usr/lib/i386-linux-gnu/libQt5Core.prl:
 qmake: FORCE
@@ -282,7 +294,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents Header/sstQt01Lib.h sstQt01LibInt.h $(DISTDIR)/
-	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01PathElementCsv.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01PathElementCsv.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -305,17 +317,26 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_sstQt01Lib.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_sstQt01Lib.cpp
+moc_sstQt01Lib.cpp: ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h
+	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include Header/sstQt01Lib.h -o moc_sstQt01Lib.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
+compiler_uic_make_all:
+compiler_uic_clean:
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: 
+compiler_clean: compiler_moc_header_clean 
 
 ####### Compile
 
@@ -337,6 +358,21 @@ sstQt01PathElementCsv.o: sstQt01PathElementCsv.cpp ../sst_str01_lib/Header/sstSt
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathElementCsv.o sstQt01PathElementCsv.cpp
+
+sstQt01TabView.o: sstQt01TabView.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TabView.o sstQt01TabView.cpp
+
+sstQt01ShapeItem.o: sstQt01ShapeItem.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01ShapeItem.o sstQt01ShapeItem.cpp
+
+moc_sstQt01Lib.o: moc_sstQt01Lib.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sstQt01Lib.o moc_sstQt01Lib.cpp
 
 ####### Install
 

@@ -46,13 +46,13 @@ class QPushButton;
 class QTextEdit;
 QT_END_NAMESPACE
 
-class Dialog : public QDialog
+class sstQt01PathTabDialogCls : public QDialog
 {
     Q_OBJECT
 
 public:
-    Dialog();
-    ~Dialog();
+    sstQt01PathTabDialogCls();
+    ~sstQt01PathTabDialogCls();
 
 private:
     void createMenu();
@@ -68,8 +68,8 @@ private:
     QMenu *fileMenu;
     QAction *exitAction;
 
-    TstRec1ModelCls  *pTstRec1Model;
-    TstRec1ViewCls   *pTstRec1View;
+    sstQt01PathMdlCls  *pTstRec1Model;
+    sstQt01TabViewCls   *pTstRec1View;
 
     // TstRec2ModelCls  *pTstRec2Model;
     // TstRec2ViewCls   *pTstRec2View;

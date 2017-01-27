@@ -49,14 +49,12 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = sstQt01LibTabPath.cpp \
-		sstDs2_tstrec1_qt_tab.cpp \
-		dialog.cpp moc_sstQt01LibTabPath.cpp \
-		moc_dialog.cpp
+		sstQt01PathModel.cpp \
+		sstQt01TabPathDialog.cpp moc_sstQt01LibTabPath.cpp
 OBJECTS       = sstQt01LibTabPath.o \
-		sstDs2_tstrec1_qt_tab.o \
-		dialog.o \
-		moc_sstQt01LibTabPath.o \
-		moc_dialog.o
+		sstQt01PathModel.o \
+		sstQt01TabPathDialog.o \
+		moc_sstQt01LibTabPath.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -114,10 +112,9 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf \
-		sstQt01LibTabPath.pro sstQt01LibTabPath.h \
-		dialog.h sstQt01LibTabPath.cpp \
-		sstDs2_tstrec1_qt_tab.cpp \
-		dialog.cpp
+		sstQt01LibTabPath.pro sstQt01LibTabPath.h sstQt01LibTabPath.cpp \
+		sstQt01PathModel.cpp \
+		sstQt01TabPathDialog.cpp
 QMAKE_TARGET  = sst_qt_lib_test_tab
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = sst_qt_lib_test_tab
@@ -285,8 +282,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents sstQt01LibTabPath.h dialog.h $(DISTDIR)/
-	$(COPY_FILE) --parents sstQt01LibTabPath.cpp sstDs2_tstrec1_qt_tab.cpp dialog.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01LibTabPath.h $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01LibTabPath.cpp sstQt01PathModel.cpp sstQt01TabPathDialog.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -309,23 +306,15 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_sstQt01LibTabPath.cpp moc_dialog.cpp
+compiler_moc_header_make_all: moc_sstQt01LibTabPath.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_sstQt01LibTabPath.cpp moc_dialog.cpp
+	-$(DEL_FILE) moc_sstQt01LibTabPath.cpp
 moc_sstQt01LibTabPath.cpp: ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
 		sstQt01LibTabPath.h
 	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib/sstQt01LibTabPath -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sstQt01LibTabPath.h -o moc_sstQt01LibTabPath.cpp
-
-moc_dialog.cpp: ../../sst_str01_lib/Header/sstStr01Lib.h \
-		../../sst_misc01_lib/Header/sstMisc01Lib.h \
-		../../sst_rec04_lib/Header/sstRec04Lib.h \
-		../../sstQt01Lib/Header/sstQt01Lib.h \
-		sstQt01LibTabPath.h \
-		dialog.h
-	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib/sstQt01LibTabPath -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include dialog.h -o moc_dialog.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -345,30 +334,25 @@ sstQt01LibTabPath.o: sstQt01LibTabPath.cpp ../../sst_str01_lib/Header/sstStr01Li
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
-		dialog.h \
 		sstQt01LibTabPath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01LibTabPath.o sstQt01LibTabPath.cpp
 
-sstDs2_tstrec1_qt_tab.o: sstDs2_tstrec1_qt_tab.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
+sstQt01PathModel.o: sstQt01PathModel.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
 		sstQt01LibTabPath.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstDs2_tstrec1_qt_tab.o sstDs2_tstrec1_qt_tab.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathModel.o sstQt01PathModel.cpp
 
-dialog.o: dialog.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
+sstQt01TabPathDialog.o: sstQt01TabPathDialog.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
-		dialog.h \
 		sstQt01LibTabPath.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o dialog.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TabPathDialog.o sstQt01TabPathDialog.cpp
 
 moc_sstQt01LibTabPath.o: moc_sstQt01LibTabPath.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sstQt01LibTabPath.o moc_sstQt01LibTabPath.cpp
-
-moc_dialog.o: moc_dialog.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialog.o moc_dialog.cpp
 
 ####### Install
 

@@ -48,12 +48,10 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = shapeitem.cpp \
-		sortingbox.cpp \
+SOURCES       = sortingbox.cpp \
 		sstQt01LibTestView.cpp qrc_tooltips.cpp \
 		moc_sortingbox.cpp
-OBJECTS       = shapeitem.o \
-		sortingbox.o \
+OBJECTS       = sortingbox.o \
 		sstQt01LibTestView.o \
 		qrc_tooltips.o \
 		moc_sortingbox.o
@@ -114,10 +112,8 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf \
-		sstQt01LibTestView.pro shapeitem.h \
-		sortingbox.h \
-		sstQt01LibTestView.h shapeitem.cpp \
-		sortingbox.cpp \
+		sstQt01LibTestView.pro sortingbox.h \
+		sstQt01LibTestView.h sortingbox.cpp \
 		sstQt01LibTestView.cpp
 QMAKE_TARGET  = sstQt01LibTestView
 DESTDIR       = #avoid trailing-slash linebreak
@@ -289,8 +285,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents tooltips.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents shapeitem.h sortingbox.h sstQt01LibTestView.h $(DISTDIR)/
-	$(COPY_FILE) --parents shapeitem.cpp sortingbox.cpp sstQt01LibTestView.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sortingbox.h sstQt01LibTestView.h $(DISTDIR)/
+	$(COPY_FILE) --parents sortingbox.cpp sstQt01LibTestView.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -328,7 +324,6 @@ moc_sortingbox.cpp: ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
 		sstQt01LibTestView.h \
-		shapeitem.h \
 		sortingbox.h
 	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib/sstQt01LibTestView -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sortingbox.h -o moc_sortingbox.cpp
 
@@ -346,21 +341,12 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean
 
 ####### Compile
 
-shapeitem.o: shapeitem.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
-		../../sst_misc01_lib/Header/sstMisc01Lib.h \
-		shapeitem.h \
-		../../sst_rec04_lib/Header/sstRec04Lib.h \
-		../../sstQt01Lib/Header/sstQt01Lib.h \
-		sstQt01LibTestView.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shapeitem.o shapeitem.cpp
-
 sortingbox.o: sortingbox.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
 		sstQt01LibTestView.h \
-		sortingbox.h \
-		shapeitem.h
+		sortingbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sortingbox.o sortingbox.cpp
 
 sstQt01LibTestView.o: sstQt01LibTestView.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
@@ -368,8 +354,7 @@ sstQt01LibTestView.o: sstQt01LibTestView.cpp ../../sst_str01_lib/Header/sstStr01
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
 		sstQt01LibTestView.h \
-		sortingbox.h \
-		shapeitem.h
+		sortingbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01LibTestView.o sstQt01LibTestView.cpp
 
 qrc_tooltips.o: qrc_tooltips.cpp 

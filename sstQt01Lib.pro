@@ -7,6 +7,8 @@ CONFIG    -= release  # ist DEBUG aktiv
 
 CONFIG    += staticlib
 
+QT += widgets
+
 INCLUDEPATH += ../sst_rec04_lib/Header
 INCLUDEPATH += ../sst_misc01_lib/Header
 INCLUDEPATH += ../sst_str01_lib/Header
@@ -17,7 +19,9 @@ HEADERS		+= sstQt01LibInt.h
 
 SOURCES		+= sstQt01Tab.cpp \
              sstQt01PathStorage.cpp \
-             sstQt01PathElementCsv.cpp
+             sstQt01PathElementCsv.cpp \
+    sstQt01TabView.cpp \
+    sstQt01ShapeItem.cpp
 
 OTHER_FILES += README.md
 

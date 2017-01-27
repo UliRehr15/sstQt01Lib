@@ -35,12 +35,12 @@ release{
 
 SOURCES  += \
     sstQt01LibTabPath.cpp \
-    sstDs2_tstrec1_qt_tab.cpp \
-    dialog.cpp
+    sstQt01PathModel.cpp \
+    sstQt01TabPathDialog.cpp
 
 HEADERS  += \ 
-    sstQt01LibTabPath.h \
-    dialog.h
+    sstQt01LibTabPath.h
+#    dialog.h
 
 
 # install

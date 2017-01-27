@@ -11,9 +11,9 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstDs2_tstrec1_qt_tab.cpp   16.09.15  Re.    16.09.15  Re.
+// sstQt01PathModell.cpp   16.09.15  Re.    16.09.15  Re.
 //
-// qt model and View for dss Table testrec1
+// qt model for sst Table painterpath
 
 #include <QtWidgets>
 #include <QFont>
@@ -31,7 +31,7 @@
 #include "sstQt01LibTabPath.h"
 
 //=============================================================================
-TstRec1ModelCls::TstRec1ModelCls(QObject *parent)
+sstQt01PathMdlCls::sstQt01PathMdlCls(QObject *parent)
     :QAbstractTableModel(parent)
 {
   int iStat = 0;
@@ -65,25 +65,25 @@ TstRec1ModelCls::TstRec1ModelCls(QObject *parent)
   }
 }
 //=============================================================================
-TstRec1ModelCls::~TstRec1ModelCls()
+sstQt01PathMdlCls::~sstQt01PathMdlCls()
 {
   // oTestRec1Table.CloseCsvFile(0,(char*) "test_rec1.csv");
   oTestRec1Table.StoreAllPathToFile( 0, (char*) "Paint.csv");
 }
 //=============================================================================
-int TstRec1ModelCls::rowCount(const QModelIndex & /*parent*/) const
+int sstQt01PathMdlCls::rowCount(const QModelIndex & /*parent*/) const
 {
   // dREC04RECNUMTYP dLocCount = oTestRec1Table.RecordCount();
   // int iLocCount = (int) dLocCount;
   return oTestRec1Table.RecordCount();//iLocCount;
 }
 //=============================================================================
-int TstRec1ModelCls::columnCount(const QModelIndex & /*parent*/) const
+int sstQt01PathMdlCls::columnCount(const QModelIndex & /*parent*/) const
 {
     return 6;
 }
 //=============================================================================
-QVariant TstRec1ModelCls::data(const QModelIndex &index, int role) const
+QVariant sstQt01PathMdlCls::data(const QModelIndex &index, int role) const
 {
   int col = index.column();
 
@@ -119,7 +119,7 @@ QVariant TstRec1ModelCls::data(const QModelIndex &index, int role) const
 //=============================================================================
 // Complete function description is in headerfile
 //-----------------------------------------------------------------------------
-QVariant TstRec1ModelCls::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant sstQt01PathMdlCls::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -140,7 +140,7 @@ QVariant TstRec1ModelCls::headerData(int section, Qt::Orientation orientation, i
 //=============================================================================
 // Complete function description is in headerfile
 //-----------------------------------------------------------------------------
-bool TstRec1ModelCls::setData(const QModelIndex & index, const QVariant & value, int role)
+bool sstQt01PathMdlCls::setData(const QModelIndex & index, const QVariant & value, int role)
 {
     if (role == Qt::EditRole)
     {
@@ -170,12 +170,12 @@ bool TstRec1ModelCls::setData(const QModelIndex & index, const QVariant & value,
 //=============================================================================
 // Complete function description is in headerfile
 //-----------------------------------------------------------------------------
-Qt::ItemFlags TstRec1ModelCls::flags(const QModelIndex &index) const
+Qt::ItemFlags sstQt01PathMdlCls::flags(const QModelIndex &index) const
 {
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
 }
 //=============================================================================
-bool TstRec1ModelCls::removeRows(int position, int rows, const QModelIndex &index)
+bool sstQt01PathMdlCls::removeRows(int position, int rows, const QModelIndex &index)
 {
     Q_UNUSED(index);
     beginRemoveRows(QModelIndex(), position, position + rows - 1);
@@ -193,7 +193,7 @@ bool TstRec1ModelCls::removeRows(int position, int rows, const QModelIndex &inde
     return true;
 }
 //=============================================================================
-bool TstRec1ModelCls::insertRows(int position, int rows, const QModelIndex &index)
+bool sstQt01PathMdlCls::insertRows(int position, int rows, const QModelIndex &index)
 {
     Q_UNUSED(index);
     beginInsertRows(QModelIndex(), position, position + rows - 1);
@@ -214,48 +214,48 @@ bool TstRec1ModelCls::insertRows(int position, int rows, const QModelIndex &inde
     return true;
 }
 //=============================================================================
-TstRec1ViewCls::TstRec1ViewCls()
-{
-    createActions();
-    setupContextMenu();
-}
-//=============================================================================
-void TstRec1ViewCls::setupContextMenu()
-{
-    addAction(cell_InsAction);
-    addAction(cell_DelAction);
-    setContextMenuPolicy(Qt::ActionsContextMenu);
-}
-//=============================================================================
-void TstRec1ViewCls::createActions()
-{
-  QString tt = QString::fromLatin1("&Zeilen lцschen");
+//sstQt01TabViewCls::sstQt01TabViewCls()
+//{
+//    createActions();
+//    setupContextMenu();
+//}
+////=============================================================================
+//void sstQt01TabViewCls::setupContextMenu()
+//{
+//    addAction(cell_InsAction);
+//    addAction(cell_DelAction);
+//    setContextMenuPolicy(Qt::ActionsContextMenu);
+//}
+////=============================================================================
+//void sstQt01TabViewCls::createActions()
+//{
+//  QString tt = QString::fromLatin1("&Zeilen lцschen");
 
-  cell_DelAction = new QAction(tt, this);
-  cell_DelAction->setShortcut(Qt::CTRL | Qt::Key_Minus);
-  connect(cell_DelAction, SIGNAL(triggered()), this, SLOT(actionRowsDelete()));
+//  cell_DelAction = new QAction(tt, this);
+//  cell_DelAction->setShortcut(Qt::CTRL | Qt::Key_Minus);
+//  connect(cell_DelAction, SIGNAL(triggered()), this, SLOT(actionRowsDelete()));
 
-  tt = QString::fromLatin1("&Zeile einfьgen am Ende");
-  cell_InsAction = new QAction( tt, this);
-  cell_InsAction->setShortcut(Qt::CTRL | Qt::Key_Plus);
-  connect(cell_InsAction, SIGNAL(triggered()), this, SLOT(actionRowsInsert()));
+//  tt = QString::fromLatin1("&Zeile einfьgen am Ende");
+//  cell_InsAction = new QAction( tt, this);
+//  cell_InsAction->setShortcut(Qt::CTRL | Qt::Key_Plus);
+//  connect(cell_InsAction, SIGNAL(triggered()), this, SLOT(actionRowsInsert()));
 
-}
-//=============================================================================
-void TstRec1ViewCls::actionRowsDelete()
-{
-  const QModelIndex index = this->selectionModel()->currentIndex();
-  int row = index.row();  // Get Positon of selected Row
-  int count = 1;  // Delete always one row
-  this->model()->removeRows(row,count,index);
-}
-//=============================================================================
-void TstRec1ViewCls::actionRowsInsert()
-{
-  const QModelIndex index = this->selectionModel()->currentIndex();
-  int row = this->model()->rowCount();  // Get Number of all defined rows
-  int count = 1;  // Append always one new row
-  this->model()->insertRows(row,count,index);
-}
-//=============================================================================
+//}
+////=============================================================================
+//void sstQt01TabViewCls::actionRowsDelete()
+//{
+//  const QModelIndex index = this->selectionModel()->currentIndex();
+//  int row = index.row();  // Get Positon of selected Row
+//  int count = 1;  // Delete always one row
+//  this->model()->removeRows(row,count,index);
+//}
+////=============================================================================
+//void sstQt01TabViewCls::actionRowsInsert()
+//{
+//  const QModelIndex index = this->selectionModel()->currentIndex();
+//  int row = this->model()->rowCount();  // Get Number of all defined rows
+//  int count = 1;  // Append always one new row
+//  this->model()->insertRows(row,count,index);
+//}
+////=============================================================================
 

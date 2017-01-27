@@ -28,7 +28,6 @@
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
-#include "dialog.h"
 #include "sstQt01LibTabPath.h"
 
 //=============================================================================
@@ -36,7 +35,7 @@ int main(int argc, char *argv[])
 {
 
     QApplication app(argc, argv);
-    Dialog dialog;
+    sstQt01PathTabDialogCls dialog;
     dialog.show();
 
     return app.exec();

@@ -24,7 +24,7 @@
 #include <sstQt01Lib.h>
 
 #include "sstQt01LibTestView.h"
-#include "shapeitem.h"
+// #include "shapeitem.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -75,13 +75,13 @@ private:
                                   const char *member);
 
 //! [2]
-    QList<ShapeItem> shapeItems;
+    QList<sstQt01ShapeItem> shapeItems;
     QPainterPath circlePath;
     QPainterPath squarePath;
     QPainterPath trianglePath;
 
     QPoint previousPosition;
-    ShapeItem *itemInMotion;
+    sstQt01ShapeItem *itemInMotion;
 
     QToolButton *newCircleButton;
     QToolButton *newSquareButton;

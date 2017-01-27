@@ -20,6 +20,8 @@
 #ifndef SST_QT01LIB_TAB_PATH_H
 #define SST_QT01LIB_TAB_PATH_H
 
+#include <QDialog>
+#include <QtWidgets>
 #include <QAbstractTableModel>
 #include <QTableView>
 
@@ -32,12 +34,50 @@
 
 QT_BEGIN_NAMESPACE
 class QAction;
+class QDialogButtonBox;
+class QGroupBox;
 class QLabel;
 class QLineEdit;
+class QMenu;
+class QMenuBar;
+class QPushButton;
+class QTextEdit;
 class QToolBar;
 class QTableWidgetItem;
 class QTableWidget;
 QT_END_NAMESPACE
+
+class sstQt01PathMdlCls;
+
+class sstQt01PathTabDialogCls : public QDialog
+{
+    Q_OBJECT
+
+public:
+    sstQt01PathTabDialogCls();
+    ~sstQt01PathTabDialogCls();
+
+private:
+    void createMenu();
+    void createHorizontalGroupBox1();
+    void createHorizontalGroupBox2();
+
+    enum { NumGridRows = 3, NumButtons = 4 };
+
+    QMenuBar *menuBar;
+    QGroupBox *horizontalGroupBox1;
+    QGroupBox *horizontalGroupBox2;
+
+    QMenu *fileMenu;
+    QAction *exitAction;
+
+    sstQt01PathMdlCls  *pTstRec1Model;
+    sstQt01TabViewCls   *pTstRec1View;
+
+    // TstRec2ModelCls  *pTstRec2Model;
+    // TstRec2ViewCls   *pTstRec2View;
+
+};
 
 //==============================================================================
 /**
@@ -54,12 +94,12 @@ QT_END_NAMESPACE
 * @date 19.02.10
 */
 // ----------------------------------------------------------------------------
-class TstRec1ModelCls : public QAbstractTableModel
+class sstQt01PathMdlCls : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-  TstRec1ModelCls(QObject *parent);
-  ~TstRec1ModelCls();
+  sstQt01PathMdlCls(QObject *parent);
+  ~sstQt01PathMdlCls();
     int rowCount(const QModelIndex &parent = QModelIndex()) const ;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
@@ -91,59 +131,59 @@ private:
 * @date 19.02.10
 */
 // ----------------------------------------------------------------------------
-class TstRec1ViewCls : public QTableView
-{
-      Q_OBJECT
-  public:   // Public functions
-     TstRec1ViewCls();   // Constructor
-// ----------------------------------------------------------------------------
-public slots:
-     //==============================================================================
-     /**
-     * @brief Shortstory
-     *
-     * @param iKey [in] For the moment 0
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-  void actionRowsInsert();
-  //==============================================================================
-  /**
-  * @brief Shortstory
-  *
-  * @param iKey [in] For the moment 0
-  *
-  * @return Errorstate
-  *
-  * @retval   = 0: OK
-  * @retval   < 0: Unspecified Error
-  */
-  // ----------------------------------------------------------------------------
-  void actionRowsDelete();
+//class sstQt01TabViewCls : public QTableView
+//{
+//      Q_OBJECT
+//  public:   // Public functions
+//     sstQt01TabViewCls();   // Constructor
+//// ----------------------------------------------------------------------------
+//public slots:
+//     //==============================================================================
+//     /**
+//     * @brief Shortstory
+//     *
+//     * @param iKey [in] For the moment 0
+//     *
+//     * @return Errorstate
+//     *
+//     * @retval   = 0: OK
+//     * @retval   < 0: Unspecified Error
+//     */
+//     // ----------------------------------------------------------------------------
+//  void actionRowsInsert();
+//  //==============================================================================
+//  /**
+//  * @brief Shortstory
+//  *
+//  * @param iKey [in] For the moment 0
+//  *
+//  * @return Errorstate
+//  *
+//  * @retval   = 0: OK
+//  * @retval   < 0: Unspecified Error
+//  */
+//  // ----------------------------------------------------------------------------
+//  void actionRowsDelete();
 
-protected:
-  //==============================================================================
-  /**
-  * @brief setup ContextMenu with actions
-  */
-  // ----------------------------------------------------------------------------
-    void setupContextMenu();
-    //==============================================================================
-    /**
-    * @brief Create actions and connect to slots
-    */
-    // ----------------------------------------------------------------------------
-    void createActions();
+//protected:
+//  //==============================================================================
+//  /**
+//  * @brief setup ContextMenu with actions
+//  */
+//  // ----------------------------------------------------------------------------
+//    void setupContextMenu();
+//    //==============================================================================
+//    /**
+//    * @brief Create actions and connect to slots
+//    */
+//    // ----------------------------------------------------------------------------
+//    void createActions();
 
-private:  // Private functions
-  QAction *cell_InsAction;   /**< Insert Table Rows Action */
-  QAction *cell_DelAction;   /**< Delete Table Rows Action */
-//-----------------------------------------------------------------------------
-};
+//private:  // Private functions
+//  QAction *cell_InsAction;   /**< Insert Table Rows Action */
+//  QAction *cell_DelAction;   /**< Delete Table Rows Action */
+////-----------------------------------------------------------------------------
+//};
 //==============================================================================
 /**
 * @brief Definition Class TstRec2ModelCls

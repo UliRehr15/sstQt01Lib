@@ -17,6 +17,7 @@
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
+#include <sstQt01Lib.h>
 
 #include "sst_qt_lib_test_tab.h"
 
@@ -55,10 +56,12 @@ private:
     QAction *exitAction;
 
     TstRec1ModelCls  *pTstRec1Model;
-    TstRec1ViewCls   *pTstRec1View;
+    // TstRec1ViewCls   *pTstRec1View;
+    sstQt01TabViewCls   *pTstRec1View;
 
     TstRec2ModelCls  *pTstRec2Model;
-    TstRec2ViewCls   *pTstRec2View;
+    // TstRec2ViewCls   *pTstRec2View;
+    sstQt01TabViewCls   *pTstRec2View;
 
 };
 

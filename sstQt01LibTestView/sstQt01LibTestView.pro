@@ -32,13 +32,12 @@ release{
 }
 
 
-HEADERS       = shapeitem.h \
+HEADERS       = \
                 sortingbox.h \
                 sstQt01LibTestView.h
 
 
 SOURCES       = \
-                shapeitem.cpp \
                 sortingbox.cpp \
     sstQt01LibTestView.cpp
 #    sstQt01PathStorage.cpp

@@ -95,7 +95,7 @@ SortingBox::~SortingBox()
   this->oPathStorage = new (sstQt01PathStorageCls);
 
   QPoint myPoint;
-  foreach (ShapeItem shapeItem, shapeItems)
+  foreach (sstQt01ShapeItem shapeItem, shapeItems)
   {
       myPoint = shapeItem.getPosition();
       QPainterPath oPath = shapeItem.getPath();
@@ -150,7 +150,7 @@ void SortingBox::paintEvent(QPaintEvent * /* event */)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    foreach (ShapeItem shapeItem, shapeItems) {
+    foreach (sstQt01ShapeItem shapeItem, shapeItems) {
 //! [8] //! [9]
         painter.translate(shapeItem.getPosition());
 //! [9] //! [10]
@@ -225,7 +225,7 @@ void SortingBox::createNewTriangle()
 int SortingBox::itemAt(const QPoint &pos)
 {
     for (int i = shapeItems.size() - 1; i >= 0; --i) {
-        const ShapeItem &item = shapeItems[i];
+        const sstQt01ShapeItem &item = shapeItems[i];
         if (item.getPath().contains(pos - item.getPosition()))
             return i;
     }
@@ -261,7 +261,7 @@ void SortingBox::createShapeItem(const QPainterPath &path,
                                  const QString &toolTip, const QPoint &pos,
                                  const QColor &color)
 {
-    ShapeItem shapeItem;
+    sstQt01ShapeItem shapeItem;
     shapeItem.setPath(path);
     shapeItem.setToolTip(toolTip);
     shapeItem.setPosition(pos);

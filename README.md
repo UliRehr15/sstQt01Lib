@@ -30,4 +30,5 @@ Structure of coding projects should be:
 06.09.2016  Version 1.2: New app for testing path storing classes. <BR>
 17.01.2017  Version 1.3: Adding title Row to PainterPath Csv file. <BR>
 24.01.2017  Version 1.4: new tool for editing painter path table. <BR>
+27.01.2017  Version 1.5: Move some classes from tool to lib. <BR>
 

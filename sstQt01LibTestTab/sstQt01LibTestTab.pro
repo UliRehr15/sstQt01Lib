@@ -10,8 +10,10 @@ CONFIG    -= release  # ist DEBUG aktiv
 INCLUDEPATH += ../../sst_str01_lib/Header
 INCLUDEPATH += ../../sst_misc01_lib/Header
 INCLUDEPATH += ../../sst_rec04_lib/Header
+INCLUDEPATH += ../../sstQt01Lib/Header
 
 debug{
+  LIBS        += ../../libs/libsstQt01Lib_d.a
   LIBS        += ../../libs/libsst_rec04_lib_d.a
   LIBS        += ../../libs/libsst_misc01_lib_d.a
   LIBS        += ../../libs/libsst_str01_lib_d.a
@@ -24,10 +26,10 @@ release{
   win32-g++:QMAKE_LFLAGS_EXCEPTIONS_ON -= -mthreads
   win32-g++:QMAKE_CXXFLAGS_EXCEPTIONS_ON -= -mthreads
 
-  LIBS        += ../libs/libsst_ds2_lib_r.a
-  LIBS        += ../libs/libsst_lib2_r.a
-  LIBS        += ../libs/libsst_lib_r.a
-  LIBS        += ../libs/libstr_lib_r.a
+  LIBS        += ../../libs/libsstQt01Lib_r.a
+  LIBS        += ../../libs/libsst_rec04_lib_r.a
+  LIBS        += ../../libs/libsst_misc01_lib_r.a
+  LIBS        += ../../libs/libsst_str01_lib_r.a
 }
 
 

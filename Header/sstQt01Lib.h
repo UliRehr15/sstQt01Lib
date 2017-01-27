@@ -24,6 +24,12 @@
  * sst Qt01 library
  */
 
+#include <QTableView>
+
+#include <sstStr01Lib.h>
+#include <sstMisc01Lib.h>
+#include <sstRec04Lib.h>
+
 // Defines ---------------------------------------------------------------------
 
 // forward declaration ---------------------------------------------------------
@@ -388,8 +394,158 @@ class sstQt01PathStorageCls
      dREC04RECNUMTYP dActualReadPos;   /**< actual read position in table */
 };
 //==============================================================================
+//==============================================================================
+/**
+* @brief Definition Class TstRec2ViewCls
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class sstQt01TabViewCls : public QTableView
+{
+      Q_OBJECT
+  public:   // Public functions
+     sstQt01TabViewCls();   // Constructor
+// ----------------------------------------------------------------------------
+public slots:
+     //==============================================================================
+     /**
+     * @brief actionRowsInsert
+     */
+     // ----------------------------------------------------------------------------
+  void actionRowsInsert();
+  //==============================================================================
+  /**
+  * @brief actionRowsDelete
+  */
+  // ----------------------------------------------------------------------------
+  void actionRowsDelete();
 
-//-----------------------------------------------------------------------------
+protected:
+  //==============================================================================
+  /**
+  * @brief setup ContextMenu with actions
+  */
+  // ----------------------------------------------------------------------------
+    void setupContextMenu();
+    //==============================================================================
+    /**
+    * @brief Create actions and connect to slots
+    */
+    // ----------------------------------------------------------------------------
+    void createActions();
+
+private:  // Private functions
+  QAction *cell_InsAction;   /**< Insert Table Rows Action */
+  QAction *cell_DelAction;   /**< Delete Table Rows Action */
+};
+//==============================================================================
+/**
+* @brief sst extended QPainterPath class
+*
+* Extended with color and string tooltip <BR>
+*
+* Changed: 26.01.17  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 26.01.17
+*/
+// ----------------------------------------------------------------------------
+class sstQt01ShapeItem
+{
+public:
+  //==============================================================================
+  /**
+  * @brief // set path object <BR>
+  * iStat = oPathItem.setPath(Path);
+  *
+  * @param Path [in] QPainterPath object
+  */
+  // ----------------------------------------------------------------------------
+    void setPath(const QPainterPath &Path);
+    //==============================================================================
+    /**
+    * @brief // set tooltip <BR>
+    * iStat = oPathItem.setToolTip(ToolTip);
+    *
+    * @param ToolTip [in] ToolTip string
+    */
+    // ----------------------------------------------------------------------------
+    void setToolTip(const QString &ToolTip);
+    //==============================================================================
+    /**
+    * @brief // set Position <BR>
+    * iStat = oPathItem.setPosition(Position);
+    *
+    * @param Position [in] QPainterPath object
+    */
+    // ----------------------------------------------------------------------------
+    void setPosition(const QPoint &Position);
+    //==============================================================================
+    /**
+    * @brief // set color <BR>
+    * iStat = oPathItem.setColor(Path);
+    *
+    * @param Color [in] QColor
+    */
+    // ----------------------------------------------------------------------------
+    void setColor(const QColor &Color);
+    //==============================================================================
+    /**
+    * @brief // Get QPainterPath <BR>
+    * oPath = PathItem.getPath();
+    *
+    * @return QPainterPath
+    */
+    // ----------------------------------------------------------------------------
+    QPainterPath getPath() const;
+    //==============================================================================
+    /**
+    * @brief // Get Position <BR>
+    * oPosition = PathItem.getPosition();
+    *
+    * @return QPoint
+    */
+    // ----------------------------------------------------------------------------
+    QPoint getPosition() const;
+    //==============================================================================
+    /**
+    * @brief // Get Color <BR>
+    * oColor = PathItem.getColor();
+    *
+    * @return QColor
+    */
+    // ----------------------------------------------------------------------------
+    QColor getColor() const;
+    //==============================================================================
+    /**
+    * @brief // Get ToolTip string <BR>
+    * oToolTip = PathItem.getToolTip();
+    *
+    * @return QString
+    */
+    // ----------------------------------------------------------------------------
+    QString getToolTip() const;
+    //==============================================================================
+
+private:
+    QPainterPath myPath;
+    QPoint myPosition;
+    QColor myColor;
+    QString myToolTip;
+};
+//==============================================================================
 
 
 #endif

@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// dialog.cpp    12.11.14  Re.    26.02.15  Re.
+// sstQt01TabPathDialog.cpp    25.01.17 Re.    26.02.15  Re.
 //
 // widget opens some gdb tables for editing
 
@@ -27,10 +27,10 @@
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
-#include "dialog.h"
+#include "sstQt01LibTabPath.h"
 
 //=============================================================================
-Dialog::Dialog()
+sstQt01PathTabDialogCls::sstQt01PathTabDialogCls()
 {
   createMenu();
   createHorizontalGroupBox1();
@@ -44,13 +44,13 @@ Dialog::Dialog()
     setWindowTitle(tr("Edit Test Record Tables Example"));
 }
 //=============================================================================
-Dialog::~Dialog()
+sstQt01PathTabDialogCls::~sstQt01PathTabDialogCls()
 {
   delete(pTstRec1Model);
   // delete(pTstRec2Model);
 }
 //=============================================================================
-void Dialog::createMenu()
+void sstQt01PathTabDialogCls::createMenu()
 {
     menuBar = new QMenuBar;
 
@@ -61,13 +61,13 @@ void Dialog::createMenu()
     connect(exitAction, SIGNAL(triggered()), this, SLOT(accept()));
 }
 //=============================================================================
-void Dialog::createHorizontalGroupBox1()
+void sstQt01PathTabDialogCls::createHorizontalGroupBox1()
 {
     horizontalGroupBox1 = new QGroupBox(tr("Paint.csv"));
     QVBoxLayout *layout1 = new QVBoxLayout;
 
-    pTstRec1View = new(TstRec1ViewCls);
-    pTstRec1Model = new TstRec1ModelCls(0);
+    pTstRec1View = new(sstQt01TabViewCls);
+    pTstRec1Model = new sstQt01PathMdlCls(0);
     pTstRec1View->setModel( pTstRec1Model );
     layout1->addWidget(pTstRec1View);
 

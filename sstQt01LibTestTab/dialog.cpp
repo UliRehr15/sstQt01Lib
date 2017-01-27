@@ -25,6 +25,7 @@
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
+#include <sstQt01Lib.h>
 
 #include "dialog.h"
 
@@ -65,7 +66,8 @@ void Dialog::createHorizontalGroupBox1()
     horizontalGroupBox1 = new QGroupBox(tr("TestRec1.csv"));
     QVBoxLayout *layout1 = new QVBoxLayout;
 
-    pTstRec1View = new(TstRec1ViewCls);
+    // pTstRec1View = new(TstRec1ViewCls);
+    pTstRec1View = new(sstQt01TabViewCls);
     pTstRec1Model = new TstRec1ModelCls(0);
     pTstRec1View->setModel( pTstRec1Model );
     layout1->addWidget(pTstRec1View);
@@ -78,7 +80,8 @@ void Dialog::createHorizontalGroupBox2()
     horizontalGroupBox2 = new QGroupBox(tr("TestRec2.csv"));
     QVBoxLayout *layout2 = new QVBoxLayout;
 
-    pTstRec2View = new(TstRec2ViewCls);
+    // pTstRec2View = new(TstRec2ViewCls);
+    pTstRec2View = new(sstQt01TabViewCls);
     pTstRec2Model = new TstRec2ModelCls(0);
     pTstRec2View->setModel( pTstRec2Model );
     layout2->addWidget(pTstRec2View);
