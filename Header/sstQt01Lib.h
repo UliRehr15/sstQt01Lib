@@ -37,6 +37,104 @@
 // Structures and Classes ------------------------------------------------------
 //==============================================================================
 /**
+* @brief sst extended QPainterPath shape class
+*
+* one Path object Extended with color and string tooltip <BR>
+*
+* Changed: 26.01.17  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 26.01.17
+*/
+// ----------------------------------------------------------------------------
+class sstQt01ShapeItem
+{
+public:
+  //==============================================================================
+  /**
+  * @brief // set path object <BR>
+  * iStat = oPathItem.setPath(Path);
+  *
+  * @param Path [in] QPainterPath object
+  */
+  // ----------------------------------------------------------------------------
+    void setPath(const QPainterPath &Path);
+    //==============================================================================
+    /**
+    * @brief // set tooltip <BR>
+    * iStat = oPathItem.setToolTip(ToolTip);
+    *
+    * @param ToolTip [in] ToolTip string
+    */
+    // ----------------------------------------------------------------------------
+    void setToolTip(const QString &ToolTip);
+    //==============================================================================
+    /**
+    * @brief // set Position <BR>
+    * iStat = oPathItem.setPosition(Position);
+    *
+    * @param Position [in] QPainterPath object
+    */
+    // ----------------------------------------------------------------------------
+    void setPosition(const QPoint &Position);
+    //==============================================================================
+    /**
+    * @brief // set color <BR>
+    * iStat = oPathItem.setColor(Path);
+    *
+    * @param Color [in] QColor
+    */
+    // ----------------------------------------------------------------------------
+    void setColor(const QColor &Color);
+    //==============================================================================
+    /**
+    * @brief // Get QPainterPath <BR>
+    * oPath = PathItem.getPath();
+    *
+    * @return QPainterPath
+    */
+    // ----------------------------------------------------------------------------
+    QPainterPath getPath() const;
+    //==============================================================================
+    /**
+    * @brief // Get Position <BR>
+    * oPosition = PathItem.getPosition();
+    *
+    * @return QPoint
+    */
+    // ----------------------------------------------------------------------------
+    QPoint getPosition() const;
+    //==============================================================================
+    /**
+    * @brief // Get Color <BR>
+    * oColor = PathItem.getColor();
+    *
+    * @return QColor
+    */
+    // ----------------------------------------------------------------------------
+    QColor getColor() const;
+    //==============================================================================
+    /**
+    * @brief // Get ToolTip string <BR>
+    * oToolTip = PathItem.getToolTip();
+    *
+    * @return QString
+    */
+    // ----------------------------------------------------------------------------
+    QString getToolTip() const;
+    //==============================================================================
+
+private:
+    QPainterPath myPath;
+    QPoint myPosition;
+    QColor myColor;
+    QString myToolTip;
+};
+//==============================================================================
+/**
 * @brief Path Element record plus Color as csv string <BR>
 *
 * for example: <BR>
@@ -57,6 +155,242 @@ class sstQt01PathElementCsvCls
 {
   public:   // Public functions
      sstQt01PathElementCsvCls();  // Constructor
+    //~sstTestBaseCls();  // Destructor
+     //==============================================================================
+     /**
+     * @brief // Read path element object from csv string <BR>
+     * iStat = oPathElement.ReadFromCsv( iKey, oCsvStr, *oErrStr);
+     *
+     * @param iKey    [in]     For the moment 0
+     * @param oCsvStr [in]  Csv string
+     * @param oErrStr [out] Result error string
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr);
+     //==============================================================================
+     /**
+     * @brief // write path element object to csv string <BR>
+     * iStat = oPathElement.WriteToCsv( iKey, &oCsvStr, &oErrStr);
+     *
+     * @param iKey    [in]  For the moment 0
+     * @param oCsvStr [out] result Csv string with path element / color data
+     * @param oErrStr [out] Result error string
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr);
+     //==============================================================================
+     /**
+     * @brief // Get Title row for PainterPath Csv file <BR>
+     * oTitleRowStr = oPathElement.GetCsvFileTitle();
+     *
+     * @return Title row string
+     */
+     // ----------------------------------------------------------------------------
+     std::string GetCsvFileTitle();
+     //==============================================================================
+     /**
+     * @brief // set all data to path element object <BR>
+     * iStat = oPathElement.setAll( iType, iXX, iYY, oColor);
+     *
+     * @param iType    [in]  int type
+     * @param iXX      [in]  int coordinate x
+     * @param iYY      [in]  int coordinate y
+     * @param oColor   [in]  color
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     void setAll(int iType,int iXX, int iYY, QColor oColor);
+     //==============================================================================
+     /**
+     * @brief // Get Element Type <BR>
+     * oSection = oPathElement.GetIType()
+     *
+     * @return Type Int
+     */
+     // ----------------------------------------------------------------------------
+     int getIType() const;
+     //==============================================================================
+     /**
+     * @brief // Set Element Type <BR>
+     * oPathElement.SetIType ( value);
+     *
+     * @param value [in] Element type 0,1,2 or 3
+     */
+     // ----------------------------------------------------------------------------
+     void setIType(int value);
+     //==============================================================================
+     /**
+     * @brief // Get X Coordinate <BR>
+     *  iXX = oPathElement.GetIXX()
+     *
+     * @return X Coordinate
+     */
+     // ----------------------------------------------------------------------------
+     int getIXX() const;
+     //==============================================================================
+     /**
+     * @brief // Set X coordinate <BR>
+     * oPathElement.SetIXX(oSection);
+     *
+     * @param value [in] coordinate X
+     */
+     // ----------------------------------------------------------------------------
+     void setIXX(int value);
+     //==============================================================================
+     /**
+     * @brief // add value to X coordinate <BR>
+     * oPathElement.addIXX(oValue);
+     *
+     * @param value [in] coordinate X
+     */
+     // ----------------------------------------------------------------------------
+     void addIXX(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Y Coordinate <BR>
+     *  iYY = oPathElement.GetIYY()
+     *
+     * @return Y Coordinate
+     */
+     // ----------------------------------------------------------------------------
+     int getIYY() const;
+     //==============================================================================
+     /**
+     * @brief // Set Y Coordnate <BR>
+     * oPathElement.SetIYY(value);
+     *
+     * @param value [in] Coordinate Y
+     */
+     // ----------------------------------------------------------------------------
+     void setIYY(int value);
+     //==============================================================================
+     /**
+     * @brief // add value to Y Coordnate <BR>
+     * oPathElement.addIYY(value);
+     *
+     * @param value [in] Coordinate Y
+     */
+     // ----------------------------------------------------------------------------
+     void addIYY(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Color Red <BR>
+     *  iColR = oPathElement.GetSection()
+     *
+     * @return int color red
+     */
+     // ----------------------------------------------------------------------------
+     int getIColR() const;
+     //==============================================================================
+     /**
+     * @brief // Set Color Red <BR>
+     * oPathElement.SetColR(value);
+     *
+     * @param value [in] color red
+     */
+     // ----------------------------------------------------------------------------
+     void setIColR(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Color green <BR>
+     *  iColG = oPathElement.GetIColG()
+     *
+     * @return int color green
+     */
+     // ----------------------------------------------------------------------------
+     int getIColG() const;
+     //==============================================================================
+     /**
+     * @brief // Set color green <BR>
+     * oPathElement.setIColG(value);
+     *
+     * @param value [in] color green
+     */
+     // ----------------------------------------------------------------------------
+     void setIColG(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Color Blue <BR>
+     *  iColB = oPathElement.getIColB()
+     *
+     * @return int color blue
+     */
+     // ----------------------------------------------------------------------------
+     int getIColB() const;
+     //==============================================================================
+     /**
+     * @brief // Set color blue <BR>
+     * oPathElement.setIColB(value);
+     *
+     * @param value [in] color blue
+     */
+     // ----------------------------------------------------------------------------
+     void setIColB(int value);
+     //==============================================================================
+     /**
+     * @brief // Set QColor <BR>
+     * oPathElement.setQCol(value);
+     *
+     * @param oQCol [in] QColor
+     */
+     // ----------------------------------------------------------------------------
+     void setQCol(QColor oQCol);
+     //==============================================================================
+     /**
+     * @brief // Get QColor <BR>
+     *  oQCol = oPathElement.getQCol()
+     *
+     * @return QColor
+     */
+     // ----------------------------------------------------------------------------
+     QColor getQCol();
+     //==============================================================================
+
+private:  // Private functions
+     int iType;        /**< Shape Item Type */
+     int iXX;          /**< Coordinate X */
+     int iYY;          /**< Coordinate Y */
+     int iColR;        /**< Color Red */
+     int iColG;        /**< Color Green */
+     int iColB;        /**< Color Blue */
+};
+//==============================================================================
+//==============================================================================
+/**
+* @brief Path Element record plus Color as csv string <BR>
+*
+* for example: <BR>
+* 0;215;193;111;190;0 <BR>
+* element type = 0, Coordinates X,Y = 215, 193 <BR>
+* Color 111,190,0 RGB <BR>
+*
+* Changed: 04.09.16  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 04.09.16
+*/
+// ----------------------------------------------------------------------------
+class sstQt01PathMainRecCls
+{
+  public:   // Public functions
+     sstQt01PathMainRecCls();  // Constructor
     //~sstTestBaseCls();  // Destructor
      //==============================================================================
      /**
@@ -225,14 +559,115 @@ class sstQt01PathElementCsvCls
      // ----------------------------------------------------------------------------
      void setIColB(int value);
      //==============================================================================
+     /**
+     * @brief // Set tooltip string <BR>
+     * oPathItem.setTooltip(oTooltip);
+     *
+     * @param oTooltip [in] tooltip string
+     */
+     // ----------------------------------------------------------------------------
+     void setTooltip(std::string oTooltip);
+     //==============================================================================
+     /**
+     * @brief // Get Tooltip string <BR>
+     * oTooltipStr = oPathItem.getTooltip();
+     *
+     * @return Tooltip String
+     */
+     // ----------------------------------------------------------------------------
+     std::string getTooltip();
+     //==============================================================================
+     /**
+     * @brief // Set QColor <BR>
+     * oPathItem.setQCol(value);
+     *
+     * @param oQCol [in] QColor
+     */
+     // ----------------------------------------------------------------------------
+     void setQCol(QColor oQCol);
+     //==============================================================================
+     /**
+     * @brief // Get QColor <BR>
+     *  oQCol = oPathItem.getQCol()
+     *
+     * @return QColor
+     */
+     // ----------------------------------------------------------------------------
+     QColor getQCol();
+     //==============================================================================
+     /**
+     * @brief // Get start record number in element table <BR>
+     *  iColR = oPathItem.GetStartElementRecNo()
+     *
+     * @return start record number in element table
+     */
+     // ----------------------------------------------------------------------------
+     dREC04RECNUMTYP getStartElementRecNo() const;
+     //==============================================================================
+     /**
+     * @brief // Set start record number in element table <BR>
+     * oPathItem.setStartElementRecNo(value);
+     *
+     * @param value [in] start record number in element table
+     */
+     // ----------------------------------------------------------------------------
+     void setStartElementRecNo(const dREC04RECNUMTYP &value);
+     //==============================================================================
+     /**
+     * @brief // Get start record number in element table <BR>
+     *  iColR = oPathItem.GetNumElements()
+     *
+     * @return number of elements in actual path
+     */
+     // ----------------------------------------------------------------------------
+     dREC04RECNUMTYP getNumElements() const;
+     //==============================================================================
+     /**
+     * @brief // Set Number of elements <BR>
+     * oPathItem.setNumElements(value);
+     *
+     * @param value [in] Number of elemnts
+     */
+     // ----------------------------------------------------------------------------
+     void setNumElements(const dREC04RECNUMTYP &value);
+     //==============================================================================
+     /**
+     * @brief // Get end record number in element table <BR>
+     *  iColR = oPathItem.GetEndElementRecNo()
+     *
+     * @return end record number in element table
+     */
+     // ----------------------------------------------------------------------------
+     dREC04RECNUMTYP getEndElementRecNo() const;
+     //==============================================================================
+     /**
+     * @brief // Set position <BR>
+     * oPathItem.setPosition(oPosition);
+     *
+     * @param oPosition [in] position
+     */
+     // ----------------------------------------------------------------------------
+     void setPosition(QPoint oPosition);
+     //==============================================================================
+     /**
+     * @brief // Get position <BR>
+     *  oPosition = oPathItem.getPosition()
+     *
+     * @return QPoint position
+     */
+     // ----------------------------------------------------------------------------
+     QPoint getPosition();
+     //==============================================================================
 
-private:  // Private functions
-     int iType;        /**< Shape Item Type */
-     int iXX;          /**< Coordinate X */
-     int iYY;          /**< Coordinate Y */
+private:
+     int iXX;        /**< Position X */
+     int iYY;        /**< Position Y */
      int iColR;        /**< Color Red */
      int iColG;        /**< Color Green */
      int iColB;        /**< Color Blue */
+     char cTooltip[30];  /**< Tooltip char string */
+     dREC04RECNUMTYP dStartElementRecNo;  /**< Start of Path in Element table */
+     dREC04RECNUMTYP dNumElements;        /**< Number of elements in path */
 };
 //==============================================================================
 /**
@@ -318,6 +753,22 @@ class sstQt01PathStorageCls
      int ReadNextPath(int iKey,  QPainterPath *oPath, QColor *oColor);
      //==============================================================================
      /**
+     * @brief // read next QPainterPath object from sst table object.  <BR>
+     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
+     *
+     * @param iKey               [in] For the moment 0
+     * @param dStartElementRecNo [in] For the moment 0
+     * @param oPath              [out] QPainterPath object
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int ReadPath(int iKey, dREC04RECNUMTYP dStartElementRecNo, QPainterPath *oPath);
+     //==============================================================================
+     /**
      * @brief // return number of stored records  <BR>
      * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
      *
@@ -388,10 +839,133 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int WriteNew (int iKey, dREC04RECNUMTYP *dRecNo, void* vRecAdr);
+     //==============================================================================
+     /**
+     * @brief // Get Tooltip string for index path <BR>
+     * iStat = oPathStorage.getToolTip(index);
+     *
+     * @param index [in] index of path
+     *
+     * @return tooltip string
+     */
+     // ----------------------------------------------------------------------------
+     QString getToolTip(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
+     * @brief // set tooltip string in main table <BR>
+     * iStat = oPathStorage.setTooltip(index,oTooltip);
+     *
+     * @param index    [in] record number in main table
+     * @param oTooltip [in] Tooltip string
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int setToolTip(dREC04RECNUMTYP index, QString oTooltip);
+     //==============================================================================
+     /**
+     * @brief // set position to shape item in main table <BR>
+     * iStat = oPathStorage.setPosition(index,oPosition);
+     *
+     * @param index     [in] record number in main table
+     * @param oPosition [in] Position point
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int setPosition(dREC04RECNUMTYP index, QPoint oPosition);
+     //==============================================================================
+     /**
+     * @brief // Get color of shape item <BR>
+     * oPosition = oPathStorage.getPosition(index);
+     *
+     * @param index [in] index of path
+     *
+     * @return QPoint
+     */
+     // ----------------------------------------------------------------------------
+     QPoint getPosition(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
+     * @brief // add position to shape item in main table <BR>
+     * iStat = oPathStorage.addPosition(index,oPosition);
+     *
+     * @param index     [in] record number in main table
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int addPosition(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
+     * @brief // Get Color for index path <BR>
+     * iStat = oPathStorage.getColor(index);
+     *
+     * @param index [in] index of path
+     *
+     * @return Color
+     */
+     // ----------------------------------------------------------------------------
+     QColor getColor(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
+     * @brief // Get Path from path table <BR>
+     * iStat = oPathStorage.getPath(index);
+     *
+     * @param index [in] index of path
+     *
+     * @return Path geometry
+     */
+     // ----------------------------------------------------------------------------
+     QPainterPath getPath(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
+     * @brief // Get Shape Item from path table <BR>
+     * iStat = oPathStorage.getShapeItem(index);
+     *
+     * @param index [in] index of path
+     *
+     * @return Path geometry
+     */
+     // ----------------------------------------------------------------------------
+     sstQt01ShapeItem getShapeItem(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
+     * @brief // append item to storage at table end <BR>
+     * iStat = oPathStorage.appendShapeItem();
+     *
+     * @param oItem [in] sst Shape item to append to table storage
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int appendShapeItem(sstQt01ShapeItem oItem);
+     //==============================================================================
+     /**
+     * @brief // return number of sst shape items in storage <BR>
+     * iStat = oPathStorage.countItems();
+     *
+     * @return int number of actual stored shape items
+     */
+     // ----------------------------------------------------------------------------
+     int countItems();
 // ----------------------------------------------------------------------------
   private:  // Private functions
-     sstRec04Cls *poShapeItemRecTable;  /**< painter path element table */
-     dREC04RECNUMTYP dActualReadPos;   /**< actual read position in table */
+     sstRec04Cls *poShapeItemRecTable;   /**< painter path element record table */
+     sstRec04Cls *poShapeItemMainTable;  /**< painter path main table */
+     dREC04RECNUMTYP dActualReadPos;     /**< actual read position in table */
 };
 //==============================================================================
 //==============================================================================
@@ -448,106 +1022,9 @@ private:  // Private functions
   QAction *cell_DelAction;   /**< Delete Table Rows Action */
 };
 //==============================================================================
-/**
-* @brief sst extended QPainterPath class
-*
-* Extended with color and string tooltip <BR>
-*
-* Changed: 26.01.17  Re.
-*
-* @ingroup sstQt01Lib
-*
-* @author Re.
-*
-* @date 26.01.17
-*/
-// ----------------------------------------------------------------------------
-class sstQt01ShapeItem
-{
-public:
-  //==============================================================================
-  /**
-  * @brief // set path object <BR>
-  * iStat = oPathItem.setPath(Path);
-  *
-  * @param Path [in] QPainterPath object
-  */
-  // ----------------------------------------------------------------------------
-    void setPath(const QPainterPath &Path);
-    //==============================================================================
-    /**
-    * @brief // set tooltip <BR>
-    * iStat = oPathItem.setToolTip(ToolTip);
-    *
-    * @param ToolTip [in] ToolTip string
-    */
-    // ----------------------------------------------------------------------------
-    void setToolTip(const QString &ToolTip);
-    //==============================================================================
-    /**
-    * @brief // set Position <BR>
-    * iStat = oPathItem.setPosition(Position);
-    *
-    * @param Position [in] QPainterPath object
-    */
-    // ----------------------------------------------------------------------------
-    void setPosition(const QPoint &Position);
-    //==============================================================================
-    /**
-    * @brief // set color <BR>
-    * iStat = oPathItem.setColor(Path);
-    *
-    * @param Color [in] QColor
-    */
-    // ----------------------------------------------------------------------------
-    void setColor(const QColor &Color);
-    //==============================================================================
-    /**
-    * @brief // Get QPainterPath <BR>
-    * oPath = PathItem.getPath();
-    *
-    * @return QPainterPath
-    */
-    // ----------------------------------------------------------------------------
-    QPainterPath getPath() const;
-    //==============================================================================
-    /**
-    * @brief // Get Position <BR>
-    * oPosition = PathItem.getPosition();
-    *
-    * @return QPoint
-    */
-    // ----------------------------------------------------------------------------
-    QPoint getPosition() const;
-    //==============================================================================
-    /**
-    * @brief // Get Color <BR>
-    * oColor = PathItem.getColor();
-    *
-    * @return QColor
-    */
-    // ----------------------------------------------------------------------------
-    QColor getColor() const;
-    //==============================================================================
-    /**
-    * @brief // Get ToolTip string <BR>
-    * oToolTip = PathItem.getToolTip();
-    *
-    * @return QString
-    */
-    // ----------------------------------------------------------------------------
-    QString getToolTip() const;
-    //==============================================================================
-
-private:
-    QPainterPath myPath;
-    QPoint myPosition;
-    QColor myColor;
-    QString myToolTip;
-};
-//==============================================================================
 
 
 #endif
 
 // --------------------------------------------------------------- File End ----
+

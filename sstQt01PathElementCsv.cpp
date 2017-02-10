@@ -126,6 +126,11 @@ void sstQt01PathElementCsvCls::setIXX(int value)
   iXX = value;
 }
 //=============================================================================
+void sstQt01PathElementCsvCls::addIXX(int value)
+{
+  iXX = iXX + value;
+}
+//=============================================================================
 int sstQt01PathElementCsvCls::getIYY() const
 {
   return iYY;
@@ -134,6 +139,11 @@ int sstQt01PathElementCsvCls::getIYY() const
 void sstQt01PathElementCsvCls::setIYY(int value)
 {
   iYY = value;
+}
+//=============================================================================
+void sstQt01PathElementCsvCls::addIYY(int value)
+{
+  iYY = iYY + value;
 }
 //=============================================================================
 int sstQt01PathElementCsvCls::getIColR() const
@@ -166,4 +176,118 @@ void sstQt01PathElementCsvCls::setIColB(int value)
   iColB = value;
 }
 //=============================================================================
-
+void sstQt01PathElementCsvCls::setQCol(QColor oQCol)
+{
+  oQCol.getRgb(&this->iColR,&this->iColG,&this->iColB);
+}
+//=============================================================================
+QColor sstQt01PathElementCsvCls::getQCol()
+{
+  QColor oCol;
+  oCol.setRgb(this->iColR,this->iColG,this->iColB);
+  return oCol;
+}
+//=============================================================================
+sstQt01PathMainRecCls::sstQt01PathMainRecCls()
+{
+  this->iColR = 0;        /**< Color Red */
+  this->iColG = 0;        /**< Color Green */
+  this->iColB = 0;        /**< Color Blue */
+  memset(this->cTooltip,0,30);
+  this->dStartElementRecNo = 0;  /**< Start of Path in Element table */
+  this->dNumElements = 0;        /**< Number of elements in path */
+  this->iXX = 0;
+  this->iYY = 0;
+}
+//=============================================================================
+int sstQt01PathMainRecCls::getIColR() const
+{
+  return iColR;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setIColR(int value)
+{
+  iColR = value;
+}
+//=============================================================================
+int sstQt01PathMainRecCls::getIColG() const
+{
+  return iColG;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setIColG(int value)
+{
+  iColG = value;
+}
+//=============================================================================
+int sstQt01PathMainRecCls::getIColB() const
+{
+  return iColB;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setIColB(int value)
+{
+  iColB = value;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setTooltip(std::string oTooltip)
+{
+  strncpy(this->cTooltip,oTooltip.c_str(),30);
+}
+//=============================================================================
+std::string sstQt01PathMainRecCls::getTooltip()
+{
+  return this->cTooltip;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setQCol(QColor oQCol)
+{
+  oQCol.getRgb(&this->iColR,&this->iColG,&this->iColB);
+}
+//=============================================================================
+QColor sstQt01PathMainRecCls::getQCol()
+{
+  QColor oCol;
+  oCol.setRgb(this->iColR,this->iColG,this->iColB);
+  return oCol;
+}
+//=============================================================================
+dREC04RECNUMTYP sstQt01PathMainRecCls::getStartElementRecNo() const
+{
+return dStartElementRecNo;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setStartElementRecNo(const dREC04RECNUMTYP &value)
+{
+dStartElementRecNo = value;
+}
+//=============================================================================
+dREC04RECNUMTYP sstQt01PathMainRecCls::getNumElements() const
+{
+return dNumElements;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setNumElements(const dREC04RECNUMTYP &value)
+{
+  dNumElements = value;
+}
+//=============================================================================
+dREC04RECNUMTYP sstQt01PathMainRecCls::getEndElementRecNo() const
+{
+return dStartElementRecNo+dNumElements-1;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setPosition(QPoint oPosition)
+{
+  this->iXX = oPosition.rx();
+  this->iYY = oPosition.ry();
+}
+//=============================================================================
+QPoint sstQt01PathMainRecCls::getPosition()
+{
+  QPoint oPnt;
+  oPnt.setX(this->iXX);
+  oPnt.setY(this->iYY);
+  return oPnt;
+}
+//=============================================================================

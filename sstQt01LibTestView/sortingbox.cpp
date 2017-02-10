@@ -38,7 +38,7 @@ SortingBox::SortingBox()
   setMouseTracking(true);
     setBackgroundRole(QPalette::Base);
 
-    itemInMotion = 0;
+    // itemInMotion = 0;
 
     newCircleButton = createToolButton(tr("New Circle"),
                                        QIcon(":/images/circle.png"),
@@ -80,35 +80,43 @@ SortingBox::SortingBox()
     else
     {
       // read items from file into item list
+      // write tooltips to items in main table
       iStat = this->ItemsLoadFromFile3( 0);
       assert(iStat <= 0);
     }
 
-    delete (this->oPathStorage);
-    this->oPathStorage = NULL;
+    iActualItemIndex = 0;
+    iItemInMotionIndex = 0;
+
+    // delete (this->oPathStorage);
+    // this->oPathStorage = NULL;
 
 }
 //=============================================================================
 SortingBox::~SortingBox()
 {
 
-  this->oPathStorage = new (sstQt01PathStorageCls);
+//  this->oPathStorage = new (sstQt01PathStorageCls);
 
-  QPoint myPoint;
-  foreach (sstQt01ShapeItem shapeItem, shapeItems)
-  {
-      myPoint = shapeItem.getPosition();
-      QPainterPath oPath = shapeItem.getPath();
-      oPath.translate(myPoint.x(), myPoint.y());
+//  QPoint myPoint;
+//  foreach (sstQt01ShapeItem shapeItem, shapeItems)
+//  {
+//      myPoint = shapeItem.getPosition();
+//      QPainterPath oPath = shapeItem.getPath();
+//      oPath.translate(myPoint.x(), myPoint.y());
 
-      QColor oColor = shapeItem.getColor();
+//      QColor oColor = shapeItem.getColor();
 
-      // Append path object to path storage
-      this->oPathStorage->AppendPath(0,oPath,oColor);
+//      // Append path object to path storage
+//      this->oPathStorage->AppendPath(0,oPath,oColor);
 
-  }
+//  }
 
-  // write whole contents of path storage to csv file
+//  // write whole contents of path storage to csv file
+  //  this->oPathStorage->StoreAllPathToFile(0,"Paint.csv");
+  //  delete (this->oPathStorage);
+  //  this->oPathStorage = NULL;
+
   this->oPathStorage->StoreAllPathToFile(0,"Paint.csv");
   delete (this->oPathStorage);
   this->oPathStorage = NULL;
@@ -119,8 +127,10 @@ bool SortingBox::event(QEvent *event)
     if (event->type() == QEvent::ToolTip) {
         QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
         int index = itemAt(helpEvent->pos());
-        if (index != -1) {
-            QToolTip::showText(helpEvent->globalPos(), shapeItems[index].getToolTip());
+        if (index != -1)
+        {
+          // QToolTip::showText(helpEvent->globalPos(), shapeItems[index].getToolTip());
+          QToolTip::showText(helpEvent->globalPos(), (QString) this->oPathStorage->getToolTip(index));
         } else {
             QToolTip::hideText();
             event->ignore();
@@ -145,31 +155,43 @@ void SortingBox::resizeEvent(QResizeEvent * /* event */)
 }
 //! [7]
 //=============================================================================
-//! [8]
 void SortingBox::paintEvent(QPaintEvent * /* event */)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    foreach (sstQt01ShapeItem shapeItem, shapeItems) {
-//! [8] //! [9]
-        painter.translate(shapeItem.getPosition());
-//! [9] //! [10]
-        painter.setBrush(shapeItem.getColor());
-        painter.drawPath(shapeItem.getPath());
-        painter.translate(-shapeItem.getPosition());
+//    foreach (sstQt01ShapeItem shapeItem, shapeItems)
+//    {
+//        // painter.translate(shapeItem.getPosition());
+//        painter.setBrush(shapeItem.getColor());
+//        painter.drawPath(shapeItem.getPath());
+//        // painter.translate(-shapeItem.getPosition());
+//    }
+    int iPathCount = (int) this->oPathStorage->countItems();
+    for (int ii=1; ii <= iPathCount; ii++)
+    {
+        painter.translate(this->oPathStorage->getPosition(ii));
+        painter.setBrush(this->oPathStorage->getColor(ii));
+        painter.drawPath(this->oPathStorage->getPath(ii));
+        painter.translate(-this->oPathStorage->getPosition(ii));
     }
 }
-//! [10]
 //=============================================================================
 //! [11]
 void SortingBox::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton) {
+    if (event->button() == Qt::LeftButton)
+    {
         int index = itemAt(event->pos());
-        if (index != -1) {
-            itemInMotion = &shapeItems[index];
+        if (index != -1)
+        {
+          iActualItemIndex = index;
+          iItemInMotionIndex = index;
+
+          oActualItem = this->oPathStorage->getShapeItem(index);
+          // itemInMotion = &oActualItem;
             previousPosition = event->pos();
-            shapeItems.move(index, shapeItems.size() - 1);
+            // Move acual item to end of list. Will be found first with mouse
+            //shapeItems.move(index, shapeItems.size() - 1);
             update();
         }
     }
@@ -179,7 +201,8 @@ void SortingBox::mousePressEvent(QMouseEvent *event)
 //! [12]
 void SortingBox::mouseMoveEvent(QMouseEvent *event)
 {
-    if ((event->buttons() & Qt::LeftButton) && itemInMotion)
+  // if ((event->buttons() & Qt::LeftButton) && itemInMotion)
+    if ((event->buttons() & Qt::LeftButton) && iItemInMotionIndex > 0)
         moveItemTo(event->pos());
 }
 //! [12]
@@ -187,9 +210,11 @@ void SortingBox::mouseMoveEvent(QMouseEvent *event)
 //! [13]
 void SortingBox::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton && itemInMotion) {
+    if (event->button() == Qt::LeftButton && iItemInMotionIndex > 0)
+    {
         moveItemTo(event->pos());
-        itemInMotion = 0;
+        this->oPathStorage->addPosition(this->iActualItemIndex);
+        iItemInMotionIndex = 0;
     }
 }
 //! [13]
@@ -224,25 +249,31 @@ void SortingBox::createNewTriangle()
 //! [17]
 int SortingBox::itemAt(const QPoint &pos)
 {
-    for (int i = shapeItems.size() - 1; i >= 0; --i) {
-        const sstQt01ShapeItem &item = shapeItems[i];
-        if (item.getPath().contains(pos - item.getPosition()))
-            return i;
-    }
+//  for (int i = shapeItems.size() - 1; i >= 0; --i)
+//  {
+//      const sstQt01ShapeItem &item = shapeItems[i];
+//      if (item.getPath().contains(pos - item.getPosition()))
+//          return i;
+//  }
+  for (int i = this->oPathStorage->countItems(); i >= 1; --i)
+  {
+      const sstQt01ShapeItem &item = this->oPathStorage->getShapeItem(i);
+      if (item.getPath().contains(pos - item.getPosition()))
+          return i;
+  }
     return -1;
 }
 //! [17]
 //=============================================================================
-//! [18]
 void SortingBox::moveItemTo(const QPoint &pos)
 {
-    QPoint offset = pos - previousPosition;
-    itemInMotion->setPosition(itemInMotion->getPosition() + offset);
-//! [18] //! [19]
+  QPoint offset = pos - previousPosition;
+  QPoint oItemPos = this->oPathStorage->getPosition(iItemInMotionIndex);
+    // itemInMotion->setPosition(itemInMotion->getPosition() + offset);
+    this->oPathStorage->setPosition(this->iActualItemIndex, oItemPos + offset);
     previousPosition = pos;
     update();
 }
-//! [19]
 //=============================================================================
 //! [20]
 int SortingBox::updateButtonGeometry(QToolButton *button, int x, int y)
@@ -266,7 +297,8 @@ void SortingBox::createShapeItem(const QPainterPath &path,
     shapeItem.setToolTip(toolTip);
     shapeItem.setPosition(pos);
     shapeItem.setColor(color);
-    shapeItems.append(shapeItem);
+    // shapeItems.append(shapeItem);
+    this->oPathStorage->appendShapeItem(shapeItem);
     update();
 
 //    QPainterPath oTmpPath = path;
@@ -296,10 +328,12 @@ QPoint SortingBox::initialItemPosition(const QPainterPath &path)
   int x = 0;
   int y = 0;
     y = (height() - (int)path.controlPointRect().height()) / 2;
-    if (shapeItems.size() == 0)
+//    if (shapeItems.size() == 0)
+    if (this->oPathStorage->countItems() == 0)
         x = ((3 * width()) / 2 - (int)path.controlPointRect().width()) / 2;
     else
-        x = (width() / shapeItems.size()
+      // x = (width() / shapeItems.size()
+      x = (width() / this->oPathStorage->countItems()
              - (int)path.controlPointRect().width()) / 2;
 
     return QPoint(x, y);
@@ -316,7 +350,8 @@ QPoint SortingBox::randomItemPosition()
 //! [25]
 QColor SortingBox::initialItemColor()
 {
-    return QColor::fromHsv(((shapeItems.size() + 1) * 85) % 256, 255, 190);
+  // return QColor::fromHsv(((shapeItems.size() + 1) * 85) % 256, 255, 190);
+  return QColor::fromHsv(((this->oPathStorage->countItems() + 1) * 85) % 256, 255, 190);
 }
 //! [25]
 //=============================================================================
@@ -327,275 +362,13 @@ QColor SortingBox::randomItemColor()
 }
 //! [26]
 //=============================================================================
-int SortingBox::ItemsLoadFromFile (int iKey, sstMisc01AscFilCls *oPainterCsvFile)
-//-----------------------------------------------------------------------------
-{
-  sstQt01PathElementCsvCls oShapeItemCsv;
-  sstRec04Cls oShapeItemRecTable(sizeof(oShapeItemCsv));
-  dREC04RECNUMTYP dRecNo = 0;
-  dREC04RECNUMTYP dItemStart = 0;
-  dREC04RECNUMTYP dItemEnd = 0;
-  std::string oErrStr;
-
-  int iRet  = 0;
-  int iStat = 0;
-  int iStat1 = 0;
-  //-----------------------------------------------------------------------------
-  if ( iKey != 0) return -1;
-  std::string oCsvStr;
-
-  // load csv file into sst record table
-  iStat1 = oPainterCsvFile->Rd_StrDS1( 0, &oCsvStr);
-  while (iStat1 >= 0)
-  {
-    iStat = oShapeItemCsv.ReadFromCsv( 0, oCsvStr, &oErrStr);
-    assert (iStat == 0);
-
-    iStat = oShapeItemRecTable.WritNew(0,&oShapeItemCsv,&dRecNo);
-
-    iStat1 = oPainterCsvFile->Rd_StrDS1(0,&oCsvStr);
-  }
-
-  QPoint oPnt(0,0);
-  QColor oCol;
-
-  for (dREC04RECNUMTYP ll=1; ll <= oShapeItemRecTable.count();ll++)
-  {
-    // Read record from table
-    oShapeItemRecTable.Read(0,ll,&oShapeItemCsv);
-
-    // if type eq. 0 or end of table
-    if(oShapeItemCsv.getIType() == 0 || ll == oShapeItemRecTable.count())
-    {
-      // new item found in csv
-      // calculate start and end of item in table
-      dItemStart = dItemEnd+1;
-
-      if (oShapeItemCsv.getIType() == 0) dItemEnd = ll-1;
-      else dItemEnd = ll;
-
-      if (dItemEnd > dItemStart)
-      {
-        oShapeItemRecTable.Read(0,dItemStart+1,&oShapeItemCsv);
-        switch (oShapeItemCsv.getIType())
-        {
-        case 1:
-          if((dItemEnd-dItemStart) == 4)
-          {  // Square
-            QPainterPath squarePathFil;
-
-            oShapeItemRecTable.Read(0,dItemStart,&oShapeItemCsv);
-            oCol.setBlue(oShapeItemCsv.getIColB());
-            oCol.setGreen(oShapeItemCsv.getIColG());
-            oCol.setRed(oShapeItemCsv.getIColR());
-
-            squarePathFil.moveTo(oShapeItemCsv.getIXX(),oShapeItemCsv.getIYY());
-            for (dREC04RECNUMTYP kk = dItemStart+1;kk <= dItemEnd; kk++)
-            {
-              oShapeItemRecTable.Read(0,kk,&oShapeItemCsv);
-              squarePathFil.lineTo(oShapeItemCsv.getIXX(),oShapeItemCsv.getIYY());
-            }
-            createShapeItem(squarePathFil, tr("Square"), oPnt, oCol);
-
-          }
-          else
-          {  // triangle
-            QPainterPath trianglePathFil;
-            oShapeItemRecTable.Read(0,dItemStart,&oShapeItemCsv);
-            oCol.setBlue(oShapeItemCsv.getIColB());
-            oCol.setGreen(oShapeItemCsv.getIColG());
-            oCol.setRed(oShapeItemCsv.getIColR());
-            trianglePathFil.moveTo(oShapeItemCsv.getIXX(),oShapeItemCsv.getIYY());
-            for (dREC04RECNUMTYP kk = dItemStart+1;kk <= dItemEnd; kk++)
-            {
-              oShapeItemRecTable.Read(0,kk,&oShapeItemCsv);
-              trianglePathFil.lineTo(oShapeItemCsv.getIXX(),oShapeItemCsv.getIYY());
-            }
-            createShapeItem(trianglePathFil, tr("Triangle"), oPnt, oCol);
-          }
-          break;  // square or triangle
-        case 2:  // ARC
-        {
-          QPainterPath circlePathFil;
-          sstQt01PathElementCsvCls oShapeItemCsv2;
-          sstQt01PathElementCsvCls oShapeItemCsv3;
-          sstQt01PathElementCsvCls oShapeItemCsv4;
-
-          oShapeItemRecTable.Read(0,dItemStart,&oShapeItemCsv);
-          oCol.setBlue(oShapeItemCsv.getIColB());
-          oCol.setGreen(oShapeItemCsv.getIColG());
-          oCol.setRed(oShapeItemCsv.getIColR());
-          circlePathFil.moveTo(oShapeItemCsv.getIXX(),oShapeItemCsv.getIYY());
-
-          oShapeItemRecTable.Read(0,dItemStart+1,&oShapeItemCsv2);
-          oShapeItemRecTable.Read(0,dItemStart+2,&oShapeItemCsv3);
-          oShapeItemRecTable.Read(0,dItemStart+3,&oShapeItemCsv4);
-          circlePathFil.cubicTo(oShapeItemCsv2.getIXX(),oShapeItemCsv2.getIYY(),
-                                oShapeItemCsv3.getIXX(),oShapeItemCsv3.getIYY(),
-                                oShapeItemCsv4.getIXX(),oShapeItemCsv4.getIYY());
-
-          //---
-
-          oShapeItemRecTable.Read(0,dItemStart+4,&oShapeItemCsv2);
-          oShapeItemRecTable.Read(0,dItemStart+5,&oShapeItemCsv3);
-          oShapeItemRecTable.Read(0,dItemStart+6,&oShapeItemCsv4);
-          circlePathFil.cubicTo(oShapeItemCsv2.getIXX(),oShapeItemCsv2.getIYY(),
-                                oShapeItemCsv3.getIXX(),oShapeItemCsv3.getIYY(),
-                                oShapeItemCsv4.getIXX(),oShapeItemCsv4.getIYY());
-
-          //---
-
-          oShapeItemRecTable.Read(0,dItemStart+7,&oShapeItemCsv2);
-          oShapeItemRecTable.Read(0,dItemStart+8,&oShapeItemCsv3);
-          oShapeItemRecTable.Read(0,dItemStart+9,&oShapeItemCsv4);
-          circlePathFil.cubicTo(oShapeItemCsv2.getIXX(),oShapeItemCsv2.getIYY(),
-                                oShapeItemCsv3.getIXX(),oShapeItemCsv3.getIYY(),
-                                oShapeItemCsv4.getIXX(),oShapeItemCsv4.getIYY());
-
-          //---
-
-          oShapeItemRecTable.Read(0,dItemStart+10,&oShapeItemCsv2);
-          oShapeItemRecTable.Read(0,dItemStart+11,&oShapeItemCsv3);
-          oShapeItemRecTable.Read(0,dItemStart+12,&oShapeItemCsv4);
-          circlePathFil.cubicTo(oShapeItemCsv2.getIXX(),oShapeItemCsv2.getIYY(),
-                                oShapeItemCsv3.getIXX(),oShapeItemCsv3.getIYY(),
-                                oShapeItemCsv4.getIXX(),oShapeItemCsv4.getIYY());
-
-
-          createShapeItem(circlePathFil, tr("Circle"), oPnt, oCol);
-        }
-          break;
-          // arc move to
-        default: assert (0); break;
-        }
-      }
-    }
-  }
-
-  assert(iRet >= 0);
-
-  // Small Errors will given back
-  iRet = iStat;
-
-  return iRet;
-}
-//=============================================================================
-int SortingBox::ItemsLoadFromFile2 (int iKey, sstMisc01AscFilCls *oPainterCsvFile)
-//-----------------------------------------------------------------------------
-{
-  sstQt01PathElementCsvCls oShapeItemCsv1;
-  sstQt01PathElementCsvCls oShapeItemCsv2;
-  sstQt01PathElementCsvCls oShapeItemCsv3;
-  sstRec04Cls oShapeItemRecTable(sizeof(oShapeItemCsv1));
-  dREC04RECNUMTYP dRecNo = 0;
-  // dREC04RECNUMTYP dItemStart = 0;
-  // dREC04RECNUMTYP dItemEnd = 0;
-  std::string oErrStr;
-
-  int iRet  = 0;
-  int iStat = 0;
-  int iStat1 = 0;
-  //-----------------------------------------------------------------------------
-  if ( iKey != 0) return -1;
-  std::string oCsvStr;
-
-  // load csv file into sst record table
-  iStat1 = oPainterCsvFile->Rd_StrDS1( 0, &oCsvStr);
-  while (iStat1 >= 0)
-  {
-    iStat = oShapeItemCsv1.ReadFromCsv( 0, oCsvStr, &oErrStr);
-    assert (iStat == 0);
-
-    iStat = oShapeItemRecTable.WritNew(0,&oShapeItemCsv1,&dRecNo);
-
-    iStat1 = oPainterCsvFile->Rd_StrDS1(0,&oCsvStr);
-  }
-
-  QPoint oPnt(0,0);
-  QColor oCol;
-  QPainterPath *poPath;
-  poPath = new (QPainterPath);
-
-  // loop over all record in sst table
-  for (dREC04RECNUMTYP ll=1; ll <= oShapeItemRecTable.count();ll++)
-  {
-    // Read record from table
-    oShapeItemRecTable.Read(0,ll,&oShapeItemCsv1);
-    switch (oShapeItemCsv1.getIType())
-    {
-    case 0:
-    {
-      // new path object begins, store actual
-      switch (poPath->elementCount())
-      {
-      case 0:
-        break;
-      default:
-        createShapeItem(*poPath, tr("Circle"), oPnt, oCol);
-        break;
-      }
-      delete poPath;
-      poPath = new (QPainterPath);
-      oCol.setBlue(oShapeItemCsv1.getIColB());
-      oCol.setGreen(oShapeItemCsv1.getIColG());
-      oCol.setRed(oShapeItemCsv1.getIColR());
-      poPath->moveTo(oShapeItemCsv1.getIXX(),oShapeItemCsv1.getIYY());
-    }
-      break;
-    case 1:
-      poPath->lineTo(oShapeItemCsv1.getIXX(),oShapeItemCsv1.getIYY());
-      break;
-    case 2:
-      // Read two Type 3 records and create circle
-      oShapeItemRecTable.Read(0,ll+1,&oShapeItemCsv2);
-      oShapeItemRecTable.Read(0,ll+2,&oShapeItemCsv3);
-      poPath->cubicTo(oShapeItemCsv1.getIXX(),oShapeItemCsv1.getIYY(),
-                      oShapeItemCsv2.getIXX(),oShapeItemCsv2.getIYY(),
-                      oShapeItemCsv3.getIXX(),oShapeItemCsv3.getIYY());
-      ll = ll + 2;
-      break;
-    case 3:
-      assert (0);
-      break;
-      // arc move to
-    default:
-      assert (0);
-      break;
-    }
-
-  }
-
-  // new path object begins, store actual
-  switch (poPath->elementCount())
-  {
-  case 0:
-    break;
-  default:
-    createShapeItem(*poPath, tr("Circle"), oPnt, oCol);
-    break;
-  }
-  delete poPath;
-
-  assert(iRet >= 0);
-
-  // Small Errors will given back
-  iRet = iStat;
-
-  return iRet;
-}
-//=============================================================================
 int SortingBox::ItemsLoadFromFile3 (int iKey)
 //-----------------------------------------------------------------------------
 {
-//  sstQt01PathElementCsvCls oShapeItemCsv1;
-//  sstQt01PathElementCsvCls oShapeItemCsv2;
-//  sstQt01PathElementCsvCls oShapeItemCsv3;
-//  sstRec04Cls oShapeItemRecTable(sizeof(oShapeItemCsv1));
-  // dREC04RECNUMTYP dRecNo = 0;
   QPoint oPnt(0,0);
-  // std::string oErrStr;
   QPainterPath *poPath;
   QColor oColor;
+  int iPathNo = 0;
 
   int iRet  = 0;
   int iStat = 0;
@@ -603,22 +376,27 @@ int SortingBox::ItemsLoadFromFile3 (int iKey)
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
+  // read next path from shape item table
   poPath = new (QPainterPath);
   iStat1 = this->oPathStorage->ReadNextPath( 0, poPath, &oColor);
 
   while (iStat1 >= 0)
   {
+    iPathNo++;
     int iElements = poPath->elementCount();
     switch (iElements)
     {
       case 4:
-      createShapeItem( *poPath, tr("Triangle"), oPnt, oColor);
+      // createShapeItem( *poPath, tr("Triangle"), oPnt, oColor);
+      this->oPathStorage->setToolTip( iPathNo, tr("Triangle"));
       break;
     case 5:
-      createShapeItem( *poPath, tr("Square"), oPnt, oColor);
+      // createShapeItem( *poPath, tr("Square"), oPnt, oColor);
+      this->oPathStorage->setToolTip( iPathNo, tr("Square"));
       break;
     case 13:
-      createShapeItem( *poPath, tr("Circle"), oPnt, oColor);
+      // createShapeItem( *poPath, tr("Circle"), oPnt, oColor);
+      this->oPathStorage->setToolTip( iPathNo, tr("Circle"));
       break;
     default:
       assert(0);

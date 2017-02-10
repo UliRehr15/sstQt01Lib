@@ -20,10 +20,10 @@ Compile with QT 5.5 and QTCreator 3.5.1
 Structure of coding projects should be:
 
 .. [libs]
-   [sstStr01Lib] <BR>
-   [sstMisc01Lib] <BR>
-   [sstRec04Lib] <BR>
-   [Doxygen_ouput] <BR>
+   [Doxygen_Output] <BR>
+   [sst_str01_lib] <BR>
+   [sst_misc01_lib] <BR>
+   [sst_rec04_lib] <BR>
 
 12.08.2016  Version 1.0: Checkin of test table project. <BR>
 05.09.2016  Version 1.1: Classes for storing QPainterPath objects. <BR>
@@ -31,4 +31,6 @@ Structure of coding projects should be:
 17.01.2017  Version 1.3: Adding title Row to PainterPath Csv file. <BR>
 24.01.2017  Version 1.4: new tool for editing painter path table. <BR>
 27.01.2017  Version 1.5: Move some classes from tool to lib. <BR>
+10.02.2017  Version 1.6: Extend class PathStorage with several functions. <BR>
+                         Tool TestView: Replace path list with PathStorage. <BR>
 
