@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sortingbox.cpp    14.08.16  Re.    14.08.16  Re.
+// sstQt01PathPaintWidget.cpp    14.08.16  Re.    14.08.16  Re.
 
 #include <QtWidgets>
 
@@ -23,15 +23,15 @@
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
-#include "sstQt01LibTestView.h"
-#include "sortingbox.h"
+// #include "sstQt01LibTestView.h"
+// #include "sstQt01PathPaintWidget.h"
 
 //=============================================================================
-SortingBox::SortingBox()
+sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls()
 {
-  sstMisc01AscFilCls oPainterCsvFile;
-  sstStr01Cls oCsvCnvt;
-  sstQt01PathElementCsvCls oShapeItemCsv;
+  // sstMisc01AscFilCls oPainterCsvFile;
+  // sstStr01Cls oCsvCnvt;
+  // sstQt01PathElementCsvCls oShapeItemCsv;
 
   int iStat = 0;
 
@@ -93,7 +93,7 @@ SortingBox::SortingBox()
 
 }
 //=============================================================================
-SortingBox::~SortingBox()
+sstQt01PathPaintWidgetCls::~sstQt01PathPaintWidgetCls()
 {
 
 //  this->oPathStorage = new (sstQt01PathStorageCls);
@@ -122,7 +122,7 @@ SortingBox::~SortingBox()
   this->oPathStorage = NULL;
 }
 //=============================================================================
-bool SortingBox::event(QEvent *event)
+bool sstQt01PathPaintWidgetCls::event(QEvent *event)
 {
     if (event->type() == QEvent::ToolTip) {
         QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
@@ -143,7 +143,7 @@ bool SortingBox::event(QEvent *event)
 //! [6]
 //=============================================================================
 //! [7]
-void SortingBox::resizeEvent(QResizeEvent * /* event */)
+void sstQt01PathPaintWidgetCls::resizeEvent(QResizeEvent * /* event */)
 {
     int margin = style()->pixelMetric(QStyle::PM_DefaultTopLevelMargin);
     int x = width() - margin;
@@ -155,7 +155,7 @@ void SortingBox::resizeEvent(QResizeEvent * /* event */)
 }
 //! [7]
 //=============================================================================
-void SortingBox::paintEvent(QPaintEvent * /* event */)
+void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -177,7 +177,7 @@ void SortingBox::paintEvent(QPaintEvent * /* event */)
 }
 //=============================================================================
 //! [11]
-void SortingBox::mousePressEvent(QMouseEvent *event)
+void sstQt01PathPaintWidgetCls::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
@@ -199,7 +199,7 @@ void SortingBox::mousePressEvent(QMouseEvent *event)
 //! [11]
 //=============================================================================
 //! [12]
-void SortingBox::mouseMoveEvent(QMouseEvent *event)
+void sstQt01PathPaintWidgetCls::mouseMoveEvent(QMouseEvent *event)
 {
   // if ((event->buttons() & Qt::LeftButton) && itemInMotion)
     if ((event->buttons() & Qt::LeftButton) && iItemInMotionIndex > 0)
@@ -208,7 +208,7 @@ void SortingBox::mouseMoveEvent(QMouseEvent *event)
 //! [12]
 //=============================================================================
 //! [13]
-void SortingBox::mouseReleaseEvent(QMouseEvent *event)
+void sstQt01PathPaintWidgetCls::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton && iItemInMotionIndex > 0)
     {
@@ -220,7 +220,7 @@ void SortingBox::mouseReleaseEvent(QMouseEvent *event)
 //! [13]
 //=============================================================================
 //! [14]
-void SortingBox::createNewCircle()
+void sstQt01PathPaintWidgetCls::createNewCircle()
 {
     static int count = 1;
     createShapeItem(circlePath, tr("Circle <%1>").arg(++count),
@@ -229,7 +229,7 @@ void SortingBox::createNewCircle()
 //! [14]
 //=============================================================================
 //! [15]
-void SortingBox::createNewSquare()
+void sstQt01PathPaintWidgetCls::createNewSquare()
 {
     static int count = 1;
     createShapeItem(squarePath, tr("Square <%1>").arg(++count),
@@ -238,7 +238,7 @@ void SortingBox::createNewSquare()
 //! [15]
 //=============================================================================
 //! [16]
-void SortingBox::createNewTriangle()
+void sstQt01PathPaintWidgetCls::createNewTriangle()
 {
     static int count = 1;
     createShapeItem(trianglePath, tr("Triangle <%1>").arg(++count),
@@ -247,7 +247,7 @@ void SortingBox::createNewTriangle()
 //! [16]
 //=============================================================================
 //! [17]
-int SortingBox::itemAt(const QPoint &pos)
+int sstQt01PathPaintWidgetCls::itemAt(const QPoint &pos)
 {
 //  for (int i = shapeItems.size() - 1; i >= 0; --i)
 //  {
@@ -265,7 +265,7 @@ int SortingBox::itemAt(const QPoint &pos)
 }
 //! [17]
 //=============================================================================
-void SortingBox::moveItemTo(const QPoint &pos)
+void sstQt01PathPaintWidgetCls::moveItemTo(const QPoint &pos)
 {
   QPoint offset = pos - previousPosition;
   QPoint oItemPos = this->oPathStorage->getPosition(iItemInMotionIndex);
@@ -276,7 +276,7 @@ void SortingBox::moveItemTo(const QPoint &pos)
 }
 //=============================================================================
 //! [20]
-int SortingBox::updateButtonGeometry(QToolButton *button, int x, int y)
+int sstQt01PathPaintWidgetCls::updateButtonGeometry(QToolButton *button, int x, int y)
 {
     QSize size = button->sizeHint();
     button->setGeometry(x - size.rwidth(), y - size.rheight(),
@@ -288,7 +288,7 @@ int SortingBox::updateButtonGeometry(QToolButton *button, int x, int y)
 //! [20]
 //=============================================================================
 //! [21]
-void SortingBox::createShapeItem(const QPainterPath &path,
+void sstQt01PathPaintWidgetCls::createShapeItem(const QPainterPath &path,
                                  const QString &toolTip, const QPoint &pos,
                                  const QColor &color)
 {
@@ -309,7 +309,7 @@ void SortingBox::createShapeItem(const QPainterPath &path,
 //! [21]
 //=============================================================================
 //! [22]
-QToolButton *SortingBox::createToolButton(const QString &toolTip,
+QToolButton *sstQt01PathPaintWidgetCls::createToolButton(const QString &toolTip,
                                           const QIcon &icon, const char *member)
 {
     QToolButton *button = new QToolButton(this);
@@ -323,7 +323,7 @@ QToolButton *SortingBox::createToolButton(const QString &toolTip,
 //! [22]
 //=============================================================================
 //! [23]
-QPoint SortingBox::initialItemPosition(const QPainterPath &path)
+QPoint sstQt01PathPaintWidgetCls::initialItemPosition(const QPainterPath &path)
 {
   int x = 0;
   int y = 0;
@@ -341,14 +341,14 @@ QPoint SortingBox::initialItemPosition(const QPainterPath &path)
 //! [23]
 //=============================================================================
 //! [24]
-QPoint SortingBox::randomItemPosition()
+QPoint sstQt01PathPaintWidgetCls::randomItemPosition()
 {
     return QPoint(qrand() % (width() - 120), qrand() % (height() - 120));
 }
 //! [24]
 //=============================================================================
 //! [25]
-QColor SortingBox::initialItemColor()
+QColor sstQt01PathPaintWidgetCls::initialItemColor()
 {
   // return QColor::fromHsv(((shapeItems.size() + 1) * 85) % 256, 255, 190);
   return QColor::fromHsv(((this->oPathStorage->countItems() + 1) * 85) % 256, 255, 190);
@@ -356,13 +356,13 @@ QColor SortingBox::initialItemColor()
 //! [25]
 //=============================================================================
 //! [26]
-QColor SortingBox::randomItemColor()
+QColor sstQt01PathPaintWidgetCls::randomItemColor()
 {
     return QColor::fromHsv(qrand() % 256, 255, 190);
 }
 //! [26]
 //=============================================================================
-int SortingBox::ItemsLoadFromFile3 (int iKey)
+int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
 //-----------------------------------------------------------------------------
 {
   QPoint oPnt(0,0);
@@ -418,7 +418,7 @@ int SortingBox::ItemsLoadFromFile3 (int iKey)
   return iRet;
 }
 //=============================================================================
-int SortingBox::ItemsCreate (int iKey) // v  -> For the moment 0
+int sstQt01PathPaintWidgetCls::ItemsCreate (int iKey) // v  -> For the moment 0
 //-----------------------------------------------------------------------------
 {
   QColor oColor;
@@ -437,3 +437,14 @@ int SortingBox::ItemsCreate (int iKey) // v  -> For the moment 0
   return iRet;
 }
 //=============================================================================
+QSize sstQt01PathPaintWidgetCls::minimumSizeHint() const
+{
+    return QSize(100, 100);
+}
+//! [1]
+
+//! [2]
+QSize sstQt01PathPaintWidgetCls::sizeHint() const
+{
+    return QSize(400, 200);
+}

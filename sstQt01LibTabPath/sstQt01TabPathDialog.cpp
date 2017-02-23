@@ -28,6 +28,7 @@
 #include <sstQt01Lib.h>
 
 #include "sstQt01LibTabPath.h"
+// #include "sstQt01LibInt.h"
 
 //=============================================================================
 sstQt01PathTabDialogCls::sstQt01PathTabDialogCls()
@@ -67,7 +68,7 @@ void sstQt01PathTabDialogCls::createHorizontalGroupBox1()
     QVBoxLayout *layout1 = new QVBoxLayout;
 
     pTstRec1View = new(sstQt01TabViewCls);
-    pTstRec1Model = new sstQt01PathMdlCls(0);
+    pTstRec1Model = new sstQt01PathTabMdlCls(0);
     pTstRec1View->setModel( pTstRec1Model );
     layout1->addWidget(pTstRec1View);
 

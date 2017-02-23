@@ -7,7 +7,8 @@ Storing QPainterPath data into csv file.
 
 Tool sstQt01LibTestTab for test editing csv table.
 Tool sstQt01LibTestView for showing QPainterPath data from csv file.
-Tool sstQt01LibTabPath for editing QPainterPath table from csv file.
+Tool sstQt01LibTabPath for editing QPainterPath data in table from csv file.
+Tool sstQt01PathTabView for combined Painter Path data editing in Table and View.
 
 Licence model:
 * This is free software; you can redistribute and/or modify it under
@@ -27,10 +28,14 @@ Structure of coding projects should be:
 
 12.08.2016  Version 1.0: Checkin of test table project. <BR>
 05.09.2016  Version 1.1: Classes for storing QPainterPath objects. <BR>
-06.09.2016  Version 1.2: New app for testing path storing classes. <BR>
+06.09.2016  Version 1.2: New Tool for testing path storing classes. <BR>
 17.01.2017  Version 1.3: Adding title Row to PainterPath Csv file. <BR>
 24.01.2017  Version 1.4: new tool for editing painter path table. <BR>
 27.01.2017  Version 1.5: Move some classes from tool to lib. <BR>
 10.02.2017  Version 1.6: Extend class PathStorage with several functions. <BR>
-                         Tool TestView: Replace path list with PathStorage. <BR>
+                         Tool TestView: Replace Path_QList with PathStorage. <BR>
+11.02.2017: Version 1.7: Path Storage Record Classes now Lib intern. <BR>
+                         Path Table Model Class now Lib. <BR>
+                         Path Table Dialog Class now Lib. <BR>
+23.02.2017: Version 1.8: New Test-Tool Combined Painter Path Table and Draw View. <BR>
 

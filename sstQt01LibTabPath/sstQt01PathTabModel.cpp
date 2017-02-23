@@ -31,13 +31,13 @@
 #include "sstQt01LibTabPath.h"
 
 //=============================================================================
-sstQt01PathMdlCls::sstQt01PathMdlCls(QObject *parent)
+sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent)
     :QAbstractTableModel(parent)
 {
   int iStat = 0;
   // dREC04RECNUMTYP dLocRecNo = 0;
   // sstQt01PathElementCsvCls oLocTestRec;
-  sstQt01PathElementCsvCls oLocTestRec;
+  // sstQt01PathElementCsvCls oLocTestRec;
   iStat = oTestRec1Table.LoadAllPathFromFile( 0, (char*) "Paint.csv");
 
   if (iStat == -2)
@@ -65,25 +65,25 @@ sstQt01PathMdlCls::sstQt01PathMdlCls(QObject *parent)
   }
 }
 //=============================================================================
-sstQt01PathMdlCls::~sstQt01PathMdlCls()
+sstQt01PathTabMdlCls::~sstQt01PathTabMdlCls()
 {
   // oTestRec1Table.CloseCsvFile(0,(char*) "test_rec1.csv");
   oTestRec1Table.StoreAllPathToFile( 0, (char*) "Paint.csv");
 }
 //=============================================================================
-int sstQt01PathMdlCls::rowCount(const QModelIndex & /*parent*/) const
+int sstQt01PathTabMdlCls::rowCount(const QModelIndex & /*parent*/) const
 {
   // dREC04RECNUMTYP dLocCount = oTestRec1Table.RecordCount();
   // int iLocCount = (int) dLocCount;
   return oTestRec1Table.RecordCount();//iLocCount;
 }
 //=============================================================================
-int sstQt01PathMdlCls::columnCount(const QModelIndex & /*parent*/) const
+int sstQt01PathTabMdlCls::columnCount(const QModelIndex & /*parent*/) const
 {
     return 6;
 }
 //=============================================================================
-QVariant sstQt01PathMdlCls::data(const QModelIndex &index, int role) const
+QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
 {
   int col = index.column();
 
@@ -119,7 +119,7 @@ QVariant sstQt01PathMdlCls::data(const QModelIndex &index, int role) const
 //=============================================================================
 // Complete function description is in headerfile
 //-----------------------------------------------------------------------------
-QVariant sstQt01PathMdlCls::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant sstQt01PathTabMdlCls::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -140,7 +140,7 @@ QVariant sstQt01PathMdlCls::headerData(int section, Qt::Orientation orientation,
 //=============================================================================
 // Complete function description is in headerfile
 //-----------------------------------------------------------------------------
-bool sstQt01PathMdlCls::setData(const QModelIndex & index, const QVariant & value, int role)
+bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & value, int role)
 {
     if (role == Qt::EditRole)
     {
@@ -170,12 +170,12 @@ bool sstQt01PathMdlCls::setData(const QModelIndex & index, const QVariant & valu
 //=============================================================================
 // Complete function description is in headerfile
 //-----------------------------------------------------------------------------
-Qt::ItemFlags sstQt01PathMdlCls::flags(const QModelIndex &index) const
+Qt::ItemFlags sstQt01PathTabMdlCls::flags(const QModelIndex &index) const
 {
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
 }
 //=============================================================================
-bool sstQt01PathMdlCls::removeRows(int position, int rows, const QModelIndex &index)
+bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex &index)
 {
     Q_UNUSED(index);
     beginRemoveRows(QModelIndex(), position, position + rows - 1);
@@ -193,7 +193,7 @@ bool sstQt01PathMdlCls::removeRows(int position, int rows, const QModelIndex &in
     return true;
 }
 //=============================================================================
-bool sstQt01PathMdlCls::insertRows(int position, int rows, const QModelIndex &index)
+bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex &index)
 {
     Q_UNUSED(index);
     beginInsertRows(QModelIndex(), position, position + rows - 1);

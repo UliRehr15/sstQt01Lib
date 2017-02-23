@@ -11,25 +11,25 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01LibTestView.cpp    14.08.16  Re.    14.08.16  Re.
+// main.cpp   23.02.17  Re.   23.02.17  Re.
 
-#include <QtWidgets>
+#include <string>
 
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
-#include "sstQt01LibTestView.h"
-// #include "sstQt01PathPaintWidget.h"
+#include "window.h"
+
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(tooltips);
+    // Q_INIT_RESOURCE(basicdrawing);
 
     QApplication app(argc, argv);
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-    sstQt01PathPaintWidgetCls oPathPaintWidget;
-    oPathPaintWidget.show();
+    Window window;
+    window.show();
     return app.exec();
 }

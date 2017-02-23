@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathStorage.cpp    02.09.16  Re.    02.09.16  Re.
+// sstQt01PathElementCsv.cpp    02.09.16  Re.    02.09.16  Re.
 //
 
 #include <stdio.h>
@@ -28,8 +28,9 @@
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
+#include <sstQt01Lib.h>
 
-#include "sstQt01Lib.h"
+#include "sstQt01LibInt.h"
 
 //=============================================================================
 sstQt01PathElementCsvCls::sstQt01PathElementCsvCls()

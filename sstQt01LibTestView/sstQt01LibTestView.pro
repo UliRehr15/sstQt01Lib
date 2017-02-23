@@ -33,12 +33,12 @@ release{
 
 
 HEADERS       = \
-                sortingbox.h \
+   #             sstQt01PathPaintWidget.h \
                 sstQt01LibTestView.h
 
 
 SOURCES       = \
-                sortingbox.cpp \
+#                sstQt01PathPaintWidget.cpp \
     sstQt01LibTestView.cpp
 #    sstQt01PathStorage.cpp
 

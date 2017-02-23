@@ -28,7 +28,9 @@
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
-#include "sstQt01Lib.h"
+#include <sstQt01Lib.h>
+
+#include "sstQt01LibInt.h"
 
 //=============================================================================
 sstQt01PathStorageCls::sstQt01PathStorageCls()

@@ -48,13 +48,9 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = sortingbox.cpp \
-		sstQt01LibTestView.cpp qrc_tooltips.cpp \
-		moc_sortingbox.cpp
-OBJECTS       = sortingbox.o \
-		sstQt01LibTestView.o \
-		qrc_tooltips.o \
-		moc_sortingbox.o
+SOURCES       = sstQt01LibTestView.cpp qrc_tooltips.cpp
+OBJECTS       = sstQt01LibTestView.o \
+		qrc_tooltips.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -112,9 +108,7 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf \
-		sstQt01LibTestView.pro sortingbox.h \
-		sstQt01LibTestView.h sortingbox.cpp \
-		sstQt01LibTestView.cpp
+		sstQt01LibTestView.pro sstQt01LibTestView.h sstQt01LibTestView.cpp
 QMAKE_TARGET  = sstQt01LibTestView
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = sstQt01LibTestView
@@ -285,8 +279,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents tooltips.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents sortingbox.h sstQt01LibTestView.h $(DISTDIR)/
-	$(COPY_FILE) --parents sortingbox.cpp sstQt01LibTestView.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01LibTestView.h $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01LibTestView.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -316,17 +310,8 @@ qrc_tooltips.cpp: tooltips.qrc \
 		images/triangle.png
 	/usr/lib/i386-linux-gnu/qt5/bin/rcc -name tooltips tooltips.qrc -o qrc_tooltips.cpp
 
-compiler_moc_header_make_all: moc_sortingbox.cpp
+compiler_moc_header_make_all:
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_sortingbox.cpp
-moc_sortingbox.cpp: ../../sst_str01_lib/Header/sstStr01Lib.h \
-		../../sst_misc01_lib/Header/sstMisc01Lib.h \
-		../../sst_rec04_lib/Header/sstRec04Lib.h \
-		../../sstQt01Lib/Header/sstQt01Lib.h \
-		sstQt01LibTestView.h \
-		sortingbox.h
-	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib/sstQt01LibTestView -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sortingbox.h -o moc_sortingbox.cpp
-
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_uic_make_all:
@@ -337,31 +322,19 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_rcc_clean compiler_moc_header_clean 
+compiler_clean: compiler_rcc_clean 
 
 ####### Compile
-
-sortingbox.o: sortingbox.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
-		../../sst_misc01_lib/Header/sstMisc01Lib.h \
-		../../sst_rec04_lib/Header/sstRec04Lib.h \
-		../../sstQt01Lib/Header/sstQt01Lib.h \
-		sstQt01LibTestView.h \
-		sortingbox.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sortingbox.o sortingbox.cpp
 
 sstQt01LibTestView.o: sstQt01LibTestView.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
-		sstQt01LibTestView.h \
-		sortingbox.h
+		sstQt01LibTestView.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01LibTestView.o sstQt01LibTestView.cpp
 
 qrc_tooltips.o: qrc_tooltips.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_tooltips.o qrc_tooltips.cpp
-
-moc_sortingbox.o: moc_sortingbox.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sortingbox.o moc_sortingbox.cpp
 
 ####### Install
 

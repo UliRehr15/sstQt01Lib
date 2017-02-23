@@ -49,12 +49,18 @@ SOURCES       = sstQt01Tab.cpp \
 		sstQt01PathStorage.cpp \
 		sstQt01PathElementCsv.cpp \
 		sstQt01TabView.cpp \
-		sstQt01ShapeItem.cpp moc_sstQt01Lib.cpp
+		sstQt01ShapeItem.cpp \
+		sstQt01PathTabModel.cpp \
+		sstQt01PathPaintWidget.cpp \
+		sstQt01TestPaintWidget.cpp moc_sstQt01Lib.cpp
 OBJECTS       = sstQt01Tab.o \
 		sstQt01PathStorage.o \
 		sstQt01PathElementCsv.o \
 		sstQt01TabView.o \
 		sstQt01ShapeItem.o \
+		sstQt01PathTabModel.o \
+		sstQt01PathPaintWidget.o \
+		sstQt01TestPaintWidget.o \
 		moc_sstQt01Lib.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -118,7 +124,10 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		sstQt01PathStorage.cpp \
 		sstQt01PathElementCsv.cpp \
 		sstQt01TabView.cpp \
-		sstQt01ShapeItem.cpp
+		sstQt01ShapeItem.cpp \
+		sstQt01PathTabModel.cpp \
+		sstQt01PathPaintWidget.cpp \
+		sstQt01TestPaintWidget.cpp
 QMAKE_TARGET  = sstQt01Lib_d
 DESTDIR       = ../libs/#avoid trailing-slash linebreak
 TARGET        = libsstQt01Lib_d.a
@@ -294,7 +303,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents Header/sstQt01Lib.h sstQt01LibInt.h $(DISTDIR)/
-	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01PathElementCsv.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01PathElementCsv.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -350,13 +359,15 @@ sstQt01Tab.o: sstQt01Tab.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 sstQt01PathStorage.o: sstQt01PathStorage.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
-		Header/sstQt01Lib.h
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathStorage.o sstQt01PathStorage.cpp
 
 sstQt01PathElementCsv.o: sstQt01PathElementCsv.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
-		Header/sstQt01Lib.h
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathElementCsv.o sstQt01PathElementCsv.cpp
 
 sstQt01TabView.o: sstQt01TabView.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
@@ -370,6 +381,25 @@ sstQt01ShapeItem.o: sstQt01ShapeItem.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01ShapeItem.o sstQt01ShapeItem.cpp
+
+sstQt01PathTabModel.o: sstQt01PathTabModel.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathTabModel.o sstQt01PathTabModel.cpp
+
+sstQt01PathPaintWidget.o: sstQt01PathPaintWidget.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathPaintWidget.o sstQt01PathPaintWidget.cpp
+
+sstQt01TestPaintWidget.o: sstQt01TestPaintWidget.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TestPaintWidget.o sstQt01TestPaintWidget.cpp
 
 moc_sstQt01Lib.o: moc_sstQt01Lib.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sstQt01Lib.o moc_sstQt01Lib.cpp
