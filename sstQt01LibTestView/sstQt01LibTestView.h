@@ -13,7 +13,7 @@
  **********************************************************************/
 // sstQt01LibTestView.h   02.09.16  Re.   02.09.16  Re.
 //
-// Datastructures and Prototypes for system "sstQtDxf01LibTest"
+// Tool for drawing PainterPath data
 //
 
 #ifndef   _SST_QT_DXF01_LIB_TEST_HEADER

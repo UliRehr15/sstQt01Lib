@@ -33,6 +33,11 @@ const int IdRole = Qt::UserRole;
 //! [1]
 Window::Window()
 {
+
+  this->oPrt = new sstMisc01PrtFilCls;
+
+  oPrt->SST_PrtAuf(0,(char*)"sstQt01PathTabView.log");
+
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
 
@@ -40,7 +45,7 @@ Window::Window()
   pTstRec1Model = new sstQt01PathTabMdlCls(0);
   pTstRec1View->setModel( pTstRec1Model );
 
-  pTstRec2View = new(sstQt01PathPaintWidgetCls);
+  pTstRec2View = new sstQt01PathPaintWidgetCls(oPrt);
 
     QGridLayout *mainLayout = new QGridLayout;
 //! [9] //! [10]

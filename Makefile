@@ -52,7 +52,8 @@ SOURCES       = sstQt01Tab.cpp \
 		sstQt01ShapeItem.cpp \
 		sstQt01PathTabModel.cpp \
 		sstQt01PathPaintWidget.cpp \
-		sstQt01TestPaintWidget.cpp moc_sstQt01Lib.cpp
+		sstQt01TestPaintWidget.cpp qrc_tooltips.cpp \
+		moc_sstQt01Lib.cpp
 OBJECTS       = sstQt01Tab.o \
 		sstQt01PathStorage.o \
 		sstQt01PathElementCsv.o \
@@ -61,6 +62,7 @@ OBJECTS       = sstQt01Tab.o \
 		sstQt01PathTabModel.o \
 		sstQt01PathPaintWidget.o \
 		sstQt01TestPaintWidget.o \
+		qrc_tooltips.o \
 		moc_sstQt01Lib.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -223,6 +225,7 @@ Makefile: sstQt01Lib.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf \
 		sstQt01Lib.pro \
+		tooltips.qrc \
 		/usr/lib/i386-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/i386-linux-gnu/libQt5Gui.prl \
 		/usr/lib/i386-linux-gnu/libQt5Core.prl
@@ -285,6 +288,7 @@ Makefile: sstQt01Lib.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf:
 sstQt01Lib.pro:
+tooltips.qrc:
 /usr/lib/i386-linux-gnu/libQt5Widgets.prl:
 /usr/lib/i386-linux-gnu/libQt5Gui.prl:
 /usr/lib/i386-linux-gnu/libQt5Core.prl:
@@ -302,6 +306,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents tooltips.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents Header/sstQt01Lib.h sstQt01LibInt.h $(DISTDIR)/
 	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01PathElementCsv.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp $(DISTDIR)/
 
@@ -324,8 +329,15 @@ mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 
 check: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_tooltips.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_tooltips.cpp
+qrc_tooltips.cpp: tooltips.qrc \
+		images/circle.png \
+		images/square.png \
+		images/triangle.png
+	/usr/lib/i386-linux-gnu/qt5/bin/rcc -name tooltips tooltips.qrc -o qrc_tooltips.cpp
+
 compiler_moc_header_make_all: moc_sstQt01Lib.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_sstQt01Lib.cpp
@@ -345,7 +357,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean 
 
 ####### Compile
 
@@ -400,6 +412,9 @@ sstQt01TestPaintWidget.o: sstQt01TestPaintWidget.cpp ../sst_str01_lib/Header/sst
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TestPaintWidget.o sstQt01TestPaintWidget.cpp
+
+qrc_tooltips.o: qrc_tooltips.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_tooltips.o qrc_tooltips.cpp
 
 moc_sstQt01Lib.o: moc_sstQt01Lib.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sstQt01Lib.o moc_sstQt01Lib.cpp

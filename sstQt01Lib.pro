@@ -28,6 +28,8 @@ SOURCES		+= sstQt01Tab.cpp \
 
 OTHER_FILES += README.md
 
+RESOURCES     = tooltips.qrc
+
 debug{
   TARGET		= sstQt01Lib_d
 }

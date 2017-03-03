@@ -55,6 +55,8 @@ private:
 
     sstQt01PathPaintWidgetCls *pTstRec2View;
 
+    sstMisc01PrtFilCls *oPrt;
+
     // QLabel *shapeLabel;
     // QLabel *penWidthLabel;
     // QLabel *penStyleLabel;

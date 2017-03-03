@@ -1,3 +1,18 @@
+/**********************************************************************
+ *
+ * sstQt01Lib - sst Qt library
+ * Hosted on github
+ *
+ * Copyright (C) 2016 Uli Rehr
+ *
+ * This is free software; you can redistribute and/or modify it under
+ * the terms of the GNU Lesser General Public Licence as published
+ * by the Free Software Foundation.
+ * See the COPYING file for more information.
+ *
+ **********************************************************************/
+// sstQt01TestPaintWidget.cpp    02.09.16  Re.    02.09.16  Re.
+//
 
 #include <string>
 
@@ -5,9 +20,6 @@
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
-
-// #include "sstQt01TestPaintWidget.h"
-// #include "sstQt01LibInt.h"
 
 #include <QPainter>
 

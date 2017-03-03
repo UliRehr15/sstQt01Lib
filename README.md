@@ -38,4 +38,5 @@ Structure of coding projects should be:
                          Path Table Model Class now Lib. <BR>
                          Path Table Dialog Class now Lib. <BR>
 23.02.2017: Version 1.8: New Test-Tool Combined Painter Path Table and Draw View. <BR>
+03.03.2017: Version 1.9: PathPaintWidget has now Protocol-File, Tooltip problem fixed. <BR>
 

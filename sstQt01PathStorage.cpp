@@ -85,6 +85,7 @@ int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
       sstQt01PathMainRecCls oPathRec;
       oPathRec.setQCol(oQCol);
       oPathRec.setStartElementRecNo(dRecNo);
+      oPathRec.setTooltip("aaa");;
       iStat = this->poShapeItemMainTable->WritNew(0,&oPathRec,&dRecNo);
     }
 
@@ -348,14 +349,15 @@ int sstQt01PathStorageCls::WriteNew (int iKey, dREC04RECNUMTYP *dRecNo, void* vR
 //=============================================================================
 QString sstQt01PathStorageCls::getToolTip(dREC04RECNUMTYP index)
 {
-  // assert(0);
-  QString oStr = this->getToolTip(index);
-  return oStr;
+  sstQt01PathMainRecCls oMainRec;
+  int iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
+  assert(iStat == 0);
+  QString qStr;
+  return qStr.fromStdString(oMainRec.getTooltip());
 }
 //=============================================================================
 int sstQt01PathStorageCls::setToolTip(dREC04RECNUMTYP index, QString oTooltip)
 {
-  // assert(0);
   int iStat = 0;
   sstQt01PathMainRecCls oMainRec;
   iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);

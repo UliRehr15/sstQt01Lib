@@ -25,11 +25,14 @@
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(tooltips);
+  sstMisc01PrtFilCls oPrt;
+  oPrt.SST_PrtAuf(0,(char*)"sstQt01LibTestView.log");
+
+  Q_INIT_RESOURCE(tooltips);
 
     QApplication app(argc, argv);
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-    sstQt01PathPaintWidgetCls oPathPaintWidget;
+    sstQt01PathPaintWidgetCls oPathPaintWidget(&oPrt);
     oPathPaintWidget.show();
     return app.exec();
 }

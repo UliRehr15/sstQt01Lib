@@ -153,6 +153,7 @@ private:
     QColor myColor;
     QString myToolTip;
 };
+//==============================================================================
 /**
 * @brief storage class for painter path objects <BR>
 *
@@ -665,7 +666,7 @@ private:  // Private functions
 
 //==============================================================================
 /**
-* @brief sstQt01PathPaintWidgetCls
+* @brief QPainterPath Map Widget
 *
 * Changed: 23.02.17  Re.
 *
@@ -681,7 +682,14 @@ class sstQt01PathPaintWidgetCls : public QWidget
     Q_OBJECT
 
 public:
-  sstQt01PathPaintWidgetCls();
+  //==============================================================================
+  /**
+  * @brief // Constructor for PathPaintWidget <BR>
+  *
+  * @param poPrt [in] Adress of Protocoll
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls *poPrt);
   ~sstQt01PathPaintWidgetCls();
 
 protected:
@@ -774,6 +782,8 @@ private:
     QToolButton *newSquareButton;
     QToolButton *newTriangleButton;
     sstQt01PathStorageCls *oPathStorage;
+
+    sstMisc01PrtFilCls *poPrt;  // Protocol Object
 };
 
 //==============================================================================
