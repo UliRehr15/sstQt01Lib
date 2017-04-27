@@ -5,10 +5,10 @@ Read/Write Csv Data to Qt Spreadsheet-Table and edit this data.
    -Add Rows and delete Rows.
 Storing QPainterPath data into csv file.
 
-Tool sstQt01LibTestTab for test editing csv table.
+Tool sstQt01LibTestTab for test editing general csv tables.
 Tool sstQt01LibTestView for showing QPainterPath data from csv file.
 Tool sstQt01LibTabPath for editing QPainterPath data in table from csv file.
-Tool sstQt01PathTabView for combined Painter Path data editing in Table and View.
+Tool sstQt01PathTabView for combined Painter Path data editing in Table and Map.
 
 Licence model:
 * This is free software; you can redistribute and/or modify it under
@@ -39,4 +39,5 @@ Structure of coding projects should be:
                          Path Table Dialog Class now Lib. <BR>
 23.02.2017: Version 1.8: New Test-Tool Combined Painter Path Table and Draw View. <BR>
 03.03.2017: Version 1.9: PathPaintWidget has now Protocol-File, Tooltip problem fixed. <BR>
+27.04.2017: Version 1.10: Small corrections in app TestTab. <BR>
 

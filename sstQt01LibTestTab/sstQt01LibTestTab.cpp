@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sst_qt_lib_test_Tab.cpp    16.09.15  Re.    16.09.15  Re.
+// sstQt01LibTestTab.cpp    16.09.15  Re.    16.09.15  Re.
 //
 // testframe for sst_qt Lib, special table functions
 
@@ -31,6 +31,7 @@
 #include "dialog.h"
 #include "sst_qt_lib_test_tab.h"
 
+//=============================================================================
 int main(int argc, char *argv[])
 {
 
@@ -39,6 +40,6 @@ int main(int argc, char *argv[])
     dialog.show();
 
     return app.exec();
-
 }
-//! [Quoting ModelView Tutorial]
+//=============================================================================
+

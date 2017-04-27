@@ -1,11 +1,24 @@
-// ds2_testrec_qt_model.h   03.03.15  Re.   03.03.15  Re.
+/**********************************************************************
+ *
+ * sstQt01Lib - sst Qt library
+ * Hosted on github
+ *
+ * Copyright (C) 2016 Uli Rehr
+ *
+ * This is free software; you can redistribute and/or modify it under
+ * the terms of the GNU Lesser General Public Licence as published
+ * by the Free Software Foundation.
+ * See the COPYING file for more information.
+ *
+ **********************************************************************/
+// sst_qt_lib_test_tab.h   22.04.17  Re.   03.03.15  Re.
 //
-// Datastructures and Prototypes for system "testrec model"
+// Datastructures and Prototypes for system "testframe for sst qt table apps"
 //
 
 
-#ifndef SST_TESTREC_QT_MODEL_H
-#define SST_TESTREC_QT_MODEL_H
+#ifndef SST_QT_LIB_TEST_TAB_H
+#define SST_QT_LIB_TEST_TAB_H
 
 #include <QAbstractTableModel>
 #include <QTableView>
@@ -13,6 +26,7 @@
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
+#include <sstQt01Lib.h>
 
 #include <vector>
 
@@ -96,5 +110,78 @@ private:
     std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
 };
 //==============================================================================
+/**
+* @brief View Class for sstRec04 TstRec1 records
+*
+* Changed: 22.04.17  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 22.04.17
+*/
+// ----------------------------------------------------------------------------
+class sstQt01TstRec1ViewCls : public sstQt01TabViewCls
+{
+  public:   // Public functions
+     sstQt01TstRec1ViewCls();  // Constructor
+     ~sstQt01TstRec1ViewCls();  // Destructor
+     //==============================================================================
+     /**
+     * @brief // Shortstory <BR>
+     * iStat = oTestBase.Func_1(iKey);
+     *
+     * @param iKey [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+    // int Func_1(int iKey);
+// ----------------------------------------------------------------------------
+private:  // Private functions
+     TstRec1ModelCls  *pTstRec1Model; /**< Dummy */
+};
+//==============================================================================
+/**
+* @brief View Class for sstRec04 TstRec2 records
+*
+* Changed: 22.04.17  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 22.04.17
+*/
+// ----------------------------------------------------------------------------
+class sstQt01TstRec2ViewCls : public sstQt01TabViewCls
+{
+  public:   // Public functions
+     sstQt01TstRec2ViewCls();  // Constructor
+     ~sstQt01TstRec2ViewCls();  // Destructor
+     //==============================================================================
+     /**
+     * @brief // Shortstory <BR>
+     * iStat = oTestBase.Func_1(iKey);
+     *
+     * @param iKey [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+    // int Func_1(int iKey);
+// ----------------------------------------------------------------------------
+private:  // Private functions
+  TstRec2ModelCls  *pTstRec2Model; /**< Dummy */
+};
+//==============================================================================
 
-#endif // MYMODEL_H
+
+#endif

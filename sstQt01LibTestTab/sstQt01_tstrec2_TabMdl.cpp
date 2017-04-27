@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstDs2_tstrec2_qt_tab.cpp   16.09.15  Re.    16.09.15  Re.
+// sstQt01_tstrec2_TabMdl.cpp   16.09.15  Re.    16.09.15  Re.
 //
 // qt model and View for dss Table testrec2
 
@@ -27,6 +27,7 @@
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
+#include <sstQt01Lib.h>
 
 #include "sst_qt_lib_test_tab.h"
 

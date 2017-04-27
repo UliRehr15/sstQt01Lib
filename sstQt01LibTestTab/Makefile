@@ -48,15 +48,19 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = sst_qt_lib_test_Tab.cpp \
-		sstDs2_tstrec1_qt_tab.cpp \
-		sstDs2_tstrec2_qt_tab.cpp \
-		dialog.cpp moc_sst_qt_lib_test_tab.cpp \
+SOURCES       = dialog.cpp \
+		sstQt01_tstrec1_TabMdl.cpp \
+		sstQt01_tstrec2_TabMdl.cpp \
+		sstQt01LibTestTab.cpp \
+		sstQt01_tstrec1_TabView.cpp \
+		sstQt01_tstrec2_TabView.cpp moc_sst_qt_lib_test_tab.cpp \
 		moc_dialog.cpp
-OBJECTS       = sst_qt_lib_test_Tab.o \
-		sstDs2_tstrec1_qt_tab.o \
-		sstDs2_tstrec2_qt_tab.o \
-		dialog.o \
+OBJECTS       = dialog.o \
+		sstQt01_tstrec1_TabMdl.o \
+		sstQt01_tstrec2_TabMdl.o \
+		sstQt01LibTestTab.o \
+		sstQt01_tstrec1_TabView.o \
+		sstQt01_tstrec2_TabView.o \
 		moc_sst_qt_lib_test_tab.o \
 		moc_dialog.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -117,10 +121,12 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf \
 		sstQt01LibTestTab.pro sst_qt_lib_test_tab.h \
-		dialog.h sst_qt_lib_test_Tab.cpp \
-		sstDs2_tstrec1_qt_tab.cpp \
-		sstDs2_tstrec2_qt_tab.cpp \
-		dialog.cpp
+		dialog.h dialog.cpp \
+		sstQt01_tstrec1_TabMdl.cpp \
+		sstQt01_tstrec2_TabMdl.cpp \
+		sstQt01LibTestTab.cpp \
+		sstQt01_tstrec1_TabView.cpp \
+		sstQt01_tstrec2_TabView.cpp
 QMAKE_TARGET  = sst_qt_lib_test_tab
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = sst_qt_lib_test_tab
@@ -289,7 +295,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents sst_qt_lib_test_tab.h dialog.h $(DISTDIR)/
-	$(COPY_FILE) --parents sst_qt_lib_test_Tab.cpp sstDs2_tstrec1_qt_tab.cpp sstDs2_tstrec2_qt_tab.cpp dialog.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents dialog.cpp sstQt01_tstrec1_TabMdl.cpp sstQt01_tstrec2_TabMdl.cpp sstQt01LibTestTab.cpp sstQt01_tstrec1_TabView.cpp sstQt01_tstrec2_TabView.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -318,6 +324,7 @@ compiler_moc_header_clean:
 moc_sst_qt_lib_test_tab.cpp: ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
+		../../sstQt01Lib/Header/sstQt01Lib.h \
 		sst_qt_lib_test_tab.h
 	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib/sstQt01LibTestTab -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sst_qt_lib_test_tab.h -o moc_sst_qt_lib_test_tab.cpp
 
@@ -343,26 +350,6 @@ compiler_clean: compiler_moc_header_clean
 
 ####### Compile
 
-sst_qt_lib_test_Tab.o: sst_qt_lib_test_Tab.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
-		../../sst_misc01_lib/Header/sstMisc01Lib.h \
-		../../sst_rec04_lib/Header/sstRec04Lib.h \
-		../../sstQt01Lib/Header/sstQt01Lib.h \
-		dialog.h \
-		sst_qt_lib_test_tab.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sst_qt_lib_test_Tab.o sst_qt_lib_test_Tab.cpp
-
-sstDs2_tstrec1_qt_tab.o: sstDs2_tstrec1_qt_tab.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
-		../../sst_misc01_lib/Header/sstMisc01Lib.h \
-		../../sst_rec04_lib/Header/sstRec04Lib.h \
-		sst_qt_lib_test_tab.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstDs2_tstrec1_qt_tab.o sstDs2_tstrec1_qt_tab.cpp
-
-sstDs2_tstrec2_qt_tab.o: sstDs2_tstrec2_qt_tab.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
-		../../sst_misc01_lib/Header/sstMisc01Lib.h \
-		../../sst_rec04_lib/Header/sstRec04Lib.h \
-		sst_qt_lib_test_tab.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstDs2_tstrec2_qt_tab.o sstDs2_tstrec2_qt_tab.cpp
-
 dialog.o: dialog.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
@@ -370,6 +357,42 @@ dialog.o: dialog.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
 		dialog.h \
 		sst_qt_lib_test_tab.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o dialog.cpp
+
+sstQt01_tstrec1_TabMdl.o: sstQt01_tstrec1_TabMdl.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
+		../../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../../sst_rec04_lib/Header/sstRec04Lib.h \
+		../../sstQt01Lib/Header/sstQt01Lib.h \
+		sst_qt_lib_test_tab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01_tstrec1_TabMdl.o sstQt01_tstrec1_TabMdl.cpp
+
+sstQt01_tstrec2_TabMdl.o: sstQt01_tstrec2_TabMdl.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
+		../../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../../sst_rec04_lib/Header/sstRec04Lib.h \
+		../../sstQt01Lib/Header/sstQt01Lib.h \
+		sst_qt_lib_test_tab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01_tstrec2_TabMdl.o sstQt01_tstrec2_TabMdl.cpp
+
+sstQt01LibTestTab.o: sstQt01LibTestTab.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
+		../../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../../sst_rec04_lib/Header/sstRec04Lib.h \
+		../../sstQt01Lib/Header/sstQt01Lib.h \
+		dialog.h \
+		sst_qt_lib_test_tab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01LibTestTab.o sstQt01LibTestTab.cpp
+
+sstQt01_tstrec1_TabView.o: sstQt01_tstrec1_TabView.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
+		../../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../../sst_rec04_lib/Header/sstRec04Lib.h \
+		../../sstQt01Lib/Header/sstQt01Lib.h \
+		sst_qt_lib_test_tab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01_tstrec1_TabView.o sstQt01_tstrec1_TabView.cpp
+
+sstQt01_tstrec2_TabView.o: sstQt01_tstrec2_TabView.cpp ../../sst_str01_lib/Header/sstStr01Lib.h \
+		../../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../../sst_rec04_lib/Header/sstRec04Lib.h \
+		../../sstQt01Lib/Header/sstQt01Lib.h \
+		sst_qt_lib_test_tab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01_tstrec2_TabView.o sstQt01_tstrec2_TabView.cpp
 
 moc_sst_qt_lib_test_tab.o: moc_sst_qt_lib_test_tab.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sst_qt_lib_test_tab.o moc_sst_qt_lib_test_tab.cpp

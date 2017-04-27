@@ -34,10 +34,12 @@ release{
 
 
 SOURCES  += \
-    sst_qt_lib_test_Tab.cpp \
-    sstDs2_tstrec1_qt_tab.cpp \
-    sstDs2_tstrec2_qt_tab.cpp \
-    dialog.cpp
+    dialog.cpp \
+    sstQt01_tstrec1_TabMdl.cpp \
+    sstQt01_tstrec2_TabMdl.cpp \
+    sstQt01LibTestTab.cpp \
+    sstQt01_tstrec1_TabView.cpp \
+    sstQt01_tstrec2_TabView.cpp
 
 HEADERS  += \ 
     sst_qt_lib_test_tab.h \

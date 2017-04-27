@@ -55,11 +55,11 @@ private:
     QMenu *fileMenu;
     QAction *exitAction;
 
-    TstRec1ModelCls  *pTstRec1Model;
+    // TstRec1ModelCls  *pTstRec1Model;
     // TstRec1ViewCls   *pTstRec1View;
     sstQt01TabViewCls   *pTstRec1View;
 
-    TstRec2ModelCls  *pTstRec2Model;
+    // TstRec2ModelCls  *pTstRec2Model;
     // TstRec2ViewCls   *pTstRec2View;
     sstQt01TabViewCls   *pTstRec2View;
 
