@@ -21,6 +21,7 @@
 
 #include <string>
 
+#include <QPen>
 #include <QColor>
 #include <QPainterPath>
 #include <QPoint>
@@ -85,7 +86,7 @@ int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
       sstQt01PathMainRecCls oPathRec;
       oPathRec.setQCol(oQCol);
       oPathRec.setStartElementRecNo(dRecNo);
-      oPathRec.setTooltip("aaa");;
+      // oPathRec.setTooltip("aaa");;
       iStat = this->poShapeItemMainTable->WritNew(0,&oPathRec,&dRecNo);
     }
 

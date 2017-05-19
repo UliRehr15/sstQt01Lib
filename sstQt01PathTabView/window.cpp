@@ -14,6 +14,7 @@
 // window.cpp   23.02.17  Re.   23.02.17  Re.
 
 
+#include <assert.h>
 #include <string>
 
 // #include "sstQt01TestPaintWidget.h"
@@ -33,10 +34,14 @@ const int IdRole = Qt::UserRole;
 //! [1]
 Window::Window()
 {
-
+  int iStat = 0;
   this->oPrt = new sstMisc01PrtFilCls;
 
   oPrt->SST_PrtAuf(0,(char*)"sstQt01PathTabView.log");
+
+  this->poPathStorage = new sstQt01PathStorageCls;
+  iStat = this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
+  assert(iStat == 0);
 
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
@@ -45,7 +50,7 @@ Window::Window()
   pTstRec1Model = new sstQt01PathTabMdlCls(0);
   pTstRec1View->setModel( pTstRec1Model );
 
-  pTstRec2View = new sstQt01PathPaintWidgetCls(oPrt);
+  pTstRec2View = new sstQt01PathPaintWidgetCls(oPrt,this->poPathStorage);
 
     QGridLayout *mainLayout = new QGridLayout;
 //! [9] //! [10]
@@ -64,6 +69,14 @@ Window::Window()
 
     setWindowTitle(tr("Basic Drawing"));
 }
+Window::~Window()
+{
+  int iStat = 0;
+  iStat = this->poPathStorage->StoreAllPathToFile(0,"Paint.csv");
+  assert (iStat == 0);
+  delete this->poPathStorage;
+}
+
 //! [10]
 
 //! [11]

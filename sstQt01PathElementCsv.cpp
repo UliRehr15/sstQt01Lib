@@ -21,6 +21,7 @@
 
 #include <string>
 
+#include <QPen>
 #include <QColor>
 #include <QPainterPath>
 #include <QPoint>

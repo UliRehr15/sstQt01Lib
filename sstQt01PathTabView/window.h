@@ -40,6 +40,7 @@ class Window : public QWidget
 
 public:
     Window();
+    ~Window();
 
 private slots:
     void shapeChanged();
@@ -56,6 +57,7 @@ private:
     sstQt01PathPaintWidgetCls *pTstRec2View;
 
     sstMisc01PrtFilCls *oPrt;
+    sstQt01PathStorageCls *poPathStorage;  // sst Painter Path storage
 
     // QLabel *shapeLabel;
     // QLabel *penWidthLabel;

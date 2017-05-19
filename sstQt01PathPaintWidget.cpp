@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathPaintWidget.cpp    14.08.16  Re.    14.08.16  Re.
+// sstQt01PathPaintWidgetCls.cpp    26.04.17  Re.    14.08.16  Re.
 
 #include <QtWidgets>
 
@@ -24,14 +24,23 @@
 #include <sstQt01Lib.h>
 
 //=============================================================================
-sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls *poPrt)
+sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTmpPrt,
+                                                     sstQt01PathStorageCls *poTmpPathStorage)
 {
 
   Q_INIT_RESOURCE(tooltips);
 
+  if (poTmpPathStorage == NULL) assert (0);
+  if (poTmpPathStorage->countItems() <= 0) assert(0);
+
+  this->oPathStorage = poTmpPathStorage;
+  this->poPrt = poTmpPrt;
+
   int iStat = 0;
 
-  this->poPrt = poPrt;
+  // Write tooltip strings to path items
+  iStat = this->ItemsLoadFromFile3(0);
+  assert(iStat == 0);
 
   setMouseTracking(true);
     setBackgroundRole(QPalette::Base);
@@ -48,6 +57,10 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls *poPrt)
                                          QIcon(":/images/triangle.png"),
                                          SLOT(createNewTriangle()));
 
+    newLineButton = createToolButton(tr("New Line"),
+                                         QIcon(":/images/line.png"),
+                                         SLOT(createNewLine()));
+
     //=============================================================================
     // Create item templates
     circlePath.addEllipse(QRect(0, 0, 100, 100));
@@ -60,40 +73,21 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls *poPrt)
     trianglePath.lineTo(120, 100);
     trianglePath.lineTo(x + 120 / 2, y);
 
+    linePath.moveTo( 0, 0);
+    linePath.lineTo(100, 100);
+    //=============================================================================
+
     setWindowTitle(tr("Tool Tips"));
     resize(500, 300);
 
-    this->oPathStorage = new (sstQt01PathStorageCls);
-
-    iStat = this->oPathStorage->LoadAllPathFromFile(0,"Paint.csv");
-    // assert(iStat == 0);
-
-    if (iStat < 0)
-    {
-      // store existing square, triangle and circle item to path list
-      iStat = this->ItemsCreate(0);
-    }
-    else
-    {
-      // read items from file into item list
-      // write tooltips to items in main table
-      iStat = this->ItemsLoadFromFile3( 0);
-      assert(iStat <= 0);
-    }
-
     iActualItemIndex = 0;
     iItemInMotionIndex = 0;
-    this->poPrt->SST_PrtWrtChar(0,(char*)"Open",(char*)"PathPaintWidget: ");
 
 }
 //=============================================================================
 sstQt01PathPaintWidgetCls::~sstQt01PathPaintWidgetCls()
 {
 
-  this->oPathStorage->StoreAllPathToFile(0,"Paint.csv");
-  delete (this->oPathStorage);
-  this->oPathStorage = NULL;
-  this->poPrt->SST_PrtWrtChar(0,(char*)"Close",(char*)"PathPaintWidget: ");
 }
 //=============================================================================
 bool sstQt01PathPaintWidgetCls::event(QEvent *event)
@@ -122,14 +116,14 @@ void sstQt01PathPaintWidgetCls::resizeEvent(QResizeEvent * /* event */)
 
     y = updateButtonGeometry(newCircleButton, x, y);
     y = updateButtonGeometry(newSquareButton, x, y);
-    updateButtonGeometry(newTriangleButton, x, y);
+    y = updateButtonGeometry(newTriangleButton, x, y);
+    updateButtonGeometry(newLineButton, x, y);
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-
     int iPathCount = (int) this->oPathStorage->countItems();
     for (int ii=1; ii <= iPathCount; ii++)
     {
@@ -197,12 +191,19 @@ void sstQt01PathPaintWidgetCls::createNewTriangle()
                     randomItemPosition(), randomItemColor());
 }
 //=============================================================================
+void sstQt01PathPaintWidgetCls::createNewLine()
+{
+    static int count = 1;
+    createShapeItem(linePath, tr("Line <%1>").arg(++count),
+                    randomItemPosition(), randomItemColor());
+}
+//=============================================================================
 int sstQt01PathPaintWidgetCls::itemAt(const QPoint &pos)
 {
   for (int i = this->oPathStorage->countItems(); i >= 1; --i)
   {
       const sstQt01ShapeItem &item = this->oPathStorage->getShapeItem(i);
-      if (item.getPath().contains(pos - item.getPosition()))
+      if (item.getBoundingBox().contains(pos - item.getPosition()))
           return i;
   }
     return -1;
@@ -305,9 +306,12 @@ int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
     int iElements = poPath->elementCount();
     switch (iElements)
     {
-      case 4:
-      this->oPathStorage->setToolTip( iPathNo, tr("Triangle"));
-      break;
+    case 2:
+    this->oPathStorage->setToolTip( iPathNo, tr("Line"));
+    break;
+    case 4:
+    this->oPathStorage->setToolTip( iPathNo, tr("Triangle"));
+    break;
     case 5:
       this->oPathStorage->setToolTip( iPathNo, tr("Square"));
       break;
@@ -349,6 +353,8 @@ int sstQt01PathPaintWidgetCls::ItemsCreate (int iKey)
                   initialItemColor());
   createShapeItem(trianglePath, tr("Triangle"),
                   initialItemPosition(trianglePath), initialItemColor());
+  createShapeItem(linePath, tr("Line"),
+                  initialItemPosition(linePath), initialItemColor());
 
   return iRet;
 }

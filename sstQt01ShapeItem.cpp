@@ -28,6 +28,11 @@ QPainterPath sstQt01ShapeItem::getPath() const
     return myPath;
 }
 //=============================================================================
+QRectF sstQt01ShapeItem::getBoundingBox() const
+{
+    return myPath.boundingRect();
+}
+//=============================================================================
 QPoint sstQt01ShapeItem::getPosition() const
 {
     return myPosition;

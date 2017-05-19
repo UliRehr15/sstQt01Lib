@@ -48,9 +48,9 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = sstQt01LibTestView.cpp qrc_tooltips.cpp
+SOURCES       = sstQt01LibTestView.cpp moc_sstQt01LibTestView.cpp
 OBJECTS       = sstQt01LibTestView.o \
-		qrc_tooltips.o
+		moc_sstQt01LibTestView.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -197,7 +197,6 @@ Makefile: sstQt01LibTestView.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/q
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf \
 		sstQt01LibTestView.pro \
-		tooltips.qrc \
 		/usr/lib/i386-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/i386-linux-gnu/libQt5Gui.prl \
 		/usr/lib/i386-linux-gnu/libQt5Core.prl
@@ -260,7 +259,6 @@ Makefile: sstQt01LibTestView.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/q
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/yacc.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/lex.prf:
 sstQt01LibTestView.pro:
-tooltips.qrc:
 /usr/lib/i386-linux-gnu/libQt5Widgets.prl:
 /usr/lib/i386-linux-gnu/libQt5Gui.prl:
 /usr/lib/i386-linux-gnu/libQt5Core.prl:
@@ -278,7 +276,6 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents tooltips.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents sstQt01LibTestView.h $(DISTDIR)/
 	$(COPY_FILE) --parents sstQt01LibTestView.cpp $(DISTDIR)/
 
@@ -301,17 +298,18 @@ mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 
 check: first
 
-compiler_rcc_make_all: qrc_tooltips.cpp
+compiler_rcc_make_all:
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_tooltips.cpp
-qrc_tooltips.cpp: tooltips.qrc \
-		images/circle.png \
-		images/square.png \
-		images/triangle.png
-	/usr/lib/i386-linux-gnu/qt5/bin/rcc -name tooltips tooltips.qrc -o qrc_tooltips.cpp
-
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_sstQt01LibTestView.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_sstQt01LibTestView.cpp
+moc_sstQt01LibTestView.cpp: ../../sst_str01_lib/Header/sstStr01Lib.h \
+		../../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../../sst_rec04_lib/Header/sstRec04Lib.h \
+		../../sstQt01Lib/Header/sstQt01Lib.h \
+		sstQt01LibTestView.h
+	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib/sstQt01LibTestView -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sstQt01LibTestView.h -o moc_sstQt01LibTestView.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_uic_make_all:
@@ -322,7 +320,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_rcc_clean 
+compiler_clean: compiler_moc_header_clean 
 
 ####### Compile
 
@@ -333,23 +331,14 @@ sstQt01LibTestView.o: sstQt01LibTestView.cpp ../../sst_str01_lib/Header/sstStr01
 		sstQt01LibTestView.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01LibTestView.o sstQt01LibTestView.cpp
 
-qrc_tooltips.o: qrc_tooltips.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_tooltips.o qrc_tooltips.cpp
+moc_sstQt01LibTestView.o: moc_sstQt01LibTestView.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sstQt01LibTestView.o moc_sstQt01LibTestView.cpp
 
 ####### Install
 
-install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/usr/lib/i386-linux-gnu/qt5/examples/widgets/widgets/tooltips || mkdir -p $(INSTALL_ROOT)/usr/lib/i386-linux-gnu/qt5/examples/widgets/widgets/tooltips
-	-$(INSTALL_PROGRAM) $(QMAKE_TARGET) $(INSTALL_ROOT)/usr/lib/i386-linux-gnu/qt5/examples/widgets/widgets/tooltips/$(QMAKE_TARGET)
+install:  FORCE
 
-uninstall_target: FORCE
-	-$(DEL_FILE) $(INSTALL_ROOT)/usr/lib/i386-linux-gnu/qt5/examples/widgets/widgets/tooltips/$(QMAKE_TARGET)
-	-$(DEL_DIR) $(INSTALL_ROOT)/usr/lib/i386-linux-gnu/qt5/examples/widgets/widgets/tooltips/ 
-
-
-install: install_target  FORCE
-
-uninstall: uninstall_target  FORCE
+uninstall:  FORCE
 
 FORCE:
 

@@ -334,6 +334,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_tooltips.cpp
 qrc_tooltips.cpp: tooltips.qrc \
 		images/circle.png \
+		images/line.png \
 		images/square.png \
 		images/triangle.png
 	/usr/lib/i386-linux-gnu/qt5/bin/rcc -name tooltips tooltips.qrc -o qrc_tooltips.cpp
