@@ -13,7 +13,7 @@
  **********************************************************************/
 // sstQt01TabPathDialog.cpp    25.01.17 Re.    26.02.15  Re.
 //
-// widget opens some gdb tables for editing
+// widget opens sst path storage tables for editing
 
 #include <QtWidgets>
 
@@ -28,27 +28,35 @@
 #include <sstQt01Lib.h>
 
 #include "sstQt01LibTabPath.h"
-// #include "sstQt01LibInt.h"
 
 //=============================================================================
 sstQt01PathTabDialogCls::sstQt01PathTabDialogCls()
 {
+  poPrt = new sstMisc01PrtFilCls;
+  poPathStorage = new sstQt01PathStorageCls;
+
+  poPrt->SST_PrtAuf(1,(char*)"sstQt01LibTabPath.log");
+  poPathStorage->LoadAllPathFromFile( 0, (char*) "Paint.csv");
+
   createMenu();
   createHorizontalGroupBox1();
-  // createHorizontalGroupBox2();
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMenuBar(this->menuBar);
-    // mainLayout->addWidget(this->horizontalGroupBox2);
-    mainLayout->addWidget(this->horizontalGroupBox1);
-    setLayout(mainLayout);
+  QVBoxLayout *mainLayout = new QVBoxLayout;
+  mainLayout->setMenuBar(this->menuBar);
+  mainLayout->addWidget(this->horizontalGroupBox1);
+  setLayout(mainLayout);
 
-    setWindowTitle(tr("Edit Test Record Tables Example"));
+  setWindowTitle(tr("Edit Test Record Tables Example"));
 }
 //=============================================================================
 sstQt01PathTabDialogCls::~sstQt01PathTabDialogCls()
 {
-  delete(pTstRec1Model);
-  // delete(pTstRec2Model);
+
+  poPathStorage->StoreAllPathToFile( 0, (char*) "Paint.csv");
+  delete poPathStorage;
+
+  poPrt->SST_PrtZu(1);
+  delete poPrt;
+  // delete(pTstRec1Model);
 }
 //=============================================================================
 void sstQt01PathTabDialogCls::createMenu()
@@ -67,24 +75,11 @@ void sstQt01PathTabDialogCls::createHorizontalGroupBox1()
     horizontalGroupBox1 = new QGroupBox(tr("Paint.csv"));
     QVBoxLayout *layout1 = new QVBoxLayout;
 
-    pTstRec1View = new(sstQt01TabViewCls);
-    pTstRec1Model = new sstQt01PathTabMdlCls(0);
-    pTstRec1View->setModel( pTstRec1Model );
+    pTstRec1View = new sstQt01TabViewCls(poPrt,poPathStorage);
+    // pTstRec1Model = new sstQt01PathTabMdlCls(0);
+    // pTstRec1View->setModel( pTstRec1Model );
     layout1->addWidget(pTstRec1View);
 
     horizontalGroupBox1->setLayout(layout1);
 }
-//=============================================================================
-//void Dialog::createHorizontalGroupBox2()
-//{
-//    horizontalGroupBox2 = new QGroupBox(tr("TestRec2.csv"));
-//    QVBoxLayout *layout2 = new QVBoxLayout;
-
-//    pTstRec2View = new(TstRec2ViewCls);
-//    pTstRec2Model = new TstRec2ModelCls(0);
-//    pTstRec2View->setModel( pTstRec2Model );
-//    layout2->addWidget(pTstRec2View);
-
-//    horizontalGroupBox2->setLayout(layout2);
-//}
 //=============================================================================

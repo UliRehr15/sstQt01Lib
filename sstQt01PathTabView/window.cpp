@@ -37,7 +37,7 @@ Window::Window()
   int iStat = 0;
   this->oPrt = new sstMisc01PrtFilCls;
 
-  oPrt->SST_PrtAuf(0,(char*)"sstQt01PathTabView.log");
+  oPrt->SST_PrtAuf(1,(char*)"sstQt01PathTabView.log");
 
   this->poPathStorage = new sstQt01PathStorageCls;
   iStat = this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
@@ -46,9 +46,7 @@ Window::Window()
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
 
-  pTstRec1View = new sstQt01TabViewCls;
-  pTstRec1Model = new sstQt01PathTabMdlCls(0);
-  pTstRec1View->setModel( pTstRec1Model );
+  pTstRec1View = new sstQt01TabViewCls(oPrt,poPathStorage);
 
   pTstRec2View = new sstQt01PathPaintWidgetCls(oPrt,this->poPathStorage);
 
@@ -75,6 +73,7 @@ Window::~Window()
   iStat = this->poPathStorage->StoreAllPathToFile(0,"Paint.csv");
   assert (iStat == 0);
   delete this->poPathStorage;
+  this->oPrt->SST_PrtZu(1);
 }
 
 //! [10]

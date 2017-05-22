@@ -53,7 +53,8 @@ SOURCES       = sstQt01Tab.cpp \
 		sstQt01PathTabModel.cpp \
 		sstQt01PathPaintWidget.cpp \
 		sstQt01TestPaintWidget.cpp qrc_tooltips.cpp \
-		moc_sstQt01Lib.cpp
+		moc_sstQt01Lib.cpp \
+		moc_sstQt01LibInt.cpp
 OBJECTS       = sstQt01Tab.o \
 		sstQt01PathStorage.o \
 		sstQt01PathElementCsv.o \
@@ -63,7 +64,8 @@ OBJECTS       = sstQt01Tab.o \
 		sstQt01PathPaintWidget.o \
 		sstQt01TestPaintWidget.o \
 		qrc_tooltips.o \
-		moc_sstQt01Lib.o
+		moc_sstQt01Lib.o \
+		moc_sstQt01LibInt.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -339,14 +341,21 @@ qrc_tooltips.cpp: tooltips.qrc \
 		images/triangle.png
 	/usr/lib/i386-linux-gnu/qt5/bin/rcc -name tooltips tooltips.qrc -o qrc_tooltips.cpp
 
-compiler_moc_header_make_all: moc_sstQt01Lib.cpp
+compiler_moc_header_make_all: moc_sstQt01Lib.cpp moc_sstQt01LibInt.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_sstQt01Lib.cpp
+	-$(DEL_FILE) moc_sstQt01Lib.cpp moc_sstQt01LibInt.cpp
 moc_sstQt01Lib.cpp: ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
 	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include Header/sstQt01Lib.h -o moc_sstQt01Lib.cpp
+
+moc_sstQt01LibInt.cpp: ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
+	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sstQt01LibInt.h -o moc_sstQt01LibInt.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -386,7 +395,8 @@ sstQt01PathElementCsv.o: sstQt01PathElementCsv.cpp ../sst_str01_lib/Header/sstSt
 sstQt01TabView.o: sstQt01TabView.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
-		Header/sstQt01Lib.h
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TabView.o sstQt01TabView.cpp
 
 sstQt01ShapeItem.o: sstQt01ShapeItem.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
@@ -419,6 +429,9 @@ qrc_tooltips.o: qrc_tooltips.cpp
 
 moc_sstQt01Lib.o: moc_sstQt01Lib.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sstQt01Lib.o moc_sstQt01Lib.cpp
+
+moc_sstQt01LibInt.o: moc_sstQt01LibInt.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sstQt01LibInt.o moc_sstQt01LibInt.cpp
 
 ####### Install
 

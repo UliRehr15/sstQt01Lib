@@ -986,166 +986,6 @@ class sstQt01PathStorageCls
 };
 //==============================================================================
 /**
-* @brief sst Path Table Model Class
-*
-* Inherit from QAbstractTableModel
-*
-* Changed: 19.02.10  Re.
-*
-* @ingroup sstQt01Lib
-*
-* @author Re.
-*
-* @date 19.02.10
-*/
-// ----------------------------------------------------------------------------
-class sstQt01PathTabMdlCls : public QAbstractTableModel
-{
-    Q_OBJECT
-public:
-  //==============================================================================
-  /**
-  * @brief // Constructor <BR>
-  *
-  * @param parent [in] For the moment 0
-  */
-  // ----------------------------------------------------------------------------
-  sstQt01PathTabMdlCls(QObject *parent);
-  //==============================================================================
-  /**
-  * @brief // Destructor <BR>
-  */
-  // ----------------------------------------------------------------------------
-  ~sstQt01PathTabMdlCls();
-  //==============================================================================
-  /**
-  * @brief // rowCount <BR>
-  * iStat = oPathTabMdl.rowCount ( parent);
-  *
-  * @param parent [in] For the moment 0
-  *
-  * @return Errorstate
-  *
-  * @retval   = 0: OK
-  * @retval   < 0: Unspecified Error
-  */
-  // ----------------------------------------------------------------------------
-    int rowCount(const QModelIndex &parent = QModelIndex()) const ;
-    //==============================================================================
-    /**
-    * @brief // columnCount <BR>
-    * iStat = oPathTabMdl.columnCount( parent);
-    *
-    * @param parent [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-    //==============================================================================
-    /**
-    * @brief // data <BR>
-    * iStat = oPathTabMdl.data(index, role);
-    *
-    * @param index [in] For the moment 0
-    * @param role  [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    //==============================================================================
-    /**
-    * @brief // headerData <BR>
-    * iStat = oPathTabMdl.headerData ( section, orientation, role);
-    *
-    * @param section     [in] For the moment 0
-    * @param orientation [in] For the moment 0
-    * @param role        [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-    //==============================================================================
-    /**
-    * @brief // setData <BR>
-    * iStat = oPathTabMdl.setData( index, value, role);
-    *
-    * @param index [in] For the moment 0
-    * @param value [in] For the moment 0
-    * @param role  [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
-    //==============================================================================
-    /**
-    * @brief // flags <BR>
-    * iStat = oPathTabMdl.flags (index);
-    *
-    * @param index [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    Qt::ItemFlags flags(const QModelIndex & index) const ;
-    //==============================================================================
-    /**
-    * @brief // removeRows  <BR>
-    * iStat = oPathTabMdl.removeRows ( position, rows, index);
-    *
-    * @param position [in] For the moment 0
-    * @param rows     [in] For the moment 0
-    * @param index    [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    bool removeRows(int position, int rows, const QModelIndex &index);
-    //==============================================================================
-    /**
-    * @brief // insertRows <BR>
-    * iStat = oPathTabMdl.insertRows ( position, rows, index);
-    *
-    * @param position [in] For the moment 0
-    * @param rows     [in] For the moment 0
-    * @param index    [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    bool insertRows(int position, int rows, const QModelIndex &index);
-    //==============================================================================
-private:
-    sstQt01PathStorageCls oTestRec1Table;  // is a table and function object for test rec1
-    std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
-};
-//==============================================================================
-//==============================================================================
-/**
 * @brief Definition Class TstRec2ViewCls
 *
 * More Comment
@@ -1163,7 +1003,17 @@ class sstQt01TabViewCls : public QTableView
 {
       Q_OBJECT
   public:   // Public functions
-     sstQt01TabViewCls();   // Constructor
+  //==============================================================================
+  /**
+  * @brief // Constructor for sstQt01TabViewCls <BR>
+  *
+  * @param poPrt         [in out] Pointer to Protocol object
+  * @param poPathStorage [in out] Pointer to Path Storage object
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01TabViewCls(sstMisc01PrtFilCls    *poPrt,
+                    sstQt01PathStorageCls *poPathStorage);    // Constructor
+  ~sstQt01TabViewCls();   // Destructor
 // ----------------------------------------------------------------------------
 public slots:
      //==============================================================================
@@ -1196,6 +1046,7 @@ protected:
 private:  // Private functions
   QAction *cell_InsAction;   /**< Insert Table Rows Action */
   QAction *cell_DelAction;   /**< Delete Table Rows Action */
+  sstQt01PathTabMdlCls *poTabMdl;
 };
 //==============================================================================
 /**

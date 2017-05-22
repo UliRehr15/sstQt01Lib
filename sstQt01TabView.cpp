@@ -28,13 +28,22 @@
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
-// #include "sstQt01LibTabPath.h"
+#include "sstQt01LibInt.h"
 
 //=============================================================================
-sstQt01TabViewCls::sstQt01TabViewCls()
+sstQt01TabViewCls::sstQt01TabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
+                                     sstQt01PathStorageCls *poTmpPathStorage)
 {
+  this->poTabMdl = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
+  this->setModel( this->poTabMdl);
     createActions();
     setupContextMenu();
+
+}
+//=============================================================================
+sstQt01TabViewCls::~sstQt01TabViewCls()
+{
+  delete this->poTabMdl;
 }
 //=============================================================================
 void sstQt01TabViewCls::setupContextMenu()
@@ -46,13 +55,15 @@ void sstQt01TabViewCls::setupContextMenu()
 //=============================================================================
 void sstQt01TabViewCls::createActions()
 {
-  QString tt = QString::fromLatin1("&Zeilen lцschen");
+  // QString tt = QString::fromLatin1("&Zeilen lцschen");
+  QString tt = QString::fromLatin1("&Remove Row");
 
   cell_DelAction = new QAction(tt, this);
   cell_DelAction->setShortcut(Qt::CTRL | Qt::Key_Minus);
   connect(cell_DelAction, SIGNAL(triggered()), this, SLOT(actionRowsDelete()));
 
-  tt = QString::fromLatin1("&Zeile einfьgen am Ende");
+  // tt = QString::fromLatin1("&Zeile einfьgen am Ende");
+  tt = QString::fromLatin1("&Insert Row at Table End");
   cell_InsAction = new QAction( tt, this);
   cell_InsAction->setShortcut(Qt::CTRL | Qt::Key_Plus);
   connect(cell_InsAction, SIGNAL(triggered()), this, SLOT(actionRowsInsert()));

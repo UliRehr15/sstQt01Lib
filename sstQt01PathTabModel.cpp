@@ -32,26 +32,16 @@
 #include "sstQt01LibInt.h"
 
 //=============================================================================
-sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent)
+sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent,
+                                           sstMisc01PrtFilCls    *poTmpPrt,
+                                           sstQt01PathStorageCls *poTmpPathStorage)
     :QAbstractTableModel(parent)
 {
   int iStat = 0;
-  // dREC04RECNUMTYP dLocRecNo = 0;
-  // sstQt01PathElementCsvCls oLocTestRec;
-  // sstQt01PathElementCsvCls oLocTestRec;
-  iStat = oTestRec1Table.LoadAllPathFromFile( 0, (char*) "Paint.csv");
+  this->poPrt = poTmpPrt;
+  this->poPathStorage = poTmpPathStorage;
 
-  if (iStat == -2)
-  {  // File not found
-
-    // Generate test data
-    // iStat = oLocTestRec.SetAll(33,(char*) "Test");
-    // iStat = oTestRec1Table.WriteNew(0,&dLocRecNo,&oLocTestRec);
-    // assert(iStat == 0);
-    assert(0);
-  }
-
-  dREC04RECNUMTYP dRecNum = oTestRec1Table.RecordCount();
+  dREC04RECNUMTYP dRecNum = poPathStorage->RecordCount();
 
   for (dREC04RECNUMTYP ll=1; ll<=dRecNum; ++ll)
   {
@@ -68,15 +58,11 @@ sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent)
 //=============================================================================
 sstQt01PathTabMdlCls::~sstQt01PathTabMdlCls()
 {
-  // oTestRec1Table.CloseCsvFile(0,(char*) "test_rec1.csv");
-  oTestRec1Table.StoreAllPathToFile( 0, (char*) "Paint.csv");
 }
 //=============================================================================
 int sstQt01PathTabMdlCls::rowCount(const QModelIndex & /*parent*/) const
 {
-  // dREC04RECNUMTYP dLocCount = oTestRec1Table.RecordCount();
-  // int iLocCount = (int) dLocCount;
-  return oTestRec1Table.RecordCount();//iLocCount;
+  return poPathStorage->RecordCount();
 }
 //=============================================================================
 int sstQt01PathTabMdlCls::columnCount(const QModelIndex & /*parent*/) const
@@ -93,7 +79,7 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
     {
       sstQt01PathElementCsvCls oTestRec1;
 
-      oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+      poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
 
       switch (index.column())
       {
@@ -118,8 +104,6 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 //=============================================================================
-// Complete function description is in headerfile
-//-----------------------------------------------------------------------------
 QVariant sstQt01PathTabMdlCls::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
@@ -139,8 +123,6 @@ QVariant sstQt01PathTabMdlCls::headerData(int section, Qt::Orientation orientati
     return QVariant();
 }
 //=============================================================================
-// Complete function description is in headerfile
-//-----------------------------------------------------------------------------
 bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & value, int role)
 {
     if (role == Qt::EditRole)
@@ -149,7 +131,7 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
       sstQt01PathElementCsvCls oTestRec1;
 
       dREC04RECNUMTYP dRecNo = index.row() +1;
-      oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+      poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
 
       bool bOK = 1;
 
@@ -163,14 +145,12 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
       case 5: oTestRec1.setIColB( value.toInt(&bOK)); break;
       }
 
-      if (bOK) oTestRec1Table.WriteRecPos( 0, dRecNo, &oTestRec1);
+      if (bOK) poPathStorage->WriteRecPos( 0, dRecNo, &oTestRec1);
 
     }
     return true;
 }
 //=============================================================================
-// Complete function description is in headerfile
-//-----------------------------------------------------------------------------
 Qt::ItemFlags sstQt01PathTabMdlCls::flags(const QModelIndex &index) const
 {
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
@@ -185,7 +165,7 @@ bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex 
     // Position is 0 > n-1
 
     for (int row = 0; row < rows; ++row) {
-      oTestRec1Table.DeleteRecPos(0,position+1);
+      poPathStorage->DeleteRecPos(0,position+1);
     }
     endRemoveRows();
 
@@ -205,7 +185,7 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
 
     for (int row = 0; row < rows; ++row) {
       sstQt01PathElementCsvCls oTestRec;
-      oTestRec1Table.WriteNew(0,&dRecNo,&oTestRec);
+      poPathStorage->WriteNew(0,&dRecNo,&oTestRec);
     }
 
     endInsertRows();
@@ -215,48 +195,3 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
     return true;
 }
 //=============================================================================
-//sstQt01TabViewCls::sstQt01TabViewCls()
-//{
-//    createActions();
-//    setupContextMenu();
-//}
-////=============================================================================
-//void sstQt01TabViewCls::setupContextMenu()
-//{
-//    addAction(cell_InsAction);
-//    addAction(cell_DelAction);
-//    setContextMenuPolicy(Qt::ActionsContextMenu);
-//}
-////=============================================================================
-//void sstQt01TabViewCls::createActions()
-//{
-//  QString tt = QString::fromLatin1("&Zeilen lцschen");
-
-//  cell_DelAction = new QAction(tt, this);
-//  cell_DelAction->setShortcut(Qt::CTRL | Qt::Key_Minus);
-//  connect(cell_DelAction, SIGNAL(triggered()), this, SLOT(actionRowsDelete()));
-
-//  tt = QString::fromLatin1("&Zeile einfьgen am Ende");
-//  cell_InsAction = new QAction( tt, this);
-//  cell_InsAction->setShortcut(Qt::CTRL | Qt::Key_Plus);
-//  connect(cell_InsAction, SIGNAL(triggered()), this, SLOT(actionRowsInsert()));
-
-//}
-////=============================================================================
-//void sstQt01TabViewCls::actionRowsDelete()
-//{
-//  const QModelIndex index = this->selectionModel()->currentIndex();
-//  int row = index.row();  // Get Positon of selected Row
-//  int count = 1;  // Delete always one row
-//  this->model()->removeRows(row,count,index);
-//}
-////=============================================================================
-//void sstQt01TabViewCls::actionRowsInsert()
-//{
-//  const QModelIndex index = this->selectionModel()->currentIndex();
-//  int row = this->model()->rowCount();  // Get Number of all defined rows
-//  int count = 1;  // Append always one new row
-//  this->model()->insertRows(row,count,index);
-//}
-////=============================================================================
-

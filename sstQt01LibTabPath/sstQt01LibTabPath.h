@@ -60,16 +60,18 @@ private:
 
     enum { NumGridRows = 3, NumButtons = 4 };
 
-    QMenuBar *menuBar;
+    QMenuBar  *menuBar;
     QGroupBox *horizontalGroupBox1;
     QGroupBox *horizontalGroupBox2;
 
     QMenu *fileMenu;
     QAction *exitAction;
 
-    sstQt01PathTabMdlCls   *pTstRec1Model;
+    // sstQt01PathTabMdlCls   *pTstRec1Model;
     sstQt01TabViewCls   *pTstRec1View;
+    sstMisc01PrtFilCls *poPrt;
+    sstQt01PathStorageCls *poPathStorage;
 };
 
 
-#endif // MYMODEL_H
+#endif

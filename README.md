@@ -41,6 +41,7 @@ Structure of coding projects should be:
 23.02.2017: Version 1.8: New Test-Tool Combined Painter Path Table and Draw View. <BR>
 03.03.2017: Version 1.9: PathPaintWidget has now Protocol-File, Tooltip problem fixed. <BR>
 27.04.2017: Version 1.10: Small corrections in app TestTab. <BR>
-19.05.2017: Version 1.11: Creation of PainterPath storage now outside of widget. <BR>
-                          PainterPathWidget: New Element LINE. <BR>
+19.05.2017: Version 1.11: Creation of PainterPath storage now outside of Map widget. <BR>
+                          PainterPathMapWidget: New Element LINE. <BR>
+22.05.2017: Version 1.12: Creation of PainterPath storage now outside of Tab widget. <BR>
 
