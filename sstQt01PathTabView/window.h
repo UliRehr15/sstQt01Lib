@@ -51,10 +51,10 @@ private:
     sstQt01TestPaintWidgetCls *sstQt01TestPaintWidgetCls1;
     sstQt01TestPaintWidgetCls *sstQt01TestPaintWidgetCls2;
 
-    sstQt01TabViewCls *pTstRec1View;
-    sstQt01PathTabMdlCls *pTstRec1Model;
+    sstQt01TabViewCls *poPathTabWidget;
+    // sstQt01PathTabMdlCls *pTstRec1Model;
 
-    sstQt01PathPaintWidgetCls *pTstRec2View;
+    sstQt01PathPaintWidgetCls *poPathMapWidget;
 
     sstMisc01PrtFilCls *oPrt;
     sstQt01PathStorageCls *poPathStorage;  // sst Painter Path storage

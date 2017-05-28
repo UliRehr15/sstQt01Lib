@@ -194,6 +194,11 @@ public:
     */
     // ----------------------------------------------------------------------------
     bool insertRows(int position, int rows, const QModelIndex &index);
+public slots:
+    void ChangeTab();
+signals:
+    void TabChanged();
+
     //==============================================================================
 private:
     sstQt01PathStorageCls *poPathStorage;  // is a table and function object for test rec1

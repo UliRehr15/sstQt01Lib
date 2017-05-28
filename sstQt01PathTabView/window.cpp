@@ -46,18 +46,18 @@ Window::Window()
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
 
-  pTstRec1View = new sstQt01TabViewCls(oPrt,poPathStorage);
+  poPathTabWidget = new sstQt01TabViewCls(oPrt,poPathStorage);
 
-  pTstRec2View = new sstQt01PathPaintWidgetCls(oPrt,this->poPathStorage);
+  poPathMapWidget = new sstQt01PathPaintWidgetCls(oPrt,this->poPathStorage);
 
     QGridLayout *mainLayout = new QGridLayout;
 //! [9] //! [10]
     mainLayout->setColumnStretch(0, 1);
     mainLayout->setColumnStretch(3, 1);
-    mainLayout->addWidget(sstQt01TestPaintWidgetCls1, 0, 0, 1, 4);
-    mainLayout->addWidget(pTstRec2View, 1, 0, 1, 4);
-    mainLayout->addWidget(sstQt01TestPaintWidgetCls2, 2, 0, 1, 4);
-    mainLayout->addWidget(pTstRec1View, 3, 0, 1, 4);
+    // mainLayout->addWidget(sstQt01TestPaintWidgetCls1, 0, 0, 1, 4);
+    mainLayout->addWidget(poPathMapWidget, 0, 0, 1, 4);
+    // mainLayout->addWidget(sstQt01TestPaintWidgetCls2, 2, 0, 1, 4);
+    mainLayout->addWidget(poPathTabWidget, 1, 0, 1, 4);
 
     setLayout(mainLayout);
 
@@ -66,6 +66,8 @@ Window::Window()
     brushChanged();
 
     setWindowTitle(tr("Basic Drawing"));
+
+    connect(poPathTabWidget, SIGNAL(TabChanged()), poPathMapWidget, SLOT(update()));
 }
 Window::~Window()
 {

@@ -1043,6 +1043,11 @@ protected:
     // ----------------------------------------------------------------------------
     void createActions();
 
+public slots:
+    void ChangeTab();
+signals:
+    void TabChanged();
+
 private:  // Private functions
   QAction *cell_InsAction;   /**< Insert Table Rows Action */
   QAction *cell_DelAction;   /**< Delete Table Rows Action */
@@ -1129,7 +1134,18 @@ protected:
     */
     // ----------------------------------------------------------------------------
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    //==============================================================================
 
+public slots:
+    //==============================================================================
+    /**
+    * @brief // event <BR>
+    *
+    * @param event [in]
+    */
+    // ----------------------------------------------------------------------------
+    void sstPaintEvent();
+    //==============================================================================
 private slots:
     void createNewCircle();
     void createNewSquare();

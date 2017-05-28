@@ -148,6 +148,7 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
       if (bOK) poPathStorage->WriteRecPos( 0, dRecNo, &oTestRec1);
 
     }
+    emit this->TabChanged();
     return true;
 }
 //=============================================================================
@@ -193,5 +194,10 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
     this->sstTabVector.push_back(dRecNo);
 
     return true;
+}
+//=============================================================================
+void sstQt01PathTabMdlCls::ChangeTab()
+{
+  emit this->TabChanged();
 }
 //=============================================================================

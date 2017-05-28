@@ -38,7 +38,7 @@ sstQt01TabViewCls::sstQt01TabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
   this->setModel( this->poTabMdl);
     createActions();
     setupContextMenu();
-
+    connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
 }
 //=============================================================================
 sstQt01TabViewCls::~sstQt01TabViewCls()
@@ -84,6 +84,11 @@ void sstQt01TabViewCls::actionRowsInsert()
   int row = this->model()->rowCount();  // Get Number of all defined rows
   int count = 1;  // Append always one new row
   this->model()->insertRows(row,count,index);
+}
+//=============================================================================
+void sstQt01TabViewCls::ChangeTab()
+{
+  emit this->TabChanged();
 }
 //=============================================================================
 

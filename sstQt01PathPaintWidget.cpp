@@ -134,6 +134,20 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
     }
 }
 //=============================================================================
+void sstQt01PathPaintWidgetCls::sstPaintEvent()
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    int iPathCount = (int) this->oPathStorage->countItems();
+    for (int ii=1; ii <= iPathCount; ii++)
+    {
+        painter.translate(this->oPathStorage->getPosition(ii));
+        painter.setBrush(this->oPathStorage->getColor(ii));
+        painter.drawPath(this->oPathStorage->getPath(ii));
+        painter.translate(-this->oPathStorage->getPosition(ii));
+    }
+}
+//=============================================================================
 void sstQt01PathPaintWidgetCls::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
