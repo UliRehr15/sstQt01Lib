@@ -136,16 +136,27 @@ public:
     //==============================================================================
     /**
     * @brief // Get ToolTip string <BR>
-    * oToolTip = PathItem.getToolTip();
+    * oToolTip = oPathItem.getToolTip();
     *
     * @return QString
     */
     // ----------------------------------------------------------------------------
     QString getToolTip() const;
     //==============================================================================
+    /**
+    * @brief // Set Path, Tooltip, Position and Color to ShapeItem <BR>
+    * iStat = oPathItem.createShapeItem( path, tooltip, pos, color);
+    *
+    * @param path    [in] QPainterPath
+    * @param toolTip [in] Tooltip string
+    * @param pos     [in] Position
+    * @param color   [in] Color
+    */
+    // ----------------------------------------------------------------------------
     void createShapeItem(const QPainterPath &path,
                          const QString &toolTip, const QPoint &pos,
                          const QColor &color);
+    //==============================================================================
 
 private:
     QPainterPath myPath;
