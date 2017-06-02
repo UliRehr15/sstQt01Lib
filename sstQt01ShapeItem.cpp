@@ -68,3 +68,16 @@ void sstQt01ShapeItem::setColor(const QColor &color)
     myColor = color;
 }
 //=============================================================================
+void sstQt01ShapeItem::createShapeItem(const QPainterPath &path,
+                                 const QString &toolTip, const QPoint &pos,
+                                 const QColor &color)
+{
+    // ShapeItem shapeItem;
+    this->setPath(path);
+    this->setToolTip(toolTip);
+    this->setPosition(pos);
+    this->setColor(color);
+    // shapeItems.append(shapeItem);
+    // update();
+}
+//=============================================================================

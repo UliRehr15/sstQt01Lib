@@ -45,4 +45,5 @@ Structure of coding projects should be:
                           PainterPathMapWidget: New Element LINE. <BR>
 22.05.2017: Version 1.12: Creation of PainterPath storage now outside of Tab widget. <BR>
 28.05.2017: Version 1.13: Signals/Slots to update PathMapWidget after changing PathTabWidget.<BR>
+01.06.2017: Version 1.14: New function CreateDefaultItems.  <BR>
 

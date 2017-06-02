@@ -143,6 +143,9 @@ public:
     // ----------------------------------------------------------------------------
     QString getToolTip() const;
     //==============================================================================
+    void createShapeItem(const QPainterPath &path,
+                         const QString &toolTip, const QPoint &pos,
+                         const QColor &color);
 
 private:
     QPainterPath myPath;
@@ -978,11 +981,31 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int countItems();
+     //==============================================================================
+     /**
+     * @brief // create in empty path storage circle, square and triangel sst item <BR>
+     * iStat = oPathStorage.createDefaultItems(iKey);
+     *
+     * @param iKey [in] Zero for the moment
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int createDefaultItems(int iKey);
 // ----------------------------------------------------------------------------
   private:  // Private functions
+     QPoint initialItemPosition(const QPainterPath &path);
+     QColor initialItemColor();
+
+
      sstRec04Cls *poShapeItemRecTable;   /**< painter path element record table */
      sstRec04Cls *poShapeItemMainTable;  /**< painter path main table */
      dREC04RECNUMTYP dActualReadPos;     /**< actual read position in table */
+     int iHeight;  // Bounding Box for creating new path objects
+     int iWidth;   // Bounding Box for creating new path objects
 };
 //==============================================================================
 /**
@@ -1044,8 +1067,18 @@ protected:
     void createActions();
 
 public slots:
+    //==============================================================================
+    /**
+    * @brief Slot Table data changed
+    */
+    // ----------------------------------------------------------------------------
     void ChangeTab();
 signals:
+    //==============================================================================
+    /**
+    * @brief Signal Table data changed
+    */
+    // ----------------------------------------------------------------------------
     void TabChanged();
 
 private:  // Private functions
@@ -1139,9 +1172,7 @@ protected:
 public slots:
     //==============================================================================
     /**
-    * @brief // event <BR>
-    *
-    * @param event [in]
+    * @brief // sst paint event <BR>
     */
     // ----------------------------------------------------------------------------
     void sstPaintEvent();

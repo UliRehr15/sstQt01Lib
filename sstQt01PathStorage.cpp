@@ -39,6 +39,9 @@ sstQt01PathStorageCls::sstQt01PathStorageCls()
   this->poShapeItemRecTable = new sstRec04Cls(sizeof(sstQt01PathElementCsvCls));
   this->poShapeItemMainTable = new sstRec04Cls(sizeof(sstQt01PathMainRecCls));
   dActualReadPos = 1;  // table reading starts at begin of table
+  iHeight = 300;
+  iWidth = 500;
+
 }
 //=============================================================================
 sstQt01PathStorageCls::~sstQt01PathStorageCls()
@@ -92,6 +95,12 @@ int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
 
     // Read next row from csv file
     iStat1 = oPainterCsvFile.Rd_StrDS1(0,&oCsvStr);
+  }
+
+  // if main table is empty, do nothing and return.
+  if (this->poShapeItemMainTable->count() <= 0)
+  {
+    return 0;
   }
 
   // update number records per path in main table
@@ -475,9 +484,65 @@ int sstQt01PathStorageCls::appendShapeItem(sstQt01ShapeItem oItem)
 //=============================================================================
 int sstQt01PathStorageCls::countItems()
 {
-  // assert(0);
   dREC04RECNUMTYP dRecs = this->poShapeItemMainTable->count();
   return (int) dRecs;
+}
+//=============================================================================
+int sstQt01PathStorageCls::createDefaultItems(int iKey)
+{
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  QPainterPath circlePath;
+  QPainterPath squarePath;
+  QPainterPath trianglePath;
+
+  circlePath.addEllipse(QRect(0, 0, 100, 100));
+  squarePath.addRect(QRect(0, 0, 100, 100));
+
+  qreal x = trianglePath.currentPosition().x();
+  qreal y = trianglePath.currentPosition().y();
+  trianglePath.moveTo(x + 120 / 2, y);
+  trianglePath.lineTo(0, 100);
+  trianglePath.lineTo(120, 100);
+  trianglePath.lineTo(x + 120 / 2, y);
+
+  sstQt01ShapeItem oItem;
+
+  oItem.createShapeItem(circlePath, "Circle", initialItemPosition(circlePath),
+                  initialItemColor());
+  this->appendShapeItem(oItem);
+
+  oItem.createShapeItem(squarePath, "Square", initialItemPosition(squarePath),
+                  initialItemColor());
+  this->appendShapeItem(oItem);
+
+  oItem.createShapeItem(trianglePath, "Triangle",
+                  initialItemPosition(trianglePath), initialItemColor());
+  this->appendShapeItem(oItem);
+
+  return 0;
+}
+//=============================================================================
+QPoint sstQt01PathStorageCls::initialItemPosition(const QPainterPath &path)
+{
+    int x;
+    int y = (iHeight - (int)path.controlPointRect().height()) / 2;
+    // if (shapeItems.size() == 0)
+    if ( this->countItems() == 0)
+        x = ((3 * iWidth) / 2 - (int)path.controlPointRect().width()) / 2;
+    else
+      // x = (width / shapeItems.size()
+      x = (iWidth / this->countItems()
+             - (int)path.controlPointRect().width()) / 2;
+
+    return QPoint(x, y);
+}
+//=============================================================================
+QColor sstQt01PathStorageCls::initialItemColor()
+{
+  // return QColor::fromHsv(((shapeItems.size() + 1) * 85) % 256, 255, 190);
+  return QColor::fromHsv(((this->countItems() + 1) * 85) % 256, 255, 190);
 }
 //=============================================================================
 

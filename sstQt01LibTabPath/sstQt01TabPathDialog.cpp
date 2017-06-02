@@ -35,8 +35,25 @@ sstQt01PathTabDialogCls::sstQt01PathTabDialogCls()
   poPrt = new sstMisc01PrtFilCls;
   poPathStorage = new sstQt01PathStorageCls;
 
-  poPrt->SST_PrtAuf(1,(char*)"sstQt01LibTabPath.log");
-  poPathStorage->LoadAllPathFromFile( 0, (char*) "Paint.csv");
+  int iStat = 0;
+  iStat = poPrt->SST_PrtAuf(1,(char*)"sstQt01LibTabPath.log");
+  assert(iStat == 0);
+  iStat = poPathStorage->LoadAllPathFromFile( 0, (char*) "Paint.csv");
+  // assert(iStat == 0);
+
+  if (iStat < 0)
+  {
+    poPrt->SST_PrtWrtChar(1,(char*)"Not Found",(char*)"File Paint.csv: ");
+
+    poPathStorage->createDefaultItems(0);
+  }
+
+  if (poPathStorage->countItems() <= 0)
+  {
+    poPrt->SST_PrtWrtChar(1,(char*)"Is Empty",(char*)"File Paint.csv: ");
+
+    poPathStorage->createDefaultItems(0);
+  }
 
   createMenu();
   createHorizontalGroupBox1();
