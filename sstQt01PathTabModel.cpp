@@ -77,7 +77,7 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
   switch(role){
   case Qt::DisplayRole:
     {
-      sstQt01PathElementCsvCls oTestRec1;
+      sstQt01PathElementCsv2Cls oTestRec1;
 
       poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
 
@@ -128,7 +128,7 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
     if (role == Qt::EditRole)
     {
         //save value from editor to oTestRecDss
-      sstQt01PathElementCsvCls oTestRec1;
+      sstQt01PathElementCsv2Cls oTestRec1;
 
       dREC04RECNUMTYP dRecNo = index.row() +1;
       poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
@@ -185,7 +185,7 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
     dREC04RECNUMTYP dRecNo = 0;
 
     for (int row = 0; row < rows; ++row) {
-      sstQt01PathElementCsvCls oTestRec;
+      sstQt01PathElementCsv2Cls oTestRec;
       poPathStorage->WriteNew(0,&dRecNo,&oTestRec);
     }
 

@@ -46,4 +46,6 @@ Structure of coding projects should be:
 22.05.2017: Version 1.12: Creation of PainterPath storage now outside of Tab widget. <BR>
 28.05.2017: Version 1.13: Signals/Slots to update PathMapWidget after changing PathTabWidget.<BR>
 01.06.2017: Version 1.14: New function CreateDefaultItems.  <BR>
+20.06.2017: Version 1.15: Extended Csv PainterPath Format with PenWidth, PenStyle. <BR>
+                          Doxygen Documentation for private elements too. <BR>
 

@@ -19,12 +19,13 @@ HEADERS		+= sstQt01LibInt.h
 
 SOURCES		+= sstQt01Tab.cpp \
              sstQt01PathStorage.cpp \
-             sstQt01PathElementCsv.cpp \
     sstQt01TabView.cpp \
     sstQt01ShapeItem.cpp \
     sstQt01PathTabModel.cpp \
     sstQt01PathPaintWidget.cpp \
-    sstQt01TestPaintWidget.cpp
+    sstQt01TestPaintWidget.cpp \
+    sstQt01PathElementCsv1.cpp \
+    sstQt01PathElementCsv2.cpp
 
 OTHER_FILES += README.md
 

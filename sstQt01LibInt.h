@@ -211,9 +211,9 @@ signals:
 
     //==============================================================================
 private:
-    sstQt01PathStorageCls *poPathStorage;  // is a table and function object for test rec1
-    std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
-    sstMisc01PrtFilCls   *poPrt;
+    sstQt01PathStorageCls *poPathStorage;          /**< Is a table and function object for test rec1 */
+    std::vector<unsigned long int> sstTabVector;   /**< Vector maps table record positions when deleting */
+    sstMisc01PrtFilCls   *poPrt;                   /**< Dummy */
 };
 
 

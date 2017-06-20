@@ -34,7 +34,7 @@
 #include "sstQt01LibInt.h"
 
 //=============================================================================
-sstQt01PathElementCsvCls::sstQt01PathElementCsvCls()
+sstQt01PathElementCsv1Cls::sstQt01PathElementCsv1Cls()
 {
   this->iType = 0;        /**< Shape Item Type */
   this->iXX = 0;          /**< Coordinate X */
@@ -45,7 +45,7 @@ sstQt01PathElementCsvCls::sstQt01PathElementCsvCls()
 
 }
 //=============================================================================
-int sstQt01PathElementCsvCls::ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr)
+int sstQt01PathElementCsv1Cls::ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr)
 {
   sstStr01Cls oCsvCnvt;
 
@@ -64,7 +64,7 @@ int sstQt01PathElementCsvCls::ReadFromCsv(int iKey, std::string oCsvStr, std::st
   return iStat;
 }
 //=============================================================================
-int sstQt01PathElementCsvCls::WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr)
+int sstQt01PathElementCsv1Cls::WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr)
 {
   sstStr01Cls oCsvCnvt;
   int iStat = 0;
@@ -82,7 +82,7 @@ int sstQt01PathElementCsvCls::WriteToCsv(int iKey, std::string *oCsvStr, std::st
   return iStat;
 }
 //=============================================================================
-std::string sstQt01PathElementCsvCls::GetCsvFileTitle()
+std::string sstQt01PathElementCsv1Cls::GetCsvFileTitle()
 {
   std::string oLocStr;
   //-----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ std::string sstQt01PathElementCsvCls::GetCsvFileTitle()
   return oLocStr;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol)
+void sstQt01PathElementCsv1Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol)
 {
   int iTmpColR = 0;
   int iTmpColG = 0;
@@ -108,82 +108,82 @@ void sstQt01PathElementCsvCls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColo
   this->iColB = iTmpColB;
 }
 //=============================================================================
-int sstQt01PathElementCsvCls::getIType() const
+int sstQt01PathElementCsv1Cls::getIType() const
 {
   return iType;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::setIType(int value)
+void sstQt01PathElementCsv1Cls::setIType(int value)
 {
   iType = value;
 }
 //=============================================================================
-int sstQt01PathElementCsvCls::getIXX() const
+int sstQt01PathElementCsv1Cls::getIXX() const
 {
   return iXX;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::setIXX(int value)
+void sstQt01PathElementCsv1Cls::setIXX(int value)
 {
   iXX = value;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::addIXX(int value)
+void sstQt01PathElementCsv1Cls::addIXX(int value)
 {
   iXX = iXX + value;
 }
 //=============================================================================
-int sstQt01PathElementCsvCls::getIYY() const
+int sstQt01PathElementCsv1Cls::getIYY() const
 {
   return iYY;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::setIYY(int value)
+void sstQt01PathElementCsv1Cls::setIYY(int value)
 {
   iYY = value;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::addIYY(int value)
+void sstQt01PathElementCsv1Cls::addIYY(int value)
 {
   iYY = iYY + value;
 }
 //=============================================================================
-int sstQt01PathElementCsvCls::getIColR() const
+int sstQt01PathElementCsv1Cls::getIColR() const
 {
   return iColR;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::setIColR(int value)
+void sstQt01PathElementCsv1Cls::setIColR(int value)
 {
   iColR = value;
 }
 //=============================================================================
-int sstQt01PathElementCsvCls::getIColG() const
+int sstQt01PathElementCsv1Cls::getIColG() const
 {
   return iColG;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::setIColG(int value)
+void sstQt01PathElementCsv1Cls::setIColG(int value)
 {
   iColG = value;
 }
 //=============================================================================
-int sstQt01PathElementCsvCls::getIColB() const
+int sstQt01PathElementCsv1Cls::getIColB() const
 {
   return iColB;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::setIColB(int value)
+void sstQt01PathElementCsv1Cls::setIColB(int value)
 {
   iColB = value;
 }
 //=============================================================================
-void sstQt01PathElementCsvCls::setQCol(QColor oQCol)
+void sstQt01PathElementCsv1Cls::setQCol(QColor oQCol)
 {
   oQCol.getRgb(&this->iColR,&this->iColG,&this->iColB);
 }
 //=============================================================================
-QColor sstQt01PathElementCsvCls::getQCol()
+QColor sstQt01PathElementCsv1Cls::getQCol()
 {
   QColor oCol;
   oCol.setRgb(this->iColR,this->iColG,this->iColB);
