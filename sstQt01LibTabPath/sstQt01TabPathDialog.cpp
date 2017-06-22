@@ -92,7 +92,8 @@ void sstQt01PathTabDialogCls::createHorizontalGroupBox1()
     horizontalGroupBox1 = new QGroupBox(tr("Paint.csv"));
     QVBoxLayout *layout1 = new QVBoxLayout;
 
-    pTstRec1View = new sstQt01TabViewCls(poPrt,poPathStorage);
+    // pTstRec1View = new sstQt01TabViewCls(poPrt,poPathStorage);
+    pTstRec1View = new sstQt01PathTabViewCls(poPrt,poPathStorage);
     // pTstRec1Model = new sstQt01PathTabMdlCls(0);
     // pTstRec1View->setModel( pTstRec1Model );
     layout1->addWidget(pTstRec1View);

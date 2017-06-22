@@ -31,19 +31,20 @@
 #include "sstQt01LibInt.h"
 
 //=============================================================================
-sstQt01TabViewCls::sstQt01TabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
-                                     sstQt01PathStorageCls *poTmpPathStorage)
+//sstQt01TabViewCls::sstQt01TabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
+//                                     sstQt01PathStorageCls *poTmpPathStorage)
+sstQt01TabViewCls::sstQt01TabViewCls()
 {
-  this->poTabMdl = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
-  this->setModel( this->poTabMdl);
+  // this->poTabMdl = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
+  // this->setModel( this->poTabMdl);
     createActions();
     setupContextMenu();
-    connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
+    // connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
 }
 //=============================================================================
 sstQt01TabViewCls::~sstQt01TabViewCls()
 {
-  delete this->poTabMdl;
+  // delete this->poTabMdl;
 }
 //=============================================================================
 void sstQt01TabViewCls::setupContextMenu()

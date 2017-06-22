@@ -68,7 +68,8 @@ private:
     QAction *exitAction;
 
     // sstQt01PathTabMdlCls   *pTstRec1Model;
-    sstQt01TabViewCls   *pTstRec1View;
+    // sstQt01TabViewCls   *pTstRec1View;
+    sstQt01PathTabViewCls *pTstRec1View;
     sstMisc01PrtFilCls *poPrt;
     sstQt01PathStorageCls *poPathStorage;
 };

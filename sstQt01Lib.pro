@@ -25,7 +25,8 @@ SOURCES		+= sstQt01Tab.cpp \
     sstQt01PathPaintWidget.cpp \
     sstQt01TestPaintWidget.cpp \
     sstQt01PathElementCsv1.cpp \
-    sstQt01PathElementCsv2.cpp
+    sstQt01PathElementCsv2.cpp \
+    sstQt01PathTabView.cpp
 
 OTHER_FILES += README.md
 

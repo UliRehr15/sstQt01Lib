@@ -1378,8 +1378,9 @@ class sstQt01TabViewCls : public QTableView
   * @param poPathStorage [in out] Pointer to Path Storage object
   */
   // ----------------------------------------------------------------------------
-  sstQt01TabViewCls(sstMisc01PrtFilCls    *poPrt,
-                    sstQt01PathStorageCls *poPathStorage);    // Constructor
+//  sstQt01TabViewCls(sstMisc01PrtFilCls    *poPrt,
+//                    sstQt01PathStorageCls *poPathStorage);    // Constructor
+  sstQt01TabViewCls();    // Constructor
   ~sstQt01TabViewCls();   // Destructor
 // ----------------------------------------------------------------------------
 public slots:
@@ -1428,7 +1429,7 @@ signals:
 private:  // Private functions
   QAction *cell_InsAction;   /**< Insert Table Rows Action */
   QAction *cell_DelAction;   /**< Delete Table Rows Action */
-  sstQt01PathTabMdlCls *poTabMdl;  /**< Dummy */
+  // sstQt01PathTabMdlCls *poTabMdl;  /**< Dummy */
 };
 //==============================================================================
 /**
@@ -1872,7 +1873,45 @@ private:
     bool transformed;  /**< Dummy */
     QPixmap pixmap;    /**< Dummy */
 };
-
+//==============================================================================
+/**
+* @brief View Class for sstRec04 TstRec1 records
+*
+* Changed: 22.04.17  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 22.04.17
+*/
+// ----------------------------------------------------------------------------
+class sstQt01PathTabViewCls : public sstQt01TabViewCls
+{
+  public:   // Public functions
+  //==============================================================================
+  /**
+  * @brief // Shortstory <BR>
+  * iStat = oTestBase.Func_1(iKey);
+  *
+  * @param poPrt         [in] Pointer to Protocol object
+  * @param poPathStorage [in] Pointer to PathStorage object
+  *
+  * @return Errorstate
+  *
+  * @retval   = 0: OK
+  * @retval   < 0: Unspecified Error
+  */
+  // ----------------------------------------------------------------------------
+     sstQt01PathTabViewCls( sstMisc01PrtFilCls    *poPrt,
+                            sstQt01PathStorageCls *poPathStorage);  // Constructor
+     //==============================================================================
+     ~sstQt01PathTabViewCls();  // Destructor
+     //==============================================================================
+private:  // Private functions
+     sstQt01PathTabMdlCls  *pTstRec1Model; /**< Dummy */
+};
+//==============================================================================
 
 #endif
 

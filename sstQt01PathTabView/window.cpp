@@ -46,7 +46,8 @@ Window::Window()
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
 
-  poPathTabWidget = new sstQt01TabViewCls(oPrt,poPathStorage);
+  // poPathTabWidget = new sstQt01TabViewCls(oPrt,poPathStorage);
+  poPathTabWidget = new sstQt01PathTabViewCls(oPrt,poPathStorage);
 
   poPathMapWidget = new sstQt01PathPaintWidgetCls(oPrt,this->poPathStorage);
 

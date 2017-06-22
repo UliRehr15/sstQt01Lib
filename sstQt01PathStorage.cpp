@@ -91,7 +91,8 @@ int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
       QColor oQCol = oShapeItemCsv.getQCol();
       sstQt01PathMainRecCls oPathRec;
       oPathRec.setQCol(oQCol);
-      oPathRec.setStartElementRecNo(dRecNo);
+      // oPathRec.setStartElementRecNo(dRecNo);
+      oPathRec.setStartElementRecNo(ii);
       // oPathRec.setTooltip("aaa");;
       iStat = this->poShapeItemMainTable->WritNew(0,&oPathRec,&dRecNo);
     }
