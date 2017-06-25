@@ -99,6 +99,15 @@ public:
     void setColor(const QColor &Color);
     //==============================================================================
     /**
+    * @brief // set pen <BR>
+    * iStat = oPathItem.setPen(Pen);
+    *
+    * @param Pen [in] QPen
+    */
+    // ----------------------------------------------------------------------------
+    void setPen(const QPen &Pen);
+    //==============================================================================
+    /**
     * @brief // Get QPainterPath <BR>
     * oPath = PathItem.getPath();
     *
@@ -135,6 +144,15 @@ public:
     QColor getColor() const;
     //==============================================================================
     /**
+    * @brief // Get Pen <BR>
+    * oColor = PathItem.getPen();
+    *
+    * @return QPen
+    */
+    // ----------------------------------------------------------------------------
+    QPen getPen() const;
+    //==============================================================================
+    /**
     * @brief // Get ToolTip string <BR>
     * oToolTip = oPathItem.getToolTip();
     *
@@ -163,6 +181,7 @@ private:
     QPoint myPosition;      /**< Dummy */
     QColor myColor;         /**< Dummy */
     QString myToolTip;      /**< Dummy */
+    QPen myPen;             /**< Dummy */
 };
 //==============================================================================
 /**
@@ -474,6 +493,7 @@ class sstQt01PathElementCsv2Cls
      * @param iXX      [in]  int coordinate x
      * @param iYY      [in]  int coordinate y
      * @param oColor   [in]  color
+     * @param oPen     [in]  pen
      *
      * @return Errorstate
      *
@@ -481,7 +501,7 @@ class sstQt01PathElementCsv2Cls
      * @retval   < 0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
-     void setAll(int iType,int iXX, int iYY, QColor oColor);
+     void setAll(int iType,int iXX, int iYY, QColor oColor, QPen oPen);
      //==============================================================================
      /**
      * @brief // Get Element Type <BR>
@@ -901,6 +921,24 @@ class sstQt01PathMainRecCls
      QColor getQCol();
      //==============================================================================
      /**
+     * @brief // Get QPen <BR>
+     *  oQPen = oPathItem.getQPen();
+     *
+     * @return QColor
+     */
+     // ----------------------------------------------------------------------------
+     QPen getQPen();
+     //==============================================================================
+     /**
+     * @brief // Set QPen <BR>
+     * oPathItem.setQPen(value);
+     *
+     * @param oQPen [in] QPen
+     */
+     // ----------------------------------------------------------------------------
+     void setQPen(QPen oQPen);
+     //==============================================================================
+     /**
      * @brief // Get start record number in element table <BR>
      *  iColR = oPathItem.GetStartElementRecNo()
      *
@@ -963,6 +1001,42 @@ class sstQt01PathMainRecCls
      // ----------------------------------------------------------------------------
      QPoint getPosition();
      //==============================================================================
+     /**
+     * @brief // Get Pen Style <BR>
+     *  iPenStyle = oPathItem.getIPenStyle();
+     *
+     * @return int iPenStyle
+     */
+     // ----------------------------------------------------------------------------
+     int getIPenStyle() const;
+     //==============================================================================
+     /**
+     * @brief // Set Pen Style <BR>
+     * oPathItem.setIPenStyle(iValue);
+     *
+     * @param value [in] iPenStyle
+     */
+     // ----------------------------------------------------------------------------
+     void setIPenStyle(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Pen Width <BR>
+     *  iPenWidth = oPathItem.getIPenWidth();
+     *
+     * @return int iPenWidth
+     */
+     // ----------------------------------------------------------------------------
+     int getIPenWidth() const;
+     //==============================================================================
+     /**
+     * @brief // Set Pen Widt <BR>
+     * oPathItem.setIPenWidth(iValue);
+     *
+     * @param value [in] iPenWidth
+     */
+     // ----------------------------------------------------------------------------
+     void setIPenWidth(int value);
+     //==============================================================================
 
 private:
      int iXX;        /**< Position X */
@@ -970,6 +1044,8 @@ private:
      int iColR;        /**< Color Red */
      int iColG;        /**< Color Green */
      int iColB;        /**< Color Blue */
+     int iPenStyle;        /**< Pen Style */
+     int iPenWidth;        /**< Pen Width */
      char cTooltip[30];  /**< Tooltip char string */
      dREC04RECNUMTYP dStartElementRecNo;  /**< Start of Path in Element table */
      dREC04RECNUMTYP dNumElements;        /**< Number of elements in path */
@@ -1032,6 +1108,7 @@ class sstQt01PathStorageCls
      * @param iKey   [in] For the moment 0
      * @param oPath  [in] QPainterPath object to store
      * @param oColor [in] Color of Path
+     * @param oPen   [in] Pen of Path
      *
      * @return Errorstate
      *
@@ -1039,7 +1116,7 @@ class sstQt01PathStorageCls
      * @retval   < 0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
-     int AppendPath(int iKey,  QPainterPath oPath, QColor oColor);
+     int AppendPath(int iKey,  QPainterPath oPath, QColor oColor, QPen oPen);
      //==============================================================================
      /**
      * @brief // read next QPainterPath object from sst table object.  <BR>
@@ -1048,6 +1125,7 @@ class sstQt01PathStorageCls
      * @param iKey   [in] For the moment 0
      * @param oPath  [out] QPainterPath object
      * @param oColor [out] Color of Path
+     * @param oPen   [out] Pen of Path
      *
      * @return Errorstate
      *
@@ -1055,7 +1133,7 @@ class sstQt01PathStorageCls
      * @retval   < 0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
-     int ReadNextPath(int iKey,  QPainterPath *oPath, QColor *oColor);
+     int ReadNextPath(int iKey,  QPainterPath *oPath, QColor *oColor, QPen *oPen);
      //==============================================================================
      /**
      * @brief // read next QPainterPath object from sst table object.  <BR>
@@ -1223,6 +1301,17 @@ class sstQt01PathStorageCls
      QColor getColor(dREC04RECNUMTYP index);
      //==============================================================================
      /**
+     * @brief // Get QPen for index path <BR>
+     * iStat = oPathStorage.getQPen(index);
+     *
+     * @param index [in] index of path
+     *
+     * @return Color
+     */
+     // ----------------------------------------------------------------------------
+     QPen getQPen(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
      * @brief // Get Path from path table <BR>
      * iStat = oPathStorage.getPath(index);
      *
@@ -1370,16 +1459,6 @@ class sstQt01TabViewCls : public QTableView
 {
       Q_OBJECT
   public:   // Public functions
-  //==============================================================================
-  /**
-  * @brief // Constructor for sstQt01TabViewCls <BR>
-  *
-  * @param poPrt         [in out] Pointer to Protocol object
-  * @param poPathStorage [in out] Pointer to Path Storage object
-  */
-  // ----------------------------------------------------------------------------
-//  sstQt01TabViewCls(sstMisc01PrtFilCls    *poPrt,
-//                    sstQt01PathStorageCls *poPathStorage);    // Constructor
   sstQt01TabViewCls();    // Constructor
   ~sstQt01TabViewCls();   // Destructor
 // ----------------------------------------------------------------------------
@@ -1571,13 +1650,14 @@ private:
     int updateButtonGeometry(QToolButton *button, int x, int y);
     //==============================================================================
     /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
+    * @brief // createShapeItem <BR>
+    * iStat = oPathWidget.createShapeItem(path, tooltip, pos, color, pen);
     *
-    * @param path [in] For the moment 0
-    * @param toolTip [in] For the moment 0
-    * @param pos [in] For the moment 0
-    * @param color [in] For the moment 0
+    * @param path    [in] QPainterPath object
+    * @param toolTip [in] tooltip string
+    * @param pos     [in] position
+    * @param color   [in] color
+    * @param pen     [in] pen
     *
     * @return Errorstate
     *
@@ -1586,7 +1666,7 @@ private:
     */
     // ----------------------------------------------------------------------------
     void createShapeItem(const QPainterPath &path, const QString &toolTip,
-                         const QPoint &pos, const QColor &color);
+                         const QPoint &pos, const QColor &color, const QPen &pen);
     //==============================================================================
     /**
     * @brief // Shortstory <BR>
@@ -1717,6 +1797,24 @@ private:
     */
     // ----------------------------------------------------------------------------
     QColor randomItemColor();
+    //==============================================================================
+    /**
+    * @brief // initialItemPen <BR>
+    * iStat = oPathWidget.initialItemPen();
+    *
+    * @return QPath
+    */
+    // ----------------------------------------------------------------------------
+    QPen initialItemPen();
+    //==============================================================================
+    /**
+    * @brief // randomItemPen <BR>
+    * iStat = oPathWidget.randomItemPen();
+    *
+    * @return QPath
+    */
+    // ----------------------------------------------------------------------------
+    QPen randomItemPen();
     //==============================================================================
     /**
     * @brief // Shortstory <BR>
@@ -1916,3 +2014,4 @@ private:  // Private functions
 #endif
 
 // --------------------------------------------------------------- File End ----
+

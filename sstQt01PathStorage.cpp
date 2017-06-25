@@ -91,6 +91,8 @@ int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
       QColor oQCol = oShapeItemCsv.getQCol();
       sstQt01PathMainRecCls oPathRec;
       oPathRec.setQCol(oQCol);
+      oPathRec.setIPenStyle(oShapeItemCsv.getIPenStyle());
+      oPathRec.setIPenWidth(oShapeItemCsv.getIPenWidth());
       // oPathRec.setStartElementRecNo(dRecNo);
       oPathRec.setStartElementRecNo(ii);
       // oPathRec.setTooltip("aaa");;
@@ -161,7 +163,7 @@ int sstQt01PathStorageCls::StoreAllPathToFile (int iKey, std::string oFilNam)
   return 0;
 }
 //=============================================================================
-int sstQt01PathStorageCls::AppendPath(int iKey, QPainterPath oTmpPath, QColor oTmpColor)
+int sstQt01PathStorageCls::AppendPath(int iKey, QPainterPath oTmpPath, QColor oTmpColor, QPen oTmpPen)
 {
 
   sstQt01PathElementCsv2Cls oShapeItemCsv;
@@ -174,14 +176,14 @@ int sstQt01PathStorageCls::AppendPath(int iKey, QPainterPath oTmpPath, QColor oT
   {
     QPainterPath::Element oElement;
     oElement = oTmpPath.elementAt(ii-1);
-    oShapeItemCsv.setAll(oElement.type,oElement.x,oElement.y, oTmpColor);
+    oShapeItemCsv.setAll(oElement.type,oElement.x,oElement.y, oTmpColor, oTmpPen);
     this->poShapeItemRecTable->WritNew(0, &oShapeItemCsv, &dRecNo);
   }
 
   return 0;
 }
 //=============================================================================
-int sstQt01PathStorageCls::ReadNextPath(int iKey, QPainterPath *oTmpPath, QColor *oTmpColor)
+int sstQt01PathStorageCls::ReadNextPath(int iKey, QPainterPath *oTmpPath, QColor *oTmpColor, QPen *oTmpPen)
 {
   sstQt01PathElementCsv2Cls oShapeItemCsv1;
   sstQt01PathElementCsv2Cls oShapeItemCsv2;
@@ -202,6 +204,9 @@ int sstQt01PathStorageCls::ReadNextPath(int iKey, QPainterPath *oTmpPath, QColor
   oTmpColor->setBlue(oShapeItemCsv1.getIColB());
   oTmpColor->setGreen(oShapeItemCsv1.getIColG());
   oTmpColor->setRed(oShapeItemCsv1.getIColR());
+
+  oTmpPen->setStyle((Qt::PenStyle) oShapeItemCsv1.getIPenStyle());
+  oTmpPen->setWidth(oShapeItemCsv1.getIPenWidth());
 
   oTmpPath->moveTo(oShapeItemCsv1.getIXX(),oShapeItemCsv1.getIYY());
 
@@ -430,6 +435,15 @@ QColor sstQt01PathStorageCls::getColor(dREC04RECNUMTYP index)
   return oMainRec.getQCol();
 }
 //=============================================================================
+QPen sstQt01PathStorageCls::getQPen(dREC04RECNUMTYP index)
+{
+  // assert(0);
+  sstQt01PathMainRecCls oMainRec;
+  int iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
+  assert(iStat >= 0);
+  return oMainRec.getQPen();
+}
+//=============================================================================
 QPainterPath sstQt01PathStorageCls::getPath(dREC04RECNUMTYP index)
 {
   // assert(0);
@@ -461,12 +475,13 @@ int sstQt01PathStorageCls::appendShapeItem(sstQt01ShapeItem oItem)
   // Append to element table
   QPainterPath oPath = oItem.getPath();
   // oPath.moveTo(oItem.getPosition());
-  int iStat = this->AppendPath(0,oPath,oItem.getColor());
+  int iStat = this->AppendPath(0,oPath,oItem.getColor(),oItem.getPen());
   assert(iStat >= 0);
 
   // Append to main table
   sstQt01PathMainRecCls oMainRec;
   oMainRec.setQCol(oItem.getColor());
+  oMainRec.setQPen(oItem.getPen());
   oMainRec.setPosition(oItem.getPosition());
   int iNumElements = oPath.elementCount();
   dREC04RECNUMTYP dLastRecNo = this->poShapeItemRecTable->count();

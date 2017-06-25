@@ -67,7 +67,8 @@ int sstQt01PathTabMdlCls::rowCount(const QModelIndex & /*parent*/) const
 //=============================================================================
 int sstQt01PathTabMdlCls::columnCount(const QModelIndex & /*parent*/) const
 {
-    return 6;
+  // return 6;
+  return 8;
 }
 //=============================================================================
 QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
@@ -89,6 +90,8 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
       case 3:  return oTestRec1.getIColR();
       case 4:  return oTestRec1.getIColG();
       case 5:  return oTestRec1.getIColB();
+      case 6:  return oTestRec1.getIPenWidth();
+      case 7:  return oTestRec1.getIPenStyle();
       default: return QString("Row%1, Column%2").arg(index.row() + 1).arg(index.column() +1); break;
       }
     }
@@ -117,6 +120,8 @@ QVariant sstQt01PathTabMdlCls::headerData(int section, Qt::Orientation orientati
             case 3: return QString("iColR");
             case 4: return QString("iColG");
             case 5: return QString("iColB");
+            case 6: return QString("iPenWidth");
+            case 7: return QString("iPenStyle");
             }
         }
     }
@@ -143,6 +148,8 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
       case 3: oTestRec1.setIColR( value.toInt(&bOK)); break;
       case 4: oTestRec1.setIColG( value.toInt(&bOK)); break;
       case 5: oTestRec1.setIColB( value.toInt(&bOK)); break;
+      case 6: oTestRec1.setIPenWidth(value.toInt(&bOK)); break;
+      case 7: oTestRec1.setIPenStyle(value.toInt(&bOK)); break;
       }
 
       if (bOK) poPathStorage->WriteRecPos( 0, dRecNo, &oTestRec1);

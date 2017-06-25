@@ -49,4 +49,5 @@ Structure of coding projects should be:
 20.06.2017: Version 1.15: Extended Csv PainterPath Format with PenWidth, PenStyle. <BR>
                           Doxygen Documentation for private elements too. <BR>
 22.06.2017: Version 1.16: Path Table View/Model corrected. <BR>
+24.06.2017: Version 1.17: Editing/Viewing PenStyle and PenWidth. <BR>
 

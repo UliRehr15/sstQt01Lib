@@ -97,7 +97,7 @@ std::string sstQt01PathElementCsv2Cls::GetCsvFileTitle()
   return oLocStr;
 }
 //=============================================================================
-void sstQt01PathElementCsv2Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol)
+void sstQt01PathElementCsv2Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol, QPen oTmpPen)
 {
   int iTmpColR = 0;
   int iTmpColG = 0;
@@ -111,6 +111,8 @@ void sstQt01PathElementCsv2Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QCol
   this->iColR = iTmpColR;
   this->iColG = iTmpColG;
   this->iColB = iTmpColB;
+  this->iPenStyle = (int) oTmpPen.style();
+  this->iPenWidth = (int) oTmpPen.width();
 }
 //=============================================================================
 int sstQt01PathElementCsv2Cls::getIType() const

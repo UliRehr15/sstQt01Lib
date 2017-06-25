@@ -254,6 +254,25 @@ QColor sstQt01PathMainRecCls::getQCol()
   return oCol;
 }
 //=============================================================================
+QPen sstQt01PathMainRecCls::getQPen()
+{
+  QPen oPen;
+  QColor oColor;
+  Qt::PenStyle eStyle;
+  oColor.setRgb(this->iColR,this->iColG,this->iColB);
+  oPen.setColor(oColor);
+  eStyle = (Qt::PenStyle) this->getIPenStyle();
+  oPen.setStyle(eStyle);
+  oPen.setWidth(this->getIPenWidth());
+  return oPen;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setQPen(QPen oQPen)
+{
+  this->iPenStyle = oQPen.style();
+  this->iPenWidth = oQPen.width();
+}
+//=============================================================================
 dREC04RECNUMTYP sstQt01PathMainRecCls::getStartElementRecNo() const
 {
 return dStartElementRecNo;
@@ -291,5 +310,25 @@ QPoint sstQt01PathMainRecCls::getPosition()
   oPnt.setX(this->iXX);
   oPnt.setY(this->iYY);
   return oPnt;
+}
+//=============================================================================
+int sstQt01PathMainRecCls::getIPenStyle() const
+{
+return iPenStyle;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setIPenStyle(int value)
+{
+iPenStyle = value;
+}
+//=============================================================================
+int sstQt01PathMainRecCls::getIPenWidth() const
+{
+return iPenWidth;
+}
+//=============================================================================
+void sstQt01PathMainRecCls::setIPenWidth(int value)
+{
+iPenWidth = value;
 }
 //=============================================================================
