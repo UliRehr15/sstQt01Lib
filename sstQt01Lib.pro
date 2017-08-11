@@ -11,6 +11,7 @@ QT += widgets
 
 INCLUDEPATH += ../sst_rec04_lib/Header
 INCLUDEPATH += ../sst_misc01_lib/Header
+INCLUDEPATH += ../sstMath01Lib/Header
 INCLUDEPATH += ../sst_str01_lib/Header
 INCLUDEPATH += ./Header
 
@@ -26,7 +27,8 @@ SOURCES		+= sstQt01Tab.cpp \
     sstQt01TestPaintWidget.cpp \
     sstQt01PathElementCsv1.cpp \
     sstQt01PathElementCsv2.cpp \
-    sstQt01PathTabView.cpp
+    sstQt01PathTabView.cpp \
+    sstQt01FormatStore.cpp
 
 OTHER_FILES += README.md
 

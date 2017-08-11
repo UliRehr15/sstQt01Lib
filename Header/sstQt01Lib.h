@@ -27,6 +27,7 @@
 #include <QTableView>
 
 #include <sstStr01Lib.h>
+#include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 
@@ -43,6 +44,80 @@ QT_END_NAMESPACE
 class sstQt01PathTabMdlCls;
 
 // Structures and Classes ------------------------------------------------------
+//==============================================================================
+/**
+* @brief General view features for format data like dxf and other.
+*
+* coordinate transformation class
+*
+* Changed: 24.07.17  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 24.07.17
+*/
+// ----------------------------------------------------------------------------
+class sstQt01FormatViewCls
+{
+  public:   // Public functions
+     sstQt01FormatViewCls();   // Constructor
+    // ~X();   // Destructor
+//==============================================================================
+/**
+* @brief // Calculate Coordinate Transformation Matrice <BR>
+* iStat = iStat = oPathStore.CalcCoorTrn( iKey, WC_Mima, ulDB_Max, dDC_Max);
+*
+* @param iKey     [in] For the moment 0
+* @param WC_Mima  [in] Mbr of data
+* @param ulDB_Max [in] Max of intern Database Coordinates
+* @param dDC_Max  [in] Max of sceen device
+*
+* @return Errorstate
+*
+* @retval   = 0: OK
+* @retval   < 0: Unspecified Error
+*/
+// ----------------------------------------------------------------------------
+    int CalcCoorTrn(int iKey, sstMath01Mbr2Cls WC_Mima, unsigned long ulDB_Max, double dDC_Max);
+    //==============================================================================
+    /**
+    * @brief // transform coordinates from device to world coordinate system  <BR>
+    * iStat = oPathStore.Transform_DC_WC(iKey, &dX, &dY);
+    *
+    * @param iKey  [in] For the moment 0
+    * @param dX    [in out] X Value
+    * @param dY    [in out] Y Value
+    *
+    * @return Errorstate
+    *
+    * @retval   = 0: OK
+    * @retval   < 0: Unspecified Error
+    */
+    // ----------------------------------------------------------------------------
+    int Transform_DC_WC (int iKey, double *dX, double *dY);
+    //==============================================================================
+    /**
+    * @brief // transform coordinates from would to device coordinate system  <BR>
+    * iStat = oPathStore.Transform_WC_DC(iKey, &dX, &dY);
+    *
+    * @param iKey  [in] For the moment 0
+    * @param dX    [in out] HatchEdge object
+    * @param dY    [in out] HatchEdge object
+    *
+    * @return Errorstate
+    *
+    * @retval   = 0: OK
+    * @retval   < 0: Unspecified Error
+    */
+    // ----------------------------------------------------------------------------
+    int Transform_WC_DC (int iKey, double *dX, double *dY);
+    //==============================================================================
+protected: // Protected functions
+    sstMath01CoorTrnCls oTrn;  /**< Coordinate Transformation matrice class */
+private:  // Private functions
+};
 //==============================================================================
 /**
 * @brief sst extended QPainterPath shape class

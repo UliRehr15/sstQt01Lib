@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -fPIC -D_REENTRANT -Wall -W $(DEFINES)
 CXXFLAGS      = -pipe -g -fPIC -D_REENTRANT -Wall -W $(DEFINES)
-INCPATH       = -I. -I../sst_rec04_lib/Header -I../sst_misc01_lib/Header -I../sst_str01_lib/Header -IHeader -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I../sst_rec04_lib/Header -I../sst_misc01_lib/Header -I../sstMath01Lib/Header -I../sst_str01_lib/Header -IHeader -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/i386-linux-gnu/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -54,7 +54,8 @@ SOURCES       = sstQt01Tab.cpp \
 		sstQt01TestPaintWidget.cpp \
 		sstQt01PathElementCsv1.cpp \
 		sstQt01PathElementCsv2.cpp \
-		sstQt01PathTabView.cpp qrc_tooltips.cpp \
+		sstQt01PathTabView.cpp \
+		sstQt01FormatStore.cpp qrc_tooltips.cpp \
 		moc_sstQt01Lib.cpp \
 		moc_sstQt01LibInt.cpp
 OBJECTS       = sstQt01Tab.o \
@@ -67,6 +68,7 @@ OBJECTS       = sstQt01Tab.o \
 		sstQt01PathElementCsv1.o \
 		sstQt01PathElementCsv2.o \
 		sstQt01PathTabView.o \
+		sstQt01FormatStore.o \
 		qrc_tooltips.o \
 		moc_sstQt01Lib.o \
 		moc_sstQt01LibInt.o
@@ -137,7 +139,8 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		sstQt01TestPaintWidget.cpp \
 		sstQt01PathElementCsv1.cpp \
 		sstQt01PathElementCsv2.cpp \
-		sstQt01PathTabView.cpp
+		sstQt01PathTabView.cpp \
+		sstQt01FormatStore.cpp
 QMAKE_TARGET  = sstQt01Lib_d
 DESTDIR       = ../libs/#avoid trailing-slash linebreak
 TARGET        = libsstQt01Lib_d.a
@@ -316,7 +319,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents tooltips.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents Header/sstQt01Lib.h sstQt01LibInt.h $(DISTDIR)/
-	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp sstQt01PathElementCsv1.cpp sstQt01PathElementCsv2.cpp sstQt01PathTabView.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp sstQt01PathElementCsv1.cpp sstQt01PathElementCsv2.cpp sstQt01PathTabView.cpp sstQt01FormatStore.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -351,17 +354,19 @@ compiler_moc_header_make_all: moc_sstQt01Lib.cpp moc_sstQt01LibInt.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_sstQt01Lib.cpp moc_sstQt01LibInt.cpp
 moc_sstQt01Lib.cpp: ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
-	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include Header/sstQt01Lib.h -o moc_sstQt01Lib.cpp
+	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sstMath01Lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include Header/sstQt01Lib.h -o moc_sstQt01Lib.cpp
 
 moc_sstQt01LibInt.cpp: ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		sstQt01LibInt.h
-	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sstQt01LibInt.h -o moc_sstQt01LibInt.cpp
+	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sstMath01Lib/Header -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sstQt01LibInt.h -o moc_sstQt01LibInt.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -378,6 +383,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean
 ####### Compile
 
 sstQt01Tab.o: sstQt01Tab.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h \
@@ -385,6 +391,7 @@ sstQt01Tab.o: sstQt01Tab.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01Tab.o sstQt01Tab.cpp
 
 sstQt01PathStorage.o: sstQt01PathStorage.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h \
@@ -392,6 +399,7 @@ sstQt01PathStorage.o: sstQt01PathStorage.cpp ../sst_str01_lib/Header/sstStr01Lib
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathStorage.o sstQt01PathStorage.cpp
 
 sstQt01TabView.o: sstQt01TabView.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h \
@@ -399,12 +407,14 @@ sstQt01TabView.o: sstQt01TabView.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TabView.o sstQt01TabView.cpp
 
 sstQt01ShapeItem.o: sstQt01ShapeItem.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01ShapeItem.o sstQt01ShapeItem.cpp
 
 sstQt01PathTabModel.o: sstQt01PathTabModel.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h \
@@ -412,18 +422,21 @@ sstQt01PathTabModel.o: sstQt01PathTabModel.cpp ../sst_str01_lib/Header/sstStr01L
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathTabModel.o sstQt01PathTabModel.cpp
 
 sstQt01PathPaintWidget.o: sstQt01PathPaintWidget.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathPaintWidget.o sstQt01PathPaintWidget.cpp
 
 sstQt01TestPaintWidget.o: sstQt01TestPaintWidget.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TestPaintWidget.o sstQt01TestPaintWidget.cpp
 
 sstQt01PathElementCsv1.o: sstQt01PathElementCsv1.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h \
@@ -431,6 +444,7 @@ sstQt01PathElementCsv1.o: sstQt01PathElementCsv1.cpp ../sst_str01_lib/Header/sst
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathElementCsv1.o sstQt01PathElementCsv1.cpp
 
 sstQt01PathElementCsv2.o: sstQt01PathElementCsv2.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h \
@@ -438,11 +452,20 @@ sstQt01PathElementCsv2.o: sstQt01PathElementCsv2.cpp ../sst_str01_lib/Header/sst
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathElementCsv2.o sstQt01PathElementCsv2.cpp
 
 sstQt01PathTabView.o: sstQt01PathTabView.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h \
 		sstQt01LibInt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathTabView.o sstQt01PathTabView.cpp
+
+sstQt01FormatStore.o: sstQt01FormatStore.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_str01_lib/Header/sstStr01FixColWidth.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01FormatStore.o sstQt01FormatStore.cpp
 
 qrc_tooltips.o: qrc_tooltips.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_tooltips.o qrc_tooltips.cpp
