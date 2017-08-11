@@ -1,14 +1,13 @@
 TEMPLATE = app
 
 CONFIG	 	 += warn_on
-# CONFIG       += c++11
+CONFIG       += c++11
 
 QT += widgets
 
 CONFIG    -= release  # ist DEBUG aktiv
 
 INCLUDEPATH += ../../sst_str01_lib/Header
-INCLUDEPATH += ../../sstMath01Lib/Header
 INCLUDEPATH += ../../sst_misc01_lib/Header
 INCLUDEPATH += ../../sst_rec04_lib/Header
 INCLUDEPATH += ../../sstQt01Lib/Header
@@ -36,16 +35,16 @@ release{
 
 SOURCES  += \
     dialog.cpp \
-    sstQt01_tstrec1_TabMdl.cpp \
-    sstQt01_tstrec2_TabMdl.cpp \
+#    sstQt01_tstrec1_TabMdl.cpp \
+#    sstQt01_tstrec2_TabMdl.cpp \
     sstQt01LibTestTab.cpp \
-    sstQt01_tstrec1_TabView.cpp \
-    sstQt01_tstrec2_TabView.cpp
+#    sstQt01_tstrec1_TabView.cpp \
+#    sstQt01_tstrec2_TabView.cpp
 
 HEADERS  += \ 
-    sst_qt_lib_test_tab.h \
+    # sst_qt_lib_test_tab.h \
     dialog.h
 
 
 # install
-TARGET =   sst_qt_lib_test_tab
+TARGET =   sstQt01LibTestTab

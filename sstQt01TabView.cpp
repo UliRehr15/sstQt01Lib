@@ -24,7 +24,6 @@
 #include <assert.h>
 
 #include <sstStr01Lib.h>
-#include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
@@ -32,12 +31,12 @@
 #include "sstQt01LibInt.h"
 
 //=============================================================================
-//sstQt01TabViewCls::sstQt01TabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
-//                                     sstQt01PathStorageCls *poTmpPathStorage)
-sstQt01TabViewCls::sstQt01TabViewCls()
+sstQt01TabViewCls::sstQt01TabViewCls(sstMisc01PrtFilCls    *poTmpPrt)
+                                     // sstQt01PathStorageCls *poTmpPathStorage)
 {
   // this->poTabMdl = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
   // this->setModel( this->poTabMdl);
+  this->poTmpPrt = poTmpPrt;
     createActions();
     setupContextMenu();
     // connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));

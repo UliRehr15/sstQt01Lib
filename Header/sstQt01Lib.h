@@ -27,7 +27,6 @@
 #include <QTableView>
 
 #include <sstStr01Lib.h>
-#include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 
@@ -42,82 +41,10 @@ QT_END_NAMESPACE
 
 // forward declaration ---------------------------------------------------------
 class sstQt01PathTabMdlCls;
+class TstRec1ModelCls;
+class TstRec2ModelCls;
 
 // Structures and Classes ------------------------------------------------------
-//==============================================================================
-/**
-* @brief General view features for format data like dxf and other.
-*
-* coordinate transformation class
-*
-* Changed: 24.07.17  Re.
-*
-* @ingroup sstQt01Lib
-*
-* @author Re.
-*
-* @date 24.07.17
-*/
-// ----------------------------------------------------------------------------
-class sstQt01FormatViewCls
-{
-  public:   // Public functions
-     sstQt01FormatViewCls();   // Constructor
-    // ~X();   // Destructor
-//==============================================================================
-/**
-* @brief // Calculate Coordinate Transformation Matrice <BR>
-* iStat = iStat = oPathStore.CalcCoorTrn( iKey, WC_Mima, ulDB_Max, dDC_Max);
-*
-* @param iKey     [in] For the moment 0
-* @param WC_Mima  [in] Mbr of data
-* @param ulDB_Max [in] Max of intern Database Coordinates
-* @param dDC_Max  [in] Max of sceen device
-*
-* @return Errorstate
-*
-* @retval   = 0: OK
-* @retval   < 0: Unspecified Error
-*/
-// ----------------------------------------------------------------------------
-    int CalcCoorTrn(int iKey, sstMath01Mbr2Cls WC_Mima, unsigned long ulDB_Max, double dDC_Max);
-    //==============================================================================
-    /**
-    * @brief // transform coordinates from device to world coordinate system  <BR>
-    * iStat = oPathStore.Transform_DC_WC(iKey, &dX, &dY);
-    *
-    * @param iKey  [in] For the moment 0
-    * @param dX    [in out] X Value
-    * @param dY    [in out] Y Value
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    int Transform_DC_WC (int iKey, double *dX, double *dY);
-    //==============================================================================
-    /**
-    * @brief // transform coordinates from would to device coordinate system  <BR>
-    * iStat = oPathStore.Transform_WC_DC(iKey, &dX, &dY);
-    *
-    * @param iKey  [in] For the moment 0
-    * @param dX    [in out] HatchEdge object
-    * @param dY    [in out] HatchEdge object
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
-    int Transform_WC_DC (int iKey, double *dX, double *dY);
-    //==============================================================================
-protected: // Protected functions
-    sstMath01CoorTrnCls oTrn;  /**< Coordinate Transformation matrice class */
-private:  // Private functions
-};
 //==============================================================================
 /**
 * @brief sst extended QPainterPath shape class
@@ -174,15 +101,6 @@ public:
     void setColor(const QColor &Color);
     //==============================================================================
     /**
-    * @brief // set pen <BR>
-    * iStat = oPathItem.setPen(Pen);
-    *
-    * @param Pen [in] QPen
-    */
-    // ----------------------------------------------------------------------------
-    void setPen(const QPen &Pen);
-    //==============================================================================
-    /**
     * @brief // Get QPainterPath <BR>
     * oPath = PathItem.getPath();
     *
@@ -219,17 +137,8 @@ public:
     QColor getColor() const;
     //==============================================================================
     /**
-    * @brief // Get Pen <BR>
-    * oColor = PathItem.getPen();
-    *
-    * @return QPen
-    */
-    // ----------------------------------------------------------------------------
-    QPen getPen() const;
-    //==============================================================================
-    /**
     * @brief // Get ToolTip string <BR>
-    * oToolTip = oPathItem.getToolTip();
+    * oToolTip = oShapeItem.getToolTip();
     *
     * @return QString
     */
@@ -237,13 +146,18 @@ public:
     QString getToolTip() const;
     //==============================================================================
     /**
-    * @brief // Set Path, Tooltip, Position and Color to ShapeItem <BR>
-    * iStat = oPathItem.createShapeItem( path, tooltip, pos, color);
+    * @brief // createShapeItem
+    * iStat = oShapeItem.createShapeItem( path, toolTip, pos, color);
     *
-    * @param path    [in] QPainterPath
-    * @param toolTip [in] Tooltip string
-    * @param pos     [in] Position
-    * @param color   [in] Color
+    * @param path    [in] path
+    * @param toolTip [in] tooltip
+    * @param pos     [in] pos
+    * @param color   [in] color
+    *
+    * @return Errorstate
+    *
+    * @retval   = 0: OK
+    * @retval   < 0: Unspecified Error
     */
     // ----------------------------------------------------------------------------
     void createShapeItem(const QPainterPath &path,
@@ -252,11 +166,10 @@ public:
     //==============================================================================
 
 private:
-    QPainterPath myPath;    /**< Dummy */
-    QPoint myPosition;      /**< Dummy */
-    QColor myColor;         /**< Dummy */
-    QString myToolTip;      /**< Dummy */
-    QPen myPen;             /**< Dummy */
+    QPainterPath myPath;
+    QPoint myPosition;
+    QColor myColor;
+    QString myToolTip;
 };
 //==============================================================================
 /**
@@ -276,10 +189,10 @@ private:
 * @date 04.09.16
 */
 // ----------------------------------------------------------------------------
-class sstQt01PathElementCsv1Cls
+class sstQt01PathElementCsvCls
 {
   public:   // Public functions
-     sstQt01PathElementCsv1Cls();  // Constructor
+     sstQt01PathElementCsvCls();  // Constructor
     //~sstTestBaseCls();  // Destructor
      //==============================================================================
      /**
@@ -494,281 +407,6 @@ private:  // Private functions
      int iColB;        /**< Color Blue */
 };
 //==============================================================================
-/**
-* @brief Path Element record plus Attributes as csv string (Version 2) <BR>
-*
-* for example: <BR>
-* 0;215;193;111;190;0 <BR>
-* element type = 0, Coordinates X,Y = 215, 193 <BR>
-* Color 111,190,0 RGB <BR>
-* Pen Width 1 <BR>
-* Pen Style 1 <BR>
-*
-* Changed: 06.06.17  Re.
-*
-* @ingroup sstQt01Lib
-*
-* @author Re.
-*
-* @date 06.06.17
-*/
-// ----------------------------------------------------------------------------
-class sstQt01PathElementCsv2Cls
-{
-  public:   // Public functions
-     sstQt01PathElementCsv2Cls();  // Constructor
-    //~sstTestBaseCls();  // Destructor
-     //==============================================================================
-     /**
-     * @brief // Read path element object from csv string <BR>
-     * iStat = oPathElement.ReadFromCsv( iKey, oCsvStr, *oErrStr);
-     *
-     * @param iKey    [in]     For the moment 0
-     * @param oCsvStr [in]  Csv string
-     * @param oErrStr [out] Result error string
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     int ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr);
-     //==============================================================================
-     /**
-     * @brief // write path element object to csv string <BR>
-     * iStat = oPathElement.WriteToCsv( iKey, &oCsvStr, &oErrStr);
-     *
-     * @param iKey    [in]  For the moment 0
-     * @param oCsvStr [out] result Csv string with path element / color data
-     * @param oErrStr [out] Result error string
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     int WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr);
-     //==============================================================================
-     /**
-     * @brief // Get Title row for PainterPath Csv file <BR>
-     * oTitleRowStr = oPathElement.GetCsvFileTitle();
-     *
-     * @return Title row string
-     */
-     // ----------------------------------------------------------------------------
-     std::string GetCsvFileTitle();
-     //==============================================================================
-     /**
-     * @brief // set all data to path element object <BR>
-     * iStat = oPathElement.setAll( iType, iXX, iYY, oColor);
-     *
-     * @param iType    [in]  int type
-     * @param iXX      [in]  int coordinate x
-     * @param iYY      [in]  int coordinate y
-     * @param oColor   [in]  color
-     * @param oPen     [in]  pen
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     void setAll(int iType,int iXX, int iYY, QColor oColor, QPen oPen);
-     //==============================================================================
-     /**
-     * @brief // Get Element Type <BR>
-     * oSection = oPathElement.GetIType()
-     *
-     * @return Type Int
-     */
-     // ----------------------------------------------------------------------------
-     int getIType() const;
-     //==============================================================================
-     /**
-     * @brief // Set Element Type <BR>
-     * oPathElement.SetIType ( value);
-     *
-     * @param value [in] Element type 0,1,2 or 3
-     */
-     // ----------------------------------------------------------------------------
-     void setIType(int value);
-     //==============================================================================
-     /**
-     * @brief // Get X Coordinate <BR>
-     *  iXX = oPathElement.GetIXX()
-     *
-     * @return X Coordinate
-     */
-     // ----------------------------------------------------------------------------
-     int getIXX() const;
-     //==============================================================================
-     /**
-     * @brief // Set X coordinate <BR>
-     * oPathElement.SetIXX(oSection);
-     *
-     * @param value [in] coordinate X
-     */
-     // ----------------------------------------------------------------------------
-     void setIXX(int value);
-     //==============================================================================
-     /**
-     * @brief // add value to X coordinate <BR>
-     * oPathElement.addIXX(oValue);
-     *
-     * @param value [in] coordinate X
-     */
-     // ----------------------------------------------------------------------------
-     void addIXX(int value);
-     //==============================================================================
-     /**
-     * @brief // Get Y Coordinate <BR>
-     *  iYY = oPathElement.GetIYY()
-     *
-     * @return Y Coordinate
-     */
-     // ----------------------------------------------------------------------------
-     int getIYY() const;
-     //==============================================================================
-     /**
-     * @brief // Set Y Coordnate <BR>
-     * oPathElement.SetIYY(value);
-     *
-     * @param value [in] Coordinate Y
-     */
-     // ----------------------------------------------------------------------------
-     void setIYY(int value);
-     //==============================================================================
-     /**
-     * @brief // add value to Y Coordnate <BR>
-     * oPathElement.addIYY(value);
-     *
-     * @param value [in] Coordinate Y
-     */
-     // ----------------------------------------------------------------------------
-     void addIYY(int value);
-     //==============================================================================
-     /**
-     * @brief // Get Color Red <BR>
-     *  iColR = oPathElement.GetSection()
-     *
-     * @return int color red
-     */
-     // ----------------------------------------------------------------------------
-     int getIColR() const;
-     //==============================================================================
-     /**
-     * @brief // Set Color Red <BR>
-     * oPathElement.SetColR(value);
-     *
-     * @param value [in] color red
-     */
-     // ----------------------------------------------------------------------------
-     void setIColR(int value);
-     //==============================================================================
-     /**
-     * @brief // Get Color green <BR>
-     *  iColG = oPathElement.GetIColG()
-     *
-     * @return int color green
-     */
-     // ----------------------------------------------------------------------------
-     int getIColG() const;
-     //==============================================================================
-     /**
-     * @brief // Set color green <BR>
-     * oPathElement.setIColG(value);
-     *
-     * @param value [in] color green
-     */
-     // ----------------------------------------------------------------------------
-     void setIColG(int value);
-     //==============================================================================
-     /**
-     * @brief // Get Color Blue <BR>
-     *  iColB = oPathElement.getIColB()
-     *
-     * @return int color blue
-     */
-     // ----------------------------------------------------------------------------
-     int getIColB() const;
-     //==============================================================================
-     /**
-     * @brief // Set color blue <BR>
-     * oPathElement.setIColB(value);
-     *
-     * @param value [in] color blue
-     */
-     // ----------------------------------------------------------------------------
-     void setIColB(int value);
-     //==============================================================================
-     /**
-     * @brief // Set QColor <BR>
-     * oPathElement.setQCol(value);
-     *
-     * @param oQCol [in] QColor
-     */
-     // ----------------------------------------------------------------------------
-     void setQCol(QColor oQCol);
-     //==============================================================================
-     /**
-     * @brief // Get QColor <BR>
-     *  oQCol = oPathElement.getQCol()
-     *
-     * @return QColor
-     */
-     // ----------------------------------------------------------------------------
-     QColor getQCol();
-     //==============================================================================
-     /**
-     * @brief // Get Value <BR>
-     *  oQCol = oPathElement.getValue()
-     *
-     * @return Value
-     */
-     // ----------------------------------------------------------------------------
-     int getIPenWidth() const;
-     //==============================================================================
-     /**
-     * @brief // Set Value <BR>
-     * oPathElement.setValue(value);
-     *
-     * @param value [in] Value
-     */
-     // ----------------------------------------------------------------------------
-     void setIPenWidth(int value);
-     //==============================================================================
-     /**
-     * @brief // Get Value <BR>
-     *  oQCol = oPathElement.getValue()
-     *
-     * @return Value
-     */
-     // ----------------------------------------------------------------------------
-     int getIPenStyle() const;
-     //==============================================================================
-     /**
-     * @brief // Set Value <BR>
-     * oPathElement.setValue(value);
-     *
-     * @param value [in] Value
-     */
-     // ----------------------------------------------------------------------------
-     void setIPenStyle(int value);
-     //==============================================================================
-
-private:  // Private functions
-     int iType;        /**< Shape Item Type */
-     int iXX;          /**< Coordinate X */
-     int iYY;          /**< Coordinate Y */
-     int iColR;        /**< Color Red */
-     int iColG;        /**< Color Green */
-     int iColB;        /**< Color Blue */
-     int iPenWidth;    /**< Pen Width */
-     int iPenStyle;    /**< Pen Style */
-};
 //==============================================================================
 /**
 * @brief Path Element record plus Color as csv string <BR>
@@ -996,24 +634,6 @@ class sstQt01PathMainRecCls
      QColor getQCol();
      //==============================================================================
      /**
-     * @brief // Get QPen <BR>
-     *  oQPen = oPathItem.getQPen();
-     *
-     * @return QColor
-     */
-     // ----------------------------------------------------------------------------
-     QPen getQPen();
-     //==============================================================================
-     /**
-     * @brief // Set QPen <BR>
-     * oPathItem.setQPen(value);
-     *
-     * @param oQPen [in] QPen
-     */
-     // ----------------------------------------------------------------------------
-     void setQPen(QPen oQPen);
-     //==============================================================================
-     /**
      * @brief // Get start record number in element table <BR>
      *  iColR = oPathItem.GetStartElementRecNo()
      *
@@ -1076,42 +696,6 @@ class sstQt01PathMainRecCls
      // ----------------------------------------------------------------------------
      QPoint getPosition();
      //==============================================================================
-     /**
-     * @brief // Get Pen Style <BR>
-     *  iPenStyle = oPathItem.getIPenStyle();
-     *
-     * @return int iPenStyle
-     */
-     // ----------------------------------------------------------------------------
-     int getIPenStyle() const;
-     //==============================================================================
-     /**
-     * @brief // Set Pen Style <BR>
-     * oPathItem.setIPenStyle(iValue);
-     *
-     * @param value [in] iPenStyle
-     */
-     // ----------------------------------------------------------------------------
-     void setIPenStyle(int value);
-     //==============================================================================
-     /**
-     * @brief // Get Pen Width <BR>
-     *  iPenWidth = oPathItem.getIPenWidth();
-     *
-     * @return int iPenWidth
-     */
-     // ----------------------------------------------------------------------------
-     int getIPenWidth() const;
-     //==============================================================================
-     /**
-     * @brief // Set Pen Widt <BR>
-     * oPathItem.setIPenWidth(iValue);
-     *
-     * @param value [in] iPenWidth
-     */
-     // ----------------------------------------------------------------------------
-     void setIPenWidth(int value);
-     //==============================================================================
 
 private:
      int iXX;        /**< Position X */
@@ -1119,8 +703,6 @@ private:
      int iColR;        /**< Color Red */
      int iColG;        /**< Color Green */
      int iColB;        /**< Color Blue */
-     int iPenStyle;        /**< Pen Style */
-     int iPenWidth;        /**< Pen Width */
      char cTooltip[30];  /**< Tooltip char string */
      dREC04RECNUMTYP dStartElementRecNo;  /**< Start of Path in Element table */
      dREC04RECNUMTYP dNumElements;        /**< Number of elements in path */
@@ -1147,7 +729,7 @@ class sstQt01PathStorageCls
     ~sstQt01PathStorageCls();  // Destructor
      //==============================================================================
      /**
-     * @brief // Load all pathes record rows from csv file in sst table object.  <BR>
+     * @brief // Load all pathes record rows from csv file into sst table object.  <BR>
      * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
      *
      * @param iKey    [in] For the moment 0
@@ -1155,7 +737,10 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
+     * @retval   =  0: OK
+     * @retval   = -1: Wrong Key
+     * @retval   = -2: File not found
+     * @retval   = -3: Wrong File Header
      * @retval   < 0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
@@ -1183,7 +768,6 @@ class sstQt01PathStorageCls
      * @param iKey   [in] For the moment 0
      * @param oPath  [in] QPainterPath object to store
      * @param oColor [in] Color of Path
-     * @param oPen   [in] Pen of Path
      *
      * @return Errorstate
      *
@@ -1191,7 +775,7 @@ class sstQt01PathStorageCls
      * @retval   < 0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
-     int AppendPath(int iKey,  QPainterPath oPath, QColor oColor, QPen oPen);
+     int AppendPath(int iKey,  QPainterPath oPath, QColor oColor);
      //==============================================================================
      /**
      * @brief // read next QPainterPath object from sst table object.  <BR>
@@ -1200,7 +784,6 @@ class sstQt01PathStorageCls
      * @param iKey   [in] For the moment 0
      * @param oPath  [out] QPainterPath object
      * @param oColor [out] Color of Path
-     * @param oPen   [out] Pen of Path
      *
      * @return Errorstate
      *
@@ -1208,7 +791,7 @@ class sstQt01PathStorageCls
      * @retval   < 0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
-     int ReadNextPath(int iKey,  QPainterPath *oPath, QColor *oColor, QPen *oPen);
+     int ReadNextPath(int iKey,  QPainterPath *oPath, QColor *oColor);
      //==============================================================================
      /**
      * @brief // read next QPainterPath object from sst table object.  <BR>
@@ -1376,17 +959,6 @@ class sstQt01PathStorageCls
      QColor getColor(dREC04RECNUMTYP index);
      //==============================================================================
      /**
-     * @brief // Get QPen for index path <BR>
-     * iStat = oPathStorage.getQPen(index);
-     *
-     * @param index [in] index of path
-     *
-     * @return Color
-     */
-     // ----------------------------------------------------------------------------
-     QPen getQPen(dREC04RECNUMTYP index);
-     //==============================================================================
-     /**
      * @brief // Get Path from path table <BR>
      * iStat = oPathStorage.getPath(index);
      *
@@ -1446,78 +1018,19 @@ class sstQt01PathStorageCls
      int createDefaultItems(int iKey);
 // ----------------------------------------------------------------------------
   private:  // Private functions
-     //==============================================================================
-     /**
-     * @brief // Shortstory <BR>
-     * iStat = oPathStorage.Func_1(iKey);
-     *
-     * @param path [in out] QPainterPath
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
      QPoint initialItemPosition(const QPainterPath &path);
-     //==============================================================================
-     /**
-     * @brief // Shortstory <BR>
-     * iStat = oPathStorage.Func_1(iKey);
-     *
-     * @return QColor
-     */
-     // ----------------------------------------------------------------------------
      QColor initialItemColor();
-     //==============================================================================
-     /**
-     * @brief // Load Version 2 Data from PainterPath CSV File <BR>
-     * iStat = oPathStorage.LoadVersion2File(iKey,poPainterCsvFile);
-     *
-     * @param iKey    [in] For the moment 0
-     * @param oFilNam [in] Name of PainterPath FileNam
-     *
-     * @return Errorstate
-     *
-     * @retval   =  0: OK
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: Could file not open
-     * @retval   = -3: Version Error
-     * @retval   = -4: Data Interpret Error
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     int LoadVersion2File(int iKey,  std::string oFilNam);
-     //==============================================================================
-     /**
-     * @brief // Load Version 1 Data from PainterPath CSV File <BR>
-     * iStat = oPathStorage.LoadVersion1File(iKey,poPainterCsvFile);
-     *
-     * @param iKey    [in] For the moment 0
-     * @param oFilNam [in] Name of PainterPath FileNam
-     *
-     * @return Errorstate
-     *
-     * @retval   =  0: OK
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: Could file not open
-     * @retval   = -3: Version Error
-     * @retval   = -4: Data Interpret Error
-     * @retval   <  0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     int LoadVersion1File(int iKey,  std::string oFilNam);
-     //==============================================================================
+
 
      sstRec04Cls *poShapeItemRecTable;   /**< painter path element record table */
      sstRec04Cls *poShapeItemMainTable;  /**< painter path main table */
      dREC04RECNUMTYP dActualReadPos;     /**< actual read position in table */
-     int iHeight;  /**< Bounding Box for creating new path objects */
-     int iWidth;   /**< Bounding Box for creating new path objects */
+     const int height = 500;
+     const int width = 300;
 };
 //==============================================================================
 /**
-* @brief Definition Class TstRec2ViewCls
+* @brief Definition Class sstQt01TabViewCls
 *
 * More Comment
 *
@@ -1534,7 +1047,15 @@ class sstQt01TabViewCls : public QTableView
 {
       Q_OBJECT
   public:   // Public functions
-  sstQt01TabViewCls();    // Constructor
+  //==============================================================================
+  /**
+  * @brief // Constructor for sstQt01TabViewCls <BR>
+  *
+  * @param poPrt         [in out] Pointer to Protocol object
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01TabViewCls(sstMisc01PrtFilCls    *poPrt);
+                    //sstQt01PathStorageCls *poPathStorage);    // Constructor
   ~sstQt01TabViewCls();   // Destructor
 // ----------------------------------------------------------------------------
 public slots:
@@ -1583,7 +1104,87 @@ signals:
 private:  // Private functions
   QAction *cell_InsAction;   /**< Insert Table Rows Action */
   QAction *cell_DelAction;   /**< Delete Table Rows Action */
-  // sstQt01PathTabMdlCls *poTabMdl;  /**< Dummy */
+  sstMisc01PrtFilCls    *poTmpPrt;  /**< Pointer to protocol object */
+  // sstQt01PathTabMdlCls *poTabMdl;
+};
+//==============================================================================
+/**
+* @brief Definition Class sstQt01PathTabViewCls
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class sstQt01PathTabViewCls : public sstQt01TabViewCls
+{
+      Q_OBJECT
+  public:   // Public functions
+  //==============================================================================
+  /**
+  * @brief // Constructor for sstQt01TabViewCls <BR>
+  *
+  * @param poPrt         [in out] Pointer to Protocol object
+  * @param poPathStorage [in out] Pointer to Path Storage object
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01PathTabViewCls(sstMisc01PrtFilCls    *poPrt,
+                    sstQt01PathStorageCls *poPathStorage);    // Constructor
+  ~sstQt01PathTabViewCls();   // Destructor
+// ----------------------------------------------------------------------------
+public slots:
+     //==============================================================================
+     /**
+     * @brief actionRowsInsert
+     */
+     // ----------------------------------------------------------------------------
+  // void actionRowsInsert();
+  //==============================================================================
+  /**
+  * @brief actionRowsDelete
+  */
+  // ----------------------------------------------------------------------------
+  // void actionRowsDelete();
+
+protected:
+  //==============================================================================
+  /**
+  * @brief setup ContextMenu with actions
+  */
+  // ----------------------------------------------------------------------------
+    // void setupContextMenu();
+    //==============================================================================
+    /**
+    * @brief Create actions and connect to slots
+    */
+    // ----------------------------------------------------------------------------
+    // void createActions();
+
+public slots:
+    //==============================================================================
+    /**
+    * @brief Slot Table data changed
+    */
+    // ----------------------------------------------------------------------------
+    // void ChangeTab();
+signals:
+    //==============================================================================
+    /**
+    * @brief Signal Table data changed
+    */
+    // ----------------------------------------------------------------------------
+    // void TabChanged();
+
+private:  // Private functions
+  // QAction *cell_InsAction;   /**< Insert Table Rows Action */
+  // QAction *cell_DelAction;   /**< Delete Table Rows Action */
+  sstQt01PathTabMdlCls *poTabMdl;
 };
 //==============================================================================
 /**
@@ -1677,256 +1278,48 @@ public slots:
     void sstPaintEvent();
     //==============================================================================
 private slots:
-    //==============================================================================
-    /**
-    * @brief // Private Slot createNewCircle <BR>
-    * iStat = oPathWidget.createNewCircle();
-    */
-    // ----------------------------------------------------------------------------
     void createNewCircle();
-    //==============================================================================
-    /**
-    * @brief // Private Slot createNewSquare <BR>
-    * iStat = oPathWidget.createNewSquare();
-    */
-    // ----------------------------------------------------------------------------
     void createNewSquare();
-    //==============================================================================
-    /**
-    * @brief // Private Slot createNewTriangle <BR>
-    * iStat = oPathWidget.createNewTriangle();
-    */
-    // ----------------------------------------------------------------------------
     void createNewTriangle();
-    //==============================================================================
-    /**
-    * @brief // Private Slot createNewLine <BR>
-    * iStat = oPathWidget.createNewLine();
-    */
-    // ----------------------------------------------------------------------------
     void createNewLine();
 
 private:
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @param button [in] For the moment 0
-    * @param x [in] For the moment 0
-    * @param y [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     int updateButtonGeometry(QToolButton *button, int x, int y);
-    //==============================================================================
-    /**
-    * @brief // createShapeItem <BR>
-    * iStat = oPathWidget.createShapeItem(path, tooltip, pos, color, pen);
-    *
-    * @param path    [in] QPainterPath object
-    * @param toolTip [in] tooltip string
-    * @param pos     [in] position
-    * @param color   [in] color
-    * @param pen     [in] pen
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     void createShapeItem(const QPainterPath &path, const QString &toolTip,
-                         const QPoint &pos, const QColor &color, const QPen &pen);
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @param pos [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
+                         const QPoint &pos, const QColor &color);
     int itemAt(const QPoint &pos);
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @param pos [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     void moveItemTo(const QPoint &pos);
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @param iKey [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     int ItemsLoadFromFile3 (int iKey);
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @param iKey [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     int ItemsCreate (int iKey);
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     QSize minimumSizeHint() const;
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     QSize sizeHint() const;
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @param path [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
+
+
     QPoint initialItemPosition(const QPainterPath &path);
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     QPoint randomItemPosition();
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     QColor initialItemColor();
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     QColor randomItemColor();
-    //==============================================================================
-    /**
-    * @brief // initialItemPen <BR>
-    * iStat = oPathWidget.initialItemPen();
-    *
-    * @return QPath
-    */
-    // ----------------------------------------------------------------------------
-    QPen initialItemPen();
-    //==============================================================================
-    /**
-    * @brief // randomItemPen <BR>
-    * iStat = oPathWidget.randomItemPen();
-    *
-    * @return QPath
-    */
-    // ----------------------------------------------------------------------------
-    QPen randomItemPen();
-    //==============================================================================
-    /**
-    * @brief // Shortstory <BR>
-    * iStat = oPathWidget.Func_1(iKey);
-    *
-    * @param toolTip [in] For the moment 0
-    * @param icon [in] For the moment 0
-    * @param member [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
-    */
-    // ----------------------------------------------------------------------------
     QToolButton *createToolButton(const QString &toolTip, const QIcon &icon,
                                   const char *member);
-    //==============================================================================
 
     // QList<sstQt01ShapeItem> shapeItems;
-    QPainterPath circlePath;    /**< Dummy */
-    QPainterPath squarePath;    /**< Dummy */
-    QPainterPath trianglePath;  /**< Dummy */
-    QPainterPath linePath;      /**< Dummy */
+    QPainterPath circlePath;
+    QPainterPath squarePath;
+    QPainterPath trianglePath;
+    QPainterPath linePath;
 
-    QPoint previousPosition;    /**< Dummy */
+    QPoint previousPosition;
     // sstQt01ShapeItem *itemInMotion;
-    int iItemInMotionIndex;     /**< Dummy */
-    sstQt01ShapeItem oActualItem; /**< Dummy */
-    int iActualItemIndex;       /**< Dummy */
+    int iItemInMotionIndex;
+    sstQt01ShapeItem oActualItem;
+    int iActualItemIndex;
 
-    QToolButton *newCircleButton;   /**< Dummy */
-    QToolButton *newSquareButton;   /**< Dummy */
-    QToolButton *newTriangleButton; /**< Dummy */
-    QToolButton *newLineButton;     /**< Dummy */
-    sstQt01PathStorageCls *oPathStorage; /**< Dummy */
-    sstMisc01PrtFilCls *poPrt;      /**< Dummy */
+    QToolButton *newCircleButton;
+    QToolButton *newSquareButton;
+    QToolButton *newTriangleButton;
+    QToolButton *newLineButton;
+    sstQt01PathStorageCls *oPathStorage;
+    sstMisc01PrtFilCls *poPrt;
 };
 //==============================================================================
 /**
@@ -2039,12 +1432,12 @@ protected:
     //==============================================================================
 
 private:
-    Shape shape;       /**< Dummy */
-    QPen pen;          /**< Dummy */
-    QBrush brush;      /**< Dummy */
-    bool antialiased;  /**< Dummy */
-    bool transformed;  /**< Dummy */
-    QPixmap pixmap;    /**< Dummy */
+    Shape shape;
+    QPen pen;
+    QBrush brush;
+    bool antialiased;
+    bool transformed;
+    QPixmap pixmap;
 };
 //==============================================================================
 /**
@@ -2059,30 +1452,78 @@ private:
 * @date 22.04.17
 */
 // ----------------------------------------------------------------------------
-class sstQt01PathTabViewCls : public sstQt01TabViewCls
+class sstQt01TstRec1ViewCls : public sstQt01TabViewCls
 {
   public:   // Public functions
   //==============================================================================
   /**
-  * @brief // Shortstory <BR>
-  * iStat = oTestBase.Func_1(iKey);
+  * @brief // Constructor for sstQt01TstRec1ViewCls <BR>
   *
-  * @param poPrt         [in] Pointer to Protocol object
-  * @param poPathStorage [in] Pointer to PathStorage object
-  *
-  * @return Errorstate
-  *
-  * @retval   = 0: OK
-  * @retval   < 0: Unspecified Error
+  * @param poPrt         [in] Adress of Protocoll
   */
   // ----------------------------------------------------------------------------
-     sstQt01PathTabViewCls( sstMisc01PrtFilCls    *poPrt,
-                            sstQt01PathStorageCls *poPathStorage);  // Constructor
+  sstQt01TstRec1ViewCls(sstMisc01PrtFilCls    *poPrt);  // Constructor
+     ~sstQt01TstRec1ViewCls();  // Destructor
      //==============================================================================
-     ~sstQt01PathTabViewCls();  // Destructor
-     //==============================================================================
+     /**
+     * @brief // Shortstory <BR>
+     * iStat = oTestBase.Func_1(iKey);
+     *
+     * @param iKey [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+    // int Func_1(int iKey);
+// ----------------------------------------------------------------------------
 private:  // Private functions
-     sstQt01PathTabMdlCls  *pTstRec1Model; /**< Dummy */
+     TstRec1ModelCls  *pTstRec1Model; /**< Dummy */
+};
+//==============================================================================
+/**
+* @brief View Class for sstRec04 TstRec2 records
+*
+* Changed: 22.04.17  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 22.04.17
+*/
+// ----------------------------------------------------------------------------
+class sstQt01TstRec2ViewCls : public sstQt01TabViewCls
+{
+  public:   // Public functions
+  //==============================================================================
+  /**
+  * @brief // Constructor for sstQt01TstRec2ViewCls <BR>
+  *
+  * @param poPrt         [in] Adress of Protocoll
+  */
+  // ----------------------------------------------------------------------------
+     sstQt01TstRec2ViewCls(sstMisc01PrtFilCls    *poPrt);  // Constructor
+     ~sstQt01TstRec2ViewCls();  // Destructor
+     //==============================================================================
+     /**
+     * @brief // Shortstory <BR>
+     * iStat = oTestBase.Func_1(iKey);
+     *
+     * @param iKey [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+    // int Func_1(int iKey);
+// ----------------------------------------------------------------------------
+private:  // Private functions
+  TstRec2ModelCls  *pTstRec2Model; /**< Dummy */
 };
 //==============================================================================
 

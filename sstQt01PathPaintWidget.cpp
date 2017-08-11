@@ -19,7 +19,6 @@
 #include <assert.h>
 
 #include <sstStr01Lib.h>
-#include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
@@ -30,8 +29,6 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTm
 {
 
   Q_INIT_RESOURCE(tooltips);
-
-  qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
   if (poTmpPathStorage == NULL) assert (0);
   if (poTmpPathStorage->countItems() <= 0) assert(0);
@@ -131,7 +128,6 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
     for (int ii=1; ii <= iPathCount; ii++)
     {
         painter.translate(this->oPathStorage->getPosition(ii));
-        painter.setPen(this->oPathStorage->getQPen(ii));
         painter.setBrush(this->oPathStorage->getColor(ii));
         painter.drawPath(this->oPathStorage->getPath(ii));
         painter.translate(-this->oPathStorage->getPosition(ii));
@@ -192,28 +188,28 @@ void sstQt01PathPaintWidgetCls::createNewCircle()
 {
     static int count = 1;
     createShapeItem(circlePath, tr("Circle <%1>").arg(++count),
-                    randomItemPosition(), randomItemColor(),randomItemPen());
+                    randomItemPosition(), randomItemColor());
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createNewSquare()
 {
     static int count = 1;
     createShapeItem(squarePath, tr("Square <%1>").arg(++count),
-                    randomItemPosition(), randomItemColor(),randomItemPen());
+                    randomItemPosition(), randomItemColor());
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createNewTriangle()
 {
     static int count = 1;
     createShapeItem(trianglePath, tr("Triangle <%1>").arg(++count),
-                    randomItemPosition(), randomItemColor(),randomItemPen());
+                    randomItemPosition(), randomItemColor());
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createNewLine()
 {
     static int count = 1;
     createShapeItem(linePath, tr("Line <%1>").arg(++count),
-                    randomItemPosition(), randomItemColor(),randomItemPen());
+                    randomItemPosition(), randomItemColor());
 }
 //=============================================================================
 int sstQt01PathPaintWidgetCls::itemAt(const QPoint &pos)
@@ -248,14 +244,13 @@ int sstQt01PathPaintWidgetCls::updateButtonGeometry(QToolButton *button, int x, 
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createShapeItem(const QPainterPath &path,
                                  const QString &toolTip, const QPoint &pos,
-                                 const QColor &color, const QPen &pen)
+                                 const QColor &color)
 {
     sstQt01ShapeItem shapeItem;
     shapeItem.setPath(path);
     shapeItem.setToolTip(toolTip);
     shapeItem.setPosition(pos);
     shapeItem.setColor(color);
-    shapeItem.setPen(pen);
     this->oPathStorage->appendShapeItem(shapeItem);
     update();
 }
@@ -301,38 +296,12 @@ QColor sstQt01PathPaintWidgetCls::randomItemColor()
     return QColor::fromHsv(qrand() % 256, 255, 190);
 }
 //=============================================================================
-QPen sstQt01PathPaintWidgetCls::initialItemPen()
-{
-  QPen oPen;
-  oPen.setStyle(Qt::SolidLine);
-  oPen.setWidth(1);
-  return oPen;
-}
-//=============================================================================
-QPen sstQt01PathPaintWidgetCls::randomItemPen()
-{
-  int iRandVal = 0;
-  double dRandVal=0.0;
-  iRandVal = qrand();
-  dRandVal = (double) iRandVal;
-  dRandVal = dRandVal / (double) RAND_MAX;
-  dRandVal = dRandVal * 5;
-  iRandVal = 1+ (int) dRandVal;
-  Qt::PenStyle ePenStyle;
-  ePenStyle = (Qt::PenStyle) iRandVal;
-  QPen oPen;
-  oPen.setStyle(ePenStyle);
-  oPen.setWidth(iRandVal);
-  return oPen;
-}
-//=============================================================================
 int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
 //-----------------------------------------------------------------------------
 {
   QPoint oPnt(0,0);
   QPainterPath *poPath;
   QColor oColor;
-  QPen oPen;
   int iPathNo = 0;
 
   int iRet  = 0;
@@ -343,7 +312,7 @@ int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
 
   // read next path from shape item table
   poPath = new (QPainterPath);
-  iStat1 = this->oPathStorage->ReadNextPath( 0, poPath, &oColor, &oPen);
+  iStat1 = this->oPathStorage->ReadNextPath( 0, poPath, &oColor);
 
   while (iStat1 >= 0)
   {
@@ -370,7 +339,7 @@ int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
 
     delete poPath;
     poPath = new (QPainterPath);
-    iStat1 = this->oPathStorage->ReadNextPath( 0, poPath, &oColor,&oPen);
+    iStat1 = this->oPathStorage->ReadNextPath( 0, poPath, &oColor);
   }
 
   delete poPath;
@@ -386,22 +355,22 @@ int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
 int sstQt01PathPaintWidgetCls::ItemsCreate (int iKey)
 //-----------------------------------------------------------------------------
 {
-  // QColor oColor;
-  // QPoint oPos;
-  // int iRet  = 0;
+  QColor oColor;
+  QPoint oPos;
+  int iRet  = 0;
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
   createShapeItem(circlePath, tr("Circle"), initialItemPosition(circlePath),
-                  initialItemColor(), initialItemPen());
+                  initialItemColor());
   createShapeItem(squarePath, tr("Square"), initialItemPosition(squarePath),
-                  initialItemColor(),initialItemPen());
+                  initialItemColor());
   createShapeItem(trianglePath, tr("Triangle"),
-                  initialItemPosition(trianglePath), initialItemColor(),initialItemPen());
+                  initialItemPosition(trianglePath), initialItemColor());
   createShapeItem(linePath, tr("Line"),
-                  initialItemPosition(linePath), initialItemColor(),initialItemPen());
+                  initialItemPosition(linePath), initialItemColor());
 
-  return 0;
+  return iRet;
 }
 //=============================================================================
 QSize sstQt01PathPaintWidgetCls::minimumSizeHint() const

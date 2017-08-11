@@ -1,6 +1,8 @@
 TEMPLATE	= lib
 CONFIG		+= warn_on
 CONFIG    += qt
+CONFIG    += c++11
+
 
 # CONFIG    -= debug  # ist RELEASE aktiv
 CONFIG    -= release  # ist DEBUG aktiv
@@ -11,7 +13,6 @@ QT += widgets
 
 INCLUDEPATH += ../sst_rec04_lib/Header
 INCLUDEPATH += ../sst_misc01_lib/Header
-INCLUDEPATH += ../sstMath01Lib/Header
 INCLUDEPATH += ../sst_str01_lib/Header
 INCLUDEPATH += ./Header
 
@@ -20,15 +21,18 @@ HEADERS		+= sstQt01LibInt.h
 
 SOURCES		+= sstQt01Tab.cpp \
              sstQt01PathStorage.cpp \
+             sstQt01PathElementCsv.cpp \
     sstQt01TabView.cpp \
     sstQt01ShapeItem.cpp \
     sstQt01PathTabModel.cpp \
     sstQt01PathPaintWidget.cpp \
     sstQt01TestPaintWidget.cpp \
-    sstQt01PathElementCsv1.cpp \
-    sstQt01PathElementCsv2.cpp \
     sstQt01PathTabView.cpp \
-    sstQt01FormatStore.cpp
+    sstQt01_tstrec1_TabMdl.cpp \
+    sstQt01_tstrec1_TabView.cpp \
+    sstQt01_tstrec2_TabMdl.cpp \
+    sstQt01_tstrec2_TabView.cpp \
+    sstQt01BaseTabMdl.cpp
 
 OTHER_FILES += README.md
 

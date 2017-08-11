@@ -32,6 +32,10 @@
 //=============================================================================
 Dialog::Dialog()
 {
+  this->poPrt = new sstMisc01PrtFilCls;
+  int iStat = poPrt->SST_PrtAuf(1,(char*)"sstQt01LibTestTab.log");
+  assert(iStat >= 0);
+
   createMenu();
   createHorizontalGroupBox1();
   createHorizontalGroupBox2();
@@ -45,6 +49,8 @@ Dialog::Dialog()
 //=============================================================================
 Dialog::~Dialog()
 {
+  this->poPrt->SST_PrtZu(1);
+  delete this->poPrt;
   // delete(pTstRec1Model);
   // delete(pTstRec2Model);
 }
@@ -65,10 +71,7 @@ void Dialog::createHorizontalGroupBox1()
     horizontalGroupBox1 = new QGroupBox(tr("TestRec1.csv"));
     QVBoxLayout *layout1 = new QVBoxLayout;
 
-    // pTstRec1View = new(sstQt01TabViewCls);
-    pTstRec1View = new sstQt01TstRec1ViewCls;
-    // pTstRec1Model = new TstRec1ModelCls(0);
-    // pTstRec1View->setModel( pTstRec1Model );
+    pTstRec1View = new sstQt01TstRec1ViewCls(this->poPrt);
     layout1->addWidget(pTstRec1View);
 
     horizontalGroupBox1->setLayout(layout1);
@@ -79,10 +82,7 @@ void Dialog::createHorizontalGroupBox2()
     horizontalGroupBox2 = new QGroupBox(tr("TestRec2.csv"));
     QVBoxLayout *layout2 = new QVBoxLayout;
 
-    // pTstRec2View = new(sstQt01TabViewCls);
-    pTstRec2View = new sstQt01TstRec2ViewCls;
-    // pTstRec2Model = new TstRec2ModelCls(0);
-    // pTstRec2View->setModel( pTstRec2Model );
+    pTstRec2View = new sstQt01TstRec2ViewCls(this->poPrt);
     layout2->addWidget(pTstRec2View);
 
     horizontalGroupBox2->setLayout(layout2);

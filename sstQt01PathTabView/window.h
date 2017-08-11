@@ -51,8 +51,7 @@ private:
     sstQt01TestPaintWidgetCls *sstQt01TestPaintWidgetCls1;
     sstQt01TestPaintWidgetCls *sstQt01TestPaintWidgetCls2;
 
-    // sstQt01TabViewCls *poPathTabWidget;
-    sstQt01PathTabViewCls *poPathTabWidget;
+    sstQt01TabViewCls *poPathTabWidget;
     // sstQt01PathTabMdlCls *pTstRec1Model;
 
     sstQt01PathPaintWidgetCls *poPathMapWidget;

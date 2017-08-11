@@ -11,9 +11,9 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathTabModel.cpp   16.09.15  Re.    16.09.15  Re.
+// sstQt01_tstrec1_TabMdl.cpp   16.09.15  Re.    16.09.15  Re.
 //
-// qt model for sst Table painterpath
+// qt model and View for dss Table testrec1
 
 #include <QtWidgets>
 #include <QFont>
@@ -28,20 +28,32 @@
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
-// #include "sstQt01LibTabPath.h"
 #include "sstQt01LibInt.h"
 
+// #include "sst_qt_lib_test_tab.h"
+
 //=============================================================================
-sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent,
-                                           sstMisc01PrtFilCls    *poTmpPrt,
-                                           sstQt01PathStorageCls *poTmpPathStorage)
+TstRec1ModelCls::TstRec1ModelCls(QObject *parent)
     :sstQt01TabMdlCls(parent)
 {
   int iStat = 0;
-  this->poPrt = poTmpPrt;
-  this->poPathStorage = poTmpPathStorage;
+  dREC04RECNUMTYP dLocRecNo = 0;
+  sstRec04TestRec1Cls oLocTestRec;
+  iStat = oTestRec1Table.OpenReadCsvFile(0,(char*) "test_rec1.csv");
 
-  dREC04RECNUMTYP dRecNum = poPathStorage->RecordCount();
+  if (iStat == -2)
+  {  // File not found
+    iStat = oLocTestRec.SetAll(33,(char*) "Test");
+
+    iStat = oTestRec1Table.WriteNew(0,&dLocRecNo,&oLocTestRec);
+    // iStat = oTestRec1Table.CloseCsvFile(0,(char*)"test_rec1.csv");
+
+    // iStat = oTestRec1Table.OpenReadCsvFile(0,(char*) "test_rec1.csv");
+    assert(iStat == 0);
+
+  }
+
+  dREC04RECNUMTYP dRecNum = oTestRec1Table.RecordCount();
 
   for (dREC04RECNUMTYP ll=1; ll<=dRecNum; ++ll)
   {
@@ -56,39 +68,46 @@ sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent,
   }
 }
 //=============================================================================
-sstQt01PathTabMdlCls::~sstQt01PathTabMdlCls()
+// Complete function description is in headerfile
+//-----------------------------------------------------------------------------
+TstRec1ModelCls::~TstRec1ModelCls()
 {
+  oTestRec1Table.CloseCsvFile(0,(char*) "test_rec1.csv");
 }
 //=============================================================================
-int sstQt01PathTabMdlCls::rowCount(const QModelIndex & /*parent*/) const
+// Complete function description is in headerfile
+//-----------------------------------------------------------------------------
+int TstRec1ModelCls::rowCount(const QModelIndex & /*parent*/) const
 {
-  return poPathStorage->RecordCount();
+  return oTestRec1Table.RecordCount();
 }
 //=============================================================================
-int sstQt01PathTabMdlCls::columnCount(const QModelIndex & /*parent*/) const
+// Complete function description is in headerfile
+//-----------------------------------------------------------------------------
+int TstRec1ModelCls::columnCount(const QModelIndex & /*parent*/) const
 {
-    return 6;
+    return 2;
 }
 //=============================================================================
-QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
+// Complete function description is in headerfile
+//-----------------------------------------------------------------------------
+QVariant TstRec1ModelCls::data(const QModelIndex &index, int role) const
 {
+  // int row = index.row();
   int col = index.column();
 
   switch(role){
   case Qt::DisplayRole:
     {
-      sstQt01PathElementCsvCls oTestRec1;
+      sstRec04TestRec1Cls oTestRec1;
 
-      poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+      oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
 
       switch (index.column())
       {
-      case 0:  return oTestRec1.getIType();
-      case 1:  return oTestRec1.getIXX();
-      case 2:  return oTestRec1.getIYY();
-      case 3:  return oTestRec1.getIColR();
-      case 4:  return oTestRec1.getIColG();
-      case 5:  return oTestRec1.getIColB();
+      // case 0:  return QString::number(oTestRec1.dVal, 'f', 4); break;
+      case 0:  return oTestRec1.iVal;
+      case 1:  return QString::fromUtf8( oTestRec1.cVal); break;
       default: return QString("Row%1, Column%2").arg(index.row() + 1).arg(index.column() +1); break;
       }
     }
@@ -104,60 +123,65 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 //=============================================================================
-QVariant sstQt01PathTabMdlCls::headerData(int section, Qt::Orientation orientation, int role) const
+// Complete function description is in headerfile
+//-----------------------------------------------------------------------------
+QVariant TstRec1ModelCls::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
     {
         if (orientation == Qt::Horizontal) {
             switch (section)
             {
-            case 0: return QString("iType");
-            case 1: return QString("iXX");
-            case 2: return QString("iYY");
-            case 3: return QString("iColR");
-            case 4: return QString("iColG");
-            case 5: return QString("iColB");
+            case 0:
+                return QString("Int2");
+            case 1:
+                return QString("Character");
             }
         }
     }
     return QVariant();
 }
 //=============================================================================
-bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & value, int role)
+// Complete function description is in headerfile
+//-----------------------------------------------------------------------------
+bool TstRec1ModelCls::setData(const QModelIndex & index, const QVariant & value, int role)
 {
     if (role == Qt::EditRole)
     {
         //save value from editor to oTestRecDss
-      sstQt01PathElementCsvCls oTestRec1;
+      sstRec04TestRec1Cls oTestRec1;
 
       dREC04RECNUMTYP dRecNo = index.row() +1;
-      poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+      oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
 
       bool bOK = 1;
 
       switch (index.column())
       {
-      case 0: oTestRec1.setIType(value.toInt(&bOK)); break;
-      case 1: oTestRec1.setIXX(value.toInt(&bOK)); break;
-      case 2: oTestRec1.setIYY( value.toInt(&bOK)); break;
-      case 3: oTestRec1.setIColR( value.toInt(&bOK)); break;
-      case 4: oTestRec1.setIColG( value.toInt(&bOK)); break;
-      case 5: oTestRec1.setIColB( value.toInt(&bOK)); break;
+      // case 0: oTestRec1.dVal = value.toDouble(&bOK); break;
+      case 0: oTestRec1.iVal = value.toInt(&bOK); break;
+      case 1:
+        {
+          QString locStr = value.toString();
+          strncpy(oTestRec1.cVal, locStr.toUtf8(),10);
+          break;
+        }
       }
 
-      if (bOK) poPathStorage->WriteRecPos( 0, dRecNo, &oTestRec1);
+      if (bOK) oTestRec1Table.WriteRecPos( 0, dRecNo, &oTestRec1);
 
     }
-    emit this->TabChanged();
     return true;
 }
 //=============================================================================
-Qt::ItemFlags sstQt01PathTabMdlCls::flags(const QModelIndex &index) const
+// Complete function description is in headerfile
+//-----------------------------------------------------------------------------
+Qt::ItemFlags TstRec1ModelCls::flags(const QModelIndex &index) const
 {
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
 }
 //=============================================================================
-bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex &index)
+bool TstRec1ModelCls::removeRows(int position, int rows, const QModelIndex &index)
 {
     Q_UNUSED(index);
     beginRemoveRows(QModelIndex(), position, position + rows - 1);
@@ -166,7 +190,7 @@ bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex 
     // Position is 0 > n-1
 
     for (int row = 0; row < rows; ++row) {
-      poPathStorage->DeleteRecPos(0,position+1);
+      oTestRec1Table.DeleteRecPos(0,position+1);
     }
     endRemoveRows();
 
@@ -175,7 +199,7 @@ bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex 
     return true;
 }
 //=============================================================================
-bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex &index)
+bool TstRec1ModelCls::insertRows(int position, int rows, const QModelIndex &index)
 {
     Q_UNUSED(index);
     beginInsertRows(QModelIndex(), position, position + rows - 1);
@@ -185,8 +209,8 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
     dREC04RECNUMTYP dRecNo = 0;
 
     for (int row = 0; row < rows; ++row) {
-      sstQt01PathElementCsvCls oTestRec;
-      poPathStorage->WriteNew(0,&dRecNo,&oTestRec);
+      sstRec04TestRec1Cls oTestRec;
+      oTestRec1Table.WriteNew(0,&dRecNo,&oTestRec);
     }
 
     endInsertRows();
@@ -194,10 +218,5 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
     this->sstTabVector.push_back(dRecNo);
 
     return true;
-}
-//=============================================================================
-void sstQt01PathTabMdlCls::ChangeTab()
-{
-  emit this->TabChanged();
 }
 //=============================================================================

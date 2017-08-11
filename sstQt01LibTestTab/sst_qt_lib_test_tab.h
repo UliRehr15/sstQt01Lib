@@ -125,7 +125,7 @@ private:
 class sstQt01TstRec1ViewCls : public sstQt01TabViewCls
 {
   public:   // Public functions
-     sstQt01TstRec1ViewCls();  // Constructor
+     sstQt01TstRec1ViewCls(sstMisc01PrtFilCls    *poTmpPrt);  // Constructor
      ~sstQt01TstRec1ViewCls();  // Destructor
      //==============================================================================
      /**
@@ -161,7 +161,7 @@ private:  // Private functions
 class sstQt01TstRec2ViewCls : public sstQt01TabViewCls
 {
   public:   // Public functions
-     sstQt01TstRec2ViewCls();  // Constructor
+     sstQt01TstRec2ViewCls(sstMisc01PrtFilCls    *poTmpPrt);  // Constructor
      ~sstQt01TstRec2ViewCls();  // Destructor
      //==============================================================================
      /**

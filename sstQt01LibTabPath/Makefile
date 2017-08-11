@@ -14,8 +14,8 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../sst_str01_lib/Header -I../../sstMath01Lib/Header -I../../sst_misc01_lib/Header -I../../sst_rec04_lib/Header -I../../sstQt01Lib/Header -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++
+CXXFLAGS      = -pipe -g -std=c++0x -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+INCPATH       = -I. -I../../sst_str01_lib/Header -I../../sst_misc01_lib/Header -I../../sst_rec04_lib/Header -I../../sstQt01Lib/Header -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/i386-linux-gnu/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -99,6 +99,7 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/default_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/resolve_config.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/default_post.prf \
+		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/c++11.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/qt.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/resources.prf \
@@ -188,6 +189,7 @@ Makefile: sstQt01LibTabPath.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/qm
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/default_pre.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/resolve_config.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/default_post.prf \
+		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/c++11.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/qt.prf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/resources.prf \
@@ -250,6 +252,7 @@ Makefile: sstQt01LibTabPath.pro /usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++/qm
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/default_pre.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/resolve_config.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/default_post.prf:
+/usr/lib/i386-linux-gnu/qt5/mkspecs/features/c++11.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/warn_on.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/qt.prf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/resources.prf:
@@ -310,9 +313,8 @@ moc_sstQt01LibTabPath.cpp: ../../sst_str01_lib/Header/sstStr01Lib.h \
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
-		../../sstMath01Lib/Header/sstMath01Lib.h \
 		sstQt01LibTabPath.h
-	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib/sstQt01LibTabPath -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sstMath01Lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sstQt01LibTabPath.h -o moc_sstQt01LibTabPath.cpp
+	/usr/lib/i386-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/home/uli-le/Entwicklung/sstQt01Lib/sstQt01LibTabPath -I/home/uli-le/Entwicklung/sst_str01_lib/Header -I/home/uli-le/Entwicklung/sst_misc01_lib/Header -I/home/uli-le/Entwicklung/sst_rec04_lib/Header -I/home/uli-le/Entwicklung/sstQt01Lib/Header -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/i386-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/i686-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/5/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include sstQt01LibTabPath.h -o moc_sstQt01LibTabPath.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -332,7 +334,6 @@ sstQt01LibTabPath.o: sstQt01LibTabPath.cpp ../../sst_str01_lib/Header/sstStr01Li
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
-		../../sstMath01Lib/Header/sstMath01Lib.h \
 		sstQt01LibTabPath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01LibTabPath.o sstQt01LibTabPath.cpp
 
@@ -340,7 +341,6 @@ sstQt01TabPathDialog.o: sstQt01TabPathDialog.cpp ../../sst_str01_lib/Header/sstS
 		../../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../../sst_rec04_lib/Header/sstRec04Lib.h \
 		../../sstQt01Lib/Header/sstQt01Lib.h \
-		../../sstMath01Lib/Header/sstMath01Lib.h \
 		sstQt01LibTabPath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TabPathDialog.o sstQt01TabPathDialog.cpp
 

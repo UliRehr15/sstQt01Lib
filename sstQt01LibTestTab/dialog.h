@@ -19,7 +19,7 @@
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
-#include "sst_qt_lib_test_tab.h"
+// #include "sst_qt_lib_test_tab.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -62,6 +62,7 @@ private:
     // TstRec2ModelCls  *pTstRec2Model;
     // TstRec2ViewCls   *pTstRec2View;
     sstQt01TabViewCls   *pTstRec2View;
+    sstMisc01PrtFilCls *poPrt;
 
 };
 

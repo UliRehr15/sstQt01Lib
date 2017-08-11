@@ -30,7 +30,7 @@
 #include "sst_qt_lib_test_tab.h"
 
 //=============================================================================
-sstQt01TstRec1ViewCls::sstQt01TstRec1ViewCls()
+sstQt01TstRec1ViewCls::sstQt01TstRec1ViewCls(sstMisc01PrtFilCls    *poTmpPrt) : sstQt01TabViewCls(poTmpPrt)
 {
   pTstRec1Model = new TstRec1ModelCls(0);
   this->setModel( pTstRec1Model );

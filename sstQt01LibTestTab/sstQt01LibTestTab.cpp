@@ -29,7 +29,7 @@
 #include <sstQt01Lib.h>
 
 #include "dialog.h"
-#include "sst_qt_lib_test_tab.h"
+// #include "sst_qt_lib_test_tab.h"
 
 //=============================================================================
 int main(int argc, char *argv[])

@@ -37,6 +37,101 @@
 // Structures and Classes ------------------------------------------------------
 //==============================================================================
 /**
+* @brief sst base table model class
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class sstQt01TabMdlCls : public QAbstractTableModel
+{
+    Q_OBJECT
+public:
+  sstQt01TabMdlCls(QObject *parent);
+  ~sstQt01TabMdlCls();
+protected:
+  std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
+private:
+};
+//==============================================================================
+/**
+* @brief Definition Class TstRec2ModelCls
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class TstRec1ModelCls : public sstQt01TabMdlCls
+{
+    Q_OBJECT
+public:
+  TstRec1ModelCls(QObject *parent);
+  ~TstRec1ModelCls();
+    int rowCount(const QModelIndex &parent = QModelIndex()) const ;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    Qt::ItemFlags flags(const QModelIndex & index) const ;
+    bool removeRows(int position, int rows, const QModelIndex &index);
+    bool insertRows(int position, int rows, const QModelIndex &index);
+
+
+private:
+    sstRec04TestRec1FncCls oTestRec1Table;  // is a table and function object for test rec1
+    // std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
+};
+//==============================================================================
+/**
+* @brief Definition Class TstRec2ModelCls
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class TstRec2ModelCls : public sstQt01TabMdlCls
+{
+    Q_OBJECT
+public:
+  TstRec2ModelCls(QObject *parent);
+  ~TstRec2ModelCls();
+    int rowCount(const QModelIndex &parent = QModelIndex()) const ;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    Qt::ItemFlags flags(const QModelIndex & index) const ;
+    bool removeRows(int position, int rows, const QModelIndex &index);
+    bool insertRows(int position, int rows, const QModelIndex &index);
+
+
+private:
+    sstRec04TestRec2FncCls oTestRec2Table;
+    // std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
+};
+//==============================================================================//==============================================================================
+/**
 * @brief sst Path Table Model Class
 *
 * Inherit from QAbstractTableModel
@@ -50,7 +145,7 @@
 * @date 19.02.10
 */
 // ----------------------------------------------------------------------------
-class sstQt01PathTabMdlCls : public QAbstractTableModel
+class sstQt01PathTabMdlCls : public sstQt01TabMdlCls
 {
     Q_OBJECT
 public:
@@ -211,9 +306,9 @@ signals:
 
     //==============================================================================
 private:
-    sstQt01PathStorageCls *poPathStorage;          /**< Is a table and function object for test rec1 */
-    std::vector<unsigned long int> sstTabVector;   /**< Vector maps table record positions when deleting */
-    sstMisc01PrtFilCls   *poPrt;                   /**< Dummy */
+    sstQt01PathStorageCls *poPathStorage;  // is a table and function object for test rec1
+    // std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
+    sstMisc01PrtFilCls   *poPrt;
 };
 
 

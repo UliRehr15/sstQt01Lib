@@ -60,7 +60,15 @@ Dialog::Dialog()
 
   this->poPathStorage = new sstQt01PathStorageCls;
   iStat = this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
-  assert(iStat == 0);
+  // assert(iStat == 0);
+
+  if (poPathStorage->countItems() <= 0)
+  {
+    poPrt->SST_PrtWrtChar(1,(char*)"Is Empty",(char*)"File Paint.csv: ");
+
+    poPathStorage->createDefaultItems(0);
+  }
+
 
   this->poPathWidget = new sstQt01PathPaintWidgetCls(this->poPrt,this->poPathStorage);
 

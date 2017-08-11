@@ -41,13 +41,21 @@ Window::Window()
 
   this->poPathStorage = new sstQt01PathStorageCls;
   iStat = this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
-  assert(iStat == 0);
+  // assert(iStat == 0);
+
+  if (poPathStorage->countItems() <= 0)
+  {
+    oPrt->SST_PrtWrtChar(1,(char*)"Is Empty",(char*)"File Paint.csv: ");
+
+    poPathStorage->createDefaultItems(0);
+  }
+
 
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
 
   // poPathTabWidget = new sstQt01TabViewCls(oPrt,poPathStorage);
-  poPathTabWidget = new sstQt01PathTabViewCls(oPrt,poPathStorage);
+  poPathTabWidget = new sstQt01TabViewCls(oPrt);
 
   poPathMapWidget = new sstQt01PathPaintWidgetCls(oPrt,this->poPathStorage);
 

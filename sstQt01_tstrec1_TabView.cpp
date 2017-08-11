@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01_tstrec2_TabView.cpp    23.04.17 Re.    23.04.17  Re.
+// sstQt01_tstrec1_TabView.cpp    23.04.17  Re.    23.04.17  Re.
 //
 
 #include <QtWidgets>
@@ -27,17 +27,19 @@
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
-#include "sst_qt_lib_test_tab.h"
+#include "sstQt01LibInt.h"
+
+// #include "sst_qt_lib_test_tab.h"
 
 //=============================================================================
-sstQt01TstRec2ViewCls::sstQt01TstRec2ViewCls(sstMisc01PrtFilCls    *poTmpPrt) : sstQt01TabViewCls(poTmpPrt)
+sstQt01TstRec1ViewCls::sstQt01TstRec1ViewCls(sstMisc01PrtFilCls    *poTmpPrt) : sstQt01TabViewCls(poTmpPrt)
 {
-  pTstRec2Model = new TstRec2ModelCls(0);
-  this->setModel( pTstRec2Model );
+  pTstRec1Model = new TstRec1ModelCls(0);
+  this->setModel( pTstRec1Model );
 }
 //=============================================================================
-sstQt01TstRec2ViewCls::~sstQt01TstRec2ViewCls()
+sstQt01TstRec1ViewCls::~sstQt01TstRec1ViewCls()
 {
-  delete pTstRec2Model;
+  delete pTstRec1Model;
 }
 //=============================================================================

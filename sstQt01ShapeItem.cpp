@@ -18,7 +18,6 @@
 #include <assert.h>
 
 #include <sstStr01Lib.h>
-#include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
@@ -44,11 +43,6 @@ QColor sstQt01ShapeItem::getColor() const
     return myColor;
 }
 //=============================================================================
-QPen sstQt01ShapeItem::getPen() const
-{
-    return myPen;
-}
-//=============================================================================
 QString sstQt01ShapeItem::getToolTip() const
 {
     return myToolTip;
@@ -72,11 +66,6 @@ void sstQt01ShapeItem::setPosition(const QPoint &position)
 void sstQt01ShapeItem::setColor(const QColor &color)
 {
     myColor = color;
-}
-//=============================================================================
-void sstQt01ShapeItem::setPen(const QPen &pen)
-{
-    myPen = pen;
 }
 //=============================================================================
 void sstQt01ShapeItem::createShapeItem(const QPainterPath &path,

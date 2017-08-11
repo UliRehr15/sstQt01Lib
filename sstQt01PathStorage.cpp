@@ -27,7 +27,6 @@
 #include <QPoint>
 
 #include <sstStr01Lib.h>
-#include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
@@ -37,12 +36,9 @@
 //=============================================================================
 sstQt01PathStorageCls::sstQt01PathStorageCls()
 {
-  this->poShapeItemRecTable = new sstRec04Cls(sizeof(sstQt01PathElementCsv2Cls));
+  this->poShapeItemRecTable = new sstRec04Cls(sizeof(sstQt01PathElementCsvCls));
   this->poShapeItemMainTable = new sstRec04Cls(sizeof(sstQt01PathMainRecCls));
   dActualReadPos = 1;  // table reading starts at begin of table
-  iHeight = 300;
-  iWidth = 500;
-
 }
 //=============================================================================
 sstQt01PathStorageCls::~sstQt01PathStorageCls()
@@ -53,52 +49,54 @@ sstQt01PathStorageCls::~sstQt01PathStorageCls()
 //=============================================================================
 int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
 {
-  // sstMisc01AscFilCls oPainterCsvFile;
-  // std::string oCsvStr;
-  // std::string oErrStr;
-  // sstStr01Cls oCsvCnvt;
-  sstQt01PathElementCsv2Cls oShapeItemCsv;
+  sstMisc01AscFilCls oPainterCsvFile;
+  std::string oCsvStr;
+  std::string oErrStr;
+  sstStr01Cls oCsvCnvt;
+  sstQt01PathElementCsvCls oShapeItemCsv;
   dREC04RECNUMTYP dRecNo = 0;
 
-  // int iStat1  = 0;
+  int iStat1  = 0;
   int iStat = 0;
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
-  // Load Format Version 2 data from file
-  iStat = this->LoadVersion2File(0, oFilNam);
+  iStat = oPainterCsvFile.fopenRd(0,oFilNam.c_str());
+  if (iStat < 0) return -2;
 
-  // If Format version error, try to load Version 1 data from file
-  if (iStat == -3)
-    iStat = this->LoadVersion1File(0, oFilNam);
-
-  if (iStat < 0)
+  // Read and test title row
+  iStat = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
+  iStat =oCsvStr.compare(oShapeItemCsv.GetCsvFileTitle());
+  if (iStat != 0)
   {
+    // assert(0);
+    oPainterCsvFile.fcloseFil(0);
     return -3;
   }
 
-  // if main table is empty, do nothing and return.
-  if (this->poShapeItemRecTable->count() <= 0)
+  // load csv file into sst record table
+  iStat1 = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
+  while (iStat1 >= 0)
   {
-    return 0;
-  }
+    // interpret file row as path element
+    iStat = oShapeItemCsv.ReadFromCsv( 0, oCsvStr, &oErrStr);
+    assert (iStat == 0);
 
-  // Build main table
-  for (dREC04RECNUMTYP ii=1;ii <= this->poShapeItemRecTable->count();ii++)
-  {
-    this->poShapeItemRecTable->Read(0,ii, &oShapeItemCsv);
+    // store path element in table
+    iStat = this->poShapeItemRecTable->WritNew(0,&oShapeItemCsv,&dRecNo);
+
     if (oShapeItemCsv.getIType() == 0)
     {  // new path, create path item record and store in path main table
       QColor oQCol = oShapeItemCsv.getQCol();
       sstQt01PathMainRecCls oPathRec;
       oPathRec.setQCol(oQCol);
-      oPathRec.setIPenStyle(oShapeItemCsv.getIPenStyle());
-      oPathRec.setIPenWidth(oShapeItemCsv.getIPenWidth());
-      // oPathRec.setStartElementRecNo(dRecNo);
-      oPathRec.setStartElementRecNo(ii);
+      oPathRec.setStartElementRecNo(dRecNo);
       // oPathRec.setTooltip("aaa");;
       iStat = this->poShapeItemMainTable->WritNew(0,&oPathRec,&dRecNo);
     }
+
+    // Read next row from csv file
+    iStat1 = oPainterCsvFile.Rd_StrDS1(0,&oCsvStr);
   }
 
   // if main table is empty, do nothing and return.
@@ -138,7 +136,7 @@ int sstQt01PathStorageCls::StoreAllPathToFile (int iKey, std::string oFilNam)
   std::string oCsvStr;
   std::string oErrStr;
   sstMisc01AscFilCls oPainterCsvFile;
-  sstQt01PathElementCsv2Cls oShapeItemCsv;
+  sstQt01PathElementCsvCls oShapeItemCsv;
 
   int iStat = 0;
   //-----------------------------------------------------------------------------
@@ -154,9 +152,12 @@ int sstQt01PathStorageCls::StoreAllPathToFile (int iKey, std::string oFilNam)
   for (dREC04RECNUMTYP ll=1; ll <= this->poShapeItemRecTable->count(); ll++)
   {
     oCsvStr.clear();
-    this->poShapeItemRecTable->Read( 0, ll, &oShapeItemCsv);
-    oShapeItemCsv.WriteToCsv(0, &oCsvStr, &oErrStr);
-    oPainterCsvFile.Wr_StrDS1(0,&oCsvStr);
+    iStat = this->poShapeItemRecTable->Read( 0, ll, &oShapeItemCsv);
+    if (iStat >= 0)
+    { // write only if not as marked deleted
+      oShapeItemCsv.WriteToCsv(0, &oCsvStr, &oErrStr);
+      oPainterCsvFile.Wr_StrDS1(0,&oCsvStr);
+    }
   }
 
   oPainterCsvFile.fcloseFil(0);
@@ -164,10 +165,10 @@ int sstQt01PathStorageCls::StoreAllPathToFile (int iKey, std::string oFilNam)
   return 0;
 }
 //=============================================================================
-int sstQt01PathStorageCls::AppendPath(int iKey, QPainterPath oTmpPath, QColor oTmpColor, QPen oTmpPen)
+int sstQt01PathStorageCls::AppendPath(int iKey, QPainterPath oTmpPath, QColor oTmpColor)
 {
 
-  sstQt01PathElementCsv2Cls oShapeItemCsv;
+  sstQt01PathElementCsvCls oShapeItemCsv;
   dREC04RECNUMTYP dRecNo = 0;
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
@@ -177,18 +178,18 @@ int sstQt01PathStorageCls::AppendPath(int iKey, QPainterPath oTmpPath, QColor oT
   {
     QPainterPath::Element oElement;
     oElement = oTmpPath.elementAt(ii-1);
-    oShapeItemCsv.setAll(oElement.type,oElement.x,oElement.y, oTmpColor, oTmpPen);
+    oShapeItemCsv.setAll(oElement.type,oElement.x,oElement.y, oTmpColor);
     this->poShapeItemRecTable->WritNew(0, &oShapeItemCsv, &dRecNo);
   }
 
   return 0;
 }
 //=============================================================================
-int sstQt01PathStorageCls::ReadNextPath(int iKey, QPainterPath *oTmpPath, QColor *oTmpColor, QPen *oTmpPen)
+int sstQt01PathStorageCls::ReadNextPath(int iKey, QPainterPath *oTmpPath, QColor *oTmpColor)
 {
-  sstQt01PathElementCsv2Cls oShapeItemCsv1;
-  sstQt01PathElementCsv2Cls oShapeItemCsv2;
-  sstQt01PathElementCsv2Cls oShapeItemCsv3;
+  sstQt01PathElementCsvCls oShapeItemCsv1;
+  sstQt01PathElementCsvCls oShapeItemCsv2;
+  sstQt01PathElementCsvCls oShapeItemCsv3;
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
@@ -205,9 +206,6 @@ int sstQt01PathStorageCls::ReadNextPath(int iKey, QPainterPath *oTmpPath, QColor
   oTmpColor->setBlue(oShapeItemCsv1.getIColB());
   oTmpColor->setGreen(oShapeItemCsv1.getIColG());
   oTmpColor->setRed(oShapeItemCsv1.getIColR());
-
-  oTmpPen->setStyle((Qt::PenStyle) oShapeItemCsv1.getIPenStyle());
-  oTmpPen->setWidth(oShapeItemCsv1.getIPenWidth());
 
   oTmpPath->moveTo(oShapeItemCsv1.getIXX(),oShapeItemCsv1.getIYY());
 
@@ -256,9 +254,9 @@ int sstQt01PathStorageCls::ReadNextPath(int iKey, QPainterPath *oTmpPath, QColor
 //=============================================================================
 int sstQt01PathStorageCls::ReadPath(int iKey, dREC04RECNUMTYP dStartElementRecNo, QPainterPath *oTmpPath)
 {
-  sstQt01PathElementCsv2Cls oShapeItemCsv1;
-  sstQt01PathElementCsv2Cls oShapeItemCsv2;
-  sstQt01PathElementCsv2Cls oShapeItemCsv3;
+  sstQt01PathElementCsvCls oShapeItemCsv1;
+  sstQt01PathElementCsvCls oShapeItemCsv2;
+  sstQt01PathElementCsvCls oShapeItemCsv3;
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
@@ -413,7 +411,7 @@ int sstQt01PathStorageCls::addPosition(dREC04RECNUMTYP index)
   QPoint oPnt = oMainRec.getPosition();
   for (dREC04RECNUMTYP ii=oMainRec.getStartElementRecNo();ii <= oMainRec.getEndElementRecNo(); ii++)
   {
-     sstQt01PathElementCsv2Cls oElementRec;
+     sstQt01PathElementCsvCls oElementRec;
      iStat = this->poShapeItemRecTable->Read(0,ii,&oElementRec);
      assert(iStat >= 0);
      oElementRec.addIXX(oPnt.rx());
@@ -434,15 +432,6 @@ QColor sstQt01PathStorageCls::getColor(dREC04RECNUMTYP index)
   int iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
   assert(iStat >= 0);
   return oMainRec.getQCol();
-}
-//=============================================================================
-QPen sstQt01PathStorageCls::getQPen(dREC04RECNUMTYP index)
-{
-  // assert(0);
-  sstQt01PathMainRecCls oMainRec;
-  int iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
-  assert(iStat >= 0);
-  return oMainRec.getQPen();
 }
 //=============================================================================
 QPainterPath sstQt01PathStorageCls::getPath(dREC04RECNUMTYP index)
@@ -476,13 +465,12 @@ int sstQt01PathStorageCls::appendShapeItem(sstQt01ShapeItem oItem)
   // Append to element table
   QPainterPath oPath = oItem.getPath();
   // oPath.moveTo(oItem.getPosition());
-  int iStat = this->AppendPath(0,oPath,oItem.getColor(),oItem.getPen());
+  int iStat = this->AppendPath(0,oPath,oItem.getColor());
   assert(iStat >= 0);
 
   // Append to main table
   sstQt01PathMainRecCls oMainRec;
   oMainRec.setQCol(oItem.getColor());
-  oMainRec.setQPen(oItem.getPen());
   oMainRec.setPosition(oItem.getPosition());
   int iNumElements = oPath.elementCount();
   dREC04RECNUMTYP dLastRecNo = this->poShapeItemRecTable->count();
@@ -544,13 +532,13 @@ int sstQt01PathStorageCls::createDefaultItems(int iKey)
 QPoint sstQt01PathStorageCls::initialItemPosition(const QPainterPath &path)
 {
     int x;
-    int y = (iHeight - (int)path.controlPointRect().height()) / 2;
+    int y = (height - (int)path.controlPointRect().height()) / 2;
     // if (shapeItems.size() == 0)
     if ( this->countItems() == 0)
-        x = ((3 * iWidth) / 2 - (int)path.controlPointRect().width()) / 2;
+        x = ((3 * width) / 2 - (int)path.controlPointRect().width()) / 2;
     else
       // x = (width / shapeItems.size()
-      x = (iWidth / this->countItems()
+      x = (width / this->countItems()
              - (int)path.controlPointRect().width()) / 2;
 
     return QPoint(x, y);
@@ -562,93 +550,4 @@ QColor sstQt01PathStorageCls::initialItemColor()
   return QColor::fromHsv(((this->countItems() + 1) * 85) % 256, 255, 190);
 }
 //=============================================================================
-int sstQt01PathStorageCls::LoadVersion2File(int iKey, std::string oFilNam)
-{
-  if (iKey != 0) return -1;
 
-  int iStat = 0;
-  int iStat1 = 0;
-  std::string oCsvStr;
-  std::string oErrStr;
-  sstQt01PathElementCsv2Cls oShapeItemCsv;  // Version 2 CSV String
-  dREC04RECNUMTYP dRecNo = 0;
-  sstMisc01AscFilCls oPainterCsvFile;
-
-  iStat = oPainterCsvFile.fopenRd(0,oFilNam.c_str());
-  if (iStat < 0) return -2;
-
-  // Read and test title row
-  iStat = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
-  iStat =oCsvStr.compare(oShapeItemCsv.GetCsvFileTitle());
-  if (iStat != 0) return -3;  // Version Error
-
-  // load csv file into sst record table
-  iStat1 = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
-  while (iStat1 >= 0)
-  {
-    // interpret file row as path element
-    iStat = oShapeItemCsv.ReadFromCsv( 0, oCsvStr, &oErrStr);
-    if (iStat != 0) return -4;
-
-    // store path element in table
-    iStat = this->poShapeItemRecTable->WritNew(0,&oShapeItemCsv,&dRecNo);
-
-    // Read next row from csv file
-    iStat1 = oPainterCsvFile.Rd_StrDS1(0,&oCsvStr);
-  }
-
-  iStat = oPainterCsvFile.fcloseFil(0);
-
-  return iStat;
-}
-//=============================================================================
-int sstQt01PathStorageCls::LoadVersion1File(int iKey, std::string oFilNam)
-{
-  if (iKey != 0) return -1;
-  int iStat = 0;
-  int iStat1 = 0;
-  std::string oCsvStr;
-  std::string oErrStr;
-  sstQt01PathElementCsv1Cls oShapeItem1Csv;  // Version 1 CSV String
-  dREC04RECNUMTYP dRecNo = 0;
-  sstMisc01AscFilCls oPainterCsvFile;
-
-  iStat = oPainterCsvFile.fopenRd(0,oFilNam.c_str());
-  if (iStat < 0) return -2;
-
-  // Read and test title row
-  iStat = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
-  iStat =oCsvStr.compare(oShapeItem1Csv.GetCsvFileTitle());
-  if (iStat != 0) return -2;  // Version Error
-
-  // load csv file into sst record table
-  iStat1 = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
-  while (iStat1 >= 0)
-  {
-    // interpret file row as path element
-    iStat = oShapeItem1Csv.ReadFromCsv( 0, oCsvStr, &oErrStr);
-    if (iStat != 0) return -3;
-
-    sstQt01PathElementCsv2Cls oShapeItem2Csv;  // Version 2 CSV String
-
-    oShapeItem2Csv.setIXX(oShapeItem1Csv.getIXX());
-    oShapeItem2Csv.setIYY(oShapeItem1Csv.getIYY());
-    oShapeItem2Csv.setIType(oShapeItem1Csv.getIType());
-    oShapeItem2Csv.setIColR(oShapeItem1Csv.getIColR());
-    oShapeItem2Csv.setIColG(oShapeItem1Csv.getIColG());
-    oShapeItem2Csv.setIColB(oShapeItem1Csv.getIColB());
-    oShapeItem2Csv.setIPenWidth(1);
-    oShapeItem2Csv.setIPenStyle(1);
-
-    // store path element in table
-    iStat = this->poShapeItemRecTable->WritNew(0,&oShapeItem2Csv,&dRecNo);
-
-    // Read next row from csv file
-    iStat1 = oPainterCsvFile.Rd_StrDS1(0,&oCsvStr);
-  }
-
-  iStat = oPainterCsvFile.fcloseFil(0);
-
-  return iStat;
-}
-//=============================================================================

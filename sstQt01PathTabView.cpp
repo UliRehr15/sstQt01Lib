@@ -11,8 +11,9 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathTabView.cpp    20.06.17  Re.    20.06.17  Re.
+// sstQt01PathTabView.cpp   25.01.17  Re.    25.01.17  Re.
 //
+// qt View for sst Table
 
 #include <QtWidgets>
 #include <QFont>
@@ -23,7 +24,6 @@
 #include <assert.h>
 
 #include <sstStr01Lib.h>
-#include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
@@ -32,16 +32,63 @@
 
 //=============================================================================
 sstQt01PathTabViewCls::sstQt01PathTabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
-                                             sstQt01PathStorageCls *poTmpPathStorage)
+                                     sstQt01PathStorageCls *poTmpPathStorage) : sstQt01TabViewCls(poTmpPrt)
 {
-  pTstRec1Model = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
-  this->setModel( pTstRec1Model );
-  connect(this->pTstRec1Model,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
-
+  this->poTabMdl = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
+  this->setModel( this->poTabMdl);
+    // createActions();
+    // setupContextMenu();
+    // connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
 }
 //=============================================================================
 sstQt01PathTabViewCls::~sstQt01PathTabViewCls()
 {
-  delete pTstRec1Model;
+  delete this->poTabMdl;
 }
 //=============================================================================
+//void sstQt01PathTabViewCls::setupContextMenu()
+//{
+//    addAction(cell_InsAction);
+//    addAction(cell_DelAction);
+//    setContextMenuPolicy(Qt::ActionsContextMenu);
+//}
+////=============================================================================
+//void sstQt01PathTabViewCls::createActions()
+//{
+//  // QString tt = QString::fromLatin1("&Zeilen lцschen");
+//  QString tt = QString::fromLatin1("&Remove Row");
+
+//  cell_DelAction = new QAction(tt, this);
+//  cell_DelAction->setShortcut(Qt::CTRL | Qt::Key_Minus);
+//  connect(cell_DelAction, SIGNAL(triggered()), this, SLOT(actionRowsDelete()));
+
+//  // tt = QString::fromLatin1("&Zeile einfьgen am Ende");
+//  tt = QString::fromLatin1("&Insert Row at Table End");
+//  cell_InsAction = new QAction( tt, this);
+//  cell_InsAction->setShortcut(Qt::CTRL | Qt::Key_Plus);
+//  connect(cell_InsAction, SIGNAL(triggered()), this, SLOT(actionRowsInsert()));
+
+//}
+////=============================================================================
+//void sstQt01PathTabViewCls::actionRowsDelete()
+//{
+//  const QModelIndex index = this->selectionModel()->currentIndex();
+//  int row = index.row();  // Get Positon of selected Row
+//  int count = 1;  // Delete always one row
+//  this->model()->removeRows(row,count,index);
+//}
+////=============================================================================
+//void sstQt01PathTabViewCls::actionRowsInsert()
+//{
+//  const QModelIndex index = this->selectionModel()->currentIndex();
+//  int row = this->model()->rowCount();  // Get Number of all defined rows
+//  int count = 1;  // Append always one new row
+//  this->model()->insertRows(row,count,index);
+//}
+////=============================================================================
+//void sstQt01PathTabViewCls::ChangeTab()
+//{
+//  emit this->TabChanged();
+//}
+////=============================================================================
+
