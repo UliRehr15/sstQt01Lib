@@ -52,4 +52,5 @@ Structure of coding projects should be:
 24.06.2017: Version 1.17: Editing/Viewing PenStyle and PenWidth. <BR>
 11.08.2017: Version 1.18: Linking sstMath01Lib. New Class sstQt01FormatViewCls. <BR>
 11.08.2017: Version 1.19: More Transformation functions for Viewing. <BR>
+18.08.2017: Version 1.20: Tool PathTabView: Now refreshing in both directions while editing path data. <BR>
 

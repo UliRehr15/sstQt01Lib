@@ -1,3 +1,20 @@
+/**********************************************************************
+ *
+ * sstQt01Lib - sst Qt library
+ * Hosted on github
+ *
+ * Copyright (C) 2016 Uli Rehr
+ *
+ * This is free software; you can redistribute and/or modify it under
+ * the terms of the GNU Lesser General Public Licence as published
+ * by the Free Software Foundation.
+ * See the COPYING file for more information.
+ *
+ **********************************************************************/
+// sstQt01LibTestTab2.cpp    15.08.17  Re.    15.08.17  Re.
+//
+// Testframe for editing more sst table in one window.
+//
 
 #include <QApplication>
 #include <QtWidgets>

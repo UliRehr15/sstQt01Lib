@@ -237,6 +237,15 @@ class sstQt01PathElementCsvCls
      std::string GetCsvFileTitle();
      //==============================================================================
      /**
+     * @brief // Get number of data elements in class <BR>
+     * uiColumns = oPathElement.ColumnCount();
+     *
+     * @return Number of data elements
+     */
+     // ----------------------------------------------------------------------------
+     unsigned int ColumnCount();
+     //==============================================================================
+     /**
      * @brief // set all data to path element object <BR>
      * iStat = oPathElement.setAll( iType, iXX, iYY, oColor);
      *
@@ -811,12 +820,21 @@ class sstQt01PathStorageCls
      //==============================================================================
      /**
      * @brief // return number of stored records  <BR>
-     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
+     * iStat = oPathStorage.RecordCount ();
      *
      * @return Number of stored records
      */
      // ----------------------------------------------------------------------------
      dREC04RECNUMTYP RecordCount() const;
+     //==============================================================================
+     /**
+     * @brief // return number of columns of data table  <BR>
+     * iStat = oPathStorage.ColumnCount ();
+     *
+     * @return Number of data table columns
+     */
+     // ----------------------------------------------------------------------------
+     unsigned int ColumnCount() const;
      //==============================================================================
      /**
      * @brief // read QPainterPath record from sst table object.  <BR>
@@ -1025,8 +1043,8 @@ class sstQt01PathStorageCls
      sstRec04Cls *poShapeItemRecTable;   /**< painter path element record table */
      sstRec04Cls *poShapeItemMainTable;  /**< painter path main table */
      dREC04RECNUMTYP dActualReadPos;     /**< actual read position in table */
-     const int height = 500;
-     const int width = 300;
+     const int height = 300;
+     const int width = 500;
 };
 //==============================================================================
 /**
@@ -1089,17 +1107,24 @@ protected:
 public slots:
     //==============================================================================
     /**
-    * @brief Slot Table data changed
+    * @brief Slot -Table data changed- direction table to map
     */
     // ----------------------------------------------------------------------------
     void ChangeTab();
 signals:
     //==============================================================================
     /**
-    * @brief Signal Table data changed
+    * @brief Signal -Table data changed- direction table to map
     */
     // ----------------------------------------------------------------------------
     void TabChanged();
+    //==============================================================================
+    /**
+    * @brief Signal -Table data changed- direction map to table
+    */
+    // ----------------------------------------------------------------------------
+    void TabUpdated();
+    //==============================================================================
 
 private:  // Private functions
   QAction *cell_InsAction;   /**< Insert Table Rows Action */
@@ -1139,6 +1164,12 @@ class sstQt01PathTabViewCls : public sstQt01TabViewCls
   ~sstQt01PathTabViewCls();   // Destructor
 // ----------------------------------------------------------------------------
 public slots:
+  //==============================================================================
+  /**
+  * @brief Slot -Table data changed- direction map to table
+  */
+  // ----------------------------------------------------------------------------
+  void UpdateTab();
      //==============================================================================
      /**
      * @brief actionRowsInsert
@@ -1272,7 +1303,7 @@ protected:
 public slots:
     //==============================================================================
     /**
-    * @brief // sst paint event <BR>
+    * @brief // slot function: sst paint event: map content is changed  <BR>
     */
     // ----------------------------------------------------------------------------
     void sstPaintEvent();
@@ -1282,6 +1313,14 @@ private slots:
     void createNewSquare();
     void createNewTriangle();
     void createNewLine();
+signals:
+    //==============================================================================
+    /**
+    * @brief // signal: sst paint event: map content is changed  <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void PathMoveEvent();
+
 
 private:
     int updateButtonGeometry(QToolButton *button, int x, int y);

@@ -17,7 +17,6 @@
 #include <assert.h>
 #include <string>
 
-// #include "sstQt01TestPaintWidget.h"
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
@@ -54,8 +53,7 @@ Window::Window()
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
 
-  // poPathTabWidget = new sstQt01TabViewCls(oPrt,poPathStorage);
-  poPathTabWidget = new sstQt01TabViewCls(oPrt);
+  poPathTabWidget = new sstQt01PathTabViewCls( oPrt, this->poPathStorage);
 
   poPathMapWidget = new sstQt01PathPaintWidgetCls(oPrt,this->poPathStorage);
 
@@ -76,7 +74,10 @@ Window::Window()
 
     setWindowTitle(tr("Basic Drawing"));
 
+    // For refreshing map from table
     connect(poPathTabWidget, SIGNAL(TabChanged()), poPathMapWidget, SLOT(update()));
+    // for refreshing table from map
+    connect(poPathMapWidget, SIGNAL(PathMoveEvent()), poPathTabWidget, SLOT(UpdateTab()));
 }
 Window::~Window()
 {

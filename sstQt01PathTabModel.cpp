@@ -48,6 +48,9 @@ sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent,
     this->sstTabVector.push_back(ll);;
   }
 
+  connect(this,SIGNAL(TabUpdated()),this,SLOT(UpdateTab()));
+
+
   // Fatal Errors goes to an assert
   if (iStat < 0)
   {
@@ -67,7 +70,7 @@ int sstQt01PathTabMdlCls::rowCount(const QModelIndex & /*parent*/) const
 //=============================================================================
 int sstQt01PathTabMdlCls::columnCount(const QModelIndex & /*parent*/) const
 {
-    return 6;
+    return this->poPathStorage->ColumnCount();
 }
 //=============================================================================
 QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
@@ -148,7 +151,10 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
       if (bOK) poPathStorage->WriteRecPos( 0, dRecNo, &oTestRec1);
 
     }
+
+    // For refreshing map
     emit this->TabChanged();
+
     return true;
 }
 //=============================================================================
@@ -199,5 +205,20 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
 void sstQt01PathTabMdlCls::ChangeTab()
 {
   emit this->TabChanged();
+}
+//=============================================================================
+void sstQt01PathTabMdlCls::UpdateTab()
+{
+  // Get actual size of path data table
+  int iRow = (int) this->poPathStorage->RecordCount();
+  int iCol = (int) this->poPathStorage->ColumnCount();
+
+  // Indexing whole model table
+  QModelIndex oIndex1 = this->index(0,0);
+  QModelIndex oIndex2 = this->index(iCol-1,iRow-1);
+
+  // emit system signal -dataChanged- is nessesary, because
+  // data are changed outside of Table Model in map.
+  emit this->dataChanged(oIndex1,oIndex2);
 }
 //=============================================================================

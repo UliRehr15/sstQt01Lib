@@ -92,6 +92,14 @@ std::string sstQt01PathElementCsvCls::GetCsvFileTitle()
   return oLocStr;
 }
 //=============================================================================
+unsigned int sstQt01PathElementCsvCls::ColumnCount()
+{
+  unsigned int uiCol = 6;
+  //-----------------------------------------------------------------------------
+
+  return uiCol;
+}
+//=============================================================================
 void sstQt01PathElementCsvCls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol)
 {
   int iTmpColR = 0;

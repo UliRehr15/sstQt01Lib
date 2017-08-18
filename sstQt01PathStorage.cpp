@@ -322,6 +322,12 @@ dREC04RECNUMTYP sstQt01PathStorageCls::RecordCount() const
   return this->poShapeItemRecTable->count();
 }
 //=============================================================================
+unsigned int sstQt01PathStorageCls::ColumnCount() const
+{
+  sstQt01PathElementCsvCls oElementCsvRecord;
+  return oElementCsvRecord.ColumnCount();
+}
+//=============================================================================
 int sstQt01PathStorageCls::ReadRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr) const
 {
   int iStat = 0;

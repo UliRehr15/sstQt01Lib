@@ -90,6 +90,6 @@ void sstQt01TabViewCls::actionRowsInsert()
 void sstQt01TabViewCls::ChangeTab()
 {
   emit this->TabChanged();
+  // emit this->valueChanged();
 }
-//=============================================================================
 

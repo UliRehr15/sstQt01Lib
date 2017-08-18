@@ -182,6 +182,7 @@ void sstQt01PathPaintWidgetCls::mouseReleaseEvent(QMouseEvent *event)
         this->oPathStorage->addPosition(this->iActualItemIndex);
         iItemInMotionIndex = 0;
     }
+    emit PathMoveEvent();
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createNewCircle()

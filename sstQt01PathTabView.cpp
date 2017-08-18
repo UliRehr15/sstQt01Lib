@@ -36,9 +36,9 @@ sstQt01PathTabViewCls::sstQt01PathTabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
 {
   this->poTabMdl = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
   this->setModel( this->poTabMdl);
-    // createActions();
-    // setupContextMenu();
-    // connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
+
+  connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
+
 }
 //=============================================================================
 sstQt01PathTabViewCls::~sstQt01PathTabViewCls()
@@ -46,49 +46,8 @@ sstQt01PathTabViewCls::~sstQt01PathTabViewCls()
   delete this->poTabMdl;
 }
 //=============================================================================
-//void sstQt01PathTabViewCls::setupContextMenu()
-//{
-//    addAction(cell_InsAction);
-//    addAction(cell_DelAction);
-//    setContextMenuPolicy(Qt::ActionsContextMenu);
-//}
-////=============================================================================
-//void sstQt01PathTabViewCls::createActions()
-//{
-//  // QString tt = QString::fromLatin1("&Zeilen lцschen");
-//  QString tt = QString::fromLatin1("&Remove Row");
-
-//  cell_DelAction = new QAction(tt, this);
-//  cell_DelAction->setShortcut(Qt::CTRL | Qt::Key_Minus);
-//  connect(cell_DelAction, SIGNAL(triggered()), this, SLOT(actionRowsDelete()));
-
-//  // tt = QString::fromLatin1("&Zeile einfьgen am Ende");
-//  tt = QString::fromLatin1("&Insert Row at Table End");
-//  cell_InsAction = new QAction( tt, this);
-//  cell_InsAction->setShortcut(Qt::CTRL | Qt::Key_Plus);
-//  connect(cell_InsAction, SIGNAL(triggered()), this, SLOT(actionRowsInsert()));
-
-//}
-////=============================================================================
-//void sstQt01PathTabViewCls::actionRowsDelete()
-//{
-//  const QModelIndex index = this->selectionModel()->currentIndex();
-//  int row = index.row();  // Get Positon of selected Row
-//  int count = 1;  // Delete always one row
-//  this->model()->removeRows(row,count,index);
-//}
-////=============================================================================
-//void sstQt01PathTabViewCls::actionRowsInsert()
-//{
-//  const QModelIndex index = this->selectionModel()->currentIndex();
-//  int row = this->model()->rowCount();  // Get Number of all defined rows
-//  int count = 1;  // Append always one new row
-//  this->model()->insertRows(row,count,index);
-//}
-////=============================================================================
-//void sstQt01PathTabViewCls::ChangeTab()
-//{
-//  emit this->TabChanged();
-//}
-////=============================================================================
-
+void sstQt01PathTabViewCls::UpdateTab()
+{
+  emit this->poTabMdl->TabUpdated();
+}
+//=============================================================================

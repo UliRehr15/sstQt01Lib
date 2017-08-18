@@ -11,7 +11,11 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// main.cpp   23.02.17  Re.   23.02.17  Re.
+// main.cpp   18.08.17  Re.   23.02.17  Re.
+//
+// This testtool combines map and table with refreshing in both direction
+// when editing qt painter path data.
+
 
 #include <string>
 

@@ -54,6 +54,14 @@ class sstQt01TabMdlCls : public QAbstractTableModel
 {
     Q_OBJECT
 public:
+  //==============================================================================
+  /**
+  * @brief // Constructor sstQt01TabMdlCls <BR>
+  * sstQt01TabMdlCls oTabMdl(parent);
+  *
+  * @param parent [in] parent
+  */
+  // ----------------------------------------------------------------------------
   sstQt01TabMdlCls(QObject *parent);
   ~sstQt01TabMdlCls();
 protected:
@@ -79,17 +87,114 @@ class TstRec1ModelCls : public sstQt01TabMdlCls
 {
     Q_OBJECT
 public:
+  //==============================================================================
+  /**
+  * @brief // Constructor TstRec1ModelCls <BR>
+  * TstRec1ModelCls oTstRec1TabMdl(parent);
+  *
+  * @param parent [in] parent
+  */
+  // ----------------------------------------------------------------------------
   TstRec1ModelCls(QObject *parent);
   ~TstRec1ModelCls();
+  //==============================================================================
+  /**
+  * @brief // rowCount <BR>
+  * iStat = oModel.rowCount ( parent);
+  *
+  * @param parent [in] For the moment 0
+  *
+  * @return Errorstate
+  *
+  * @retval   = 0: OK
+  * @retval   < 0: Unspecified Error
+  */
+  // ----------------------------------------------------------------------------
     int rowCount(const QModelIndex &parent = QModelIndex()) const ;
+    //==============================================================================
+    /**
+    * @brief // columnCount <BR>
+    * iStat = oModel.columnCount( parent);
+    *
+    * @param parent [in] For the moment 0
+    *
+    * @return Errorstate
+    *
+    * @retval   = 0: OK
+    * @retval   < 0: Unspecified Error
+    */
+    // ----------------------------------------------------------------------------
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    //==============================================================================
+    /**
+    * @brief // data <BR>
+    * iStat = oModel.data(index, role);
+    *
+    * @param index [in] For the moment 0
+    * @param role  [in] For the moment 0
+    */
+    // ----------------------------------------------------------------------------
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    //==============================================================================
+    /**
+    * @brief // headerData <BR>
+    * iStat = oModel.headerData ( section, orientation, role);
+    *
+    * @param section     [in] For the moment 0
+    * @param orientation [in] For the moment 0
+    * @param role        [in] For the moment 0
+    */
+    // ----------------------------------------------------------------------------
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    //==============================================================================
+    /**
+    * @brief // setData <BR>
+    * iStat = oModl.setData( index, value, role);
+    *
+    * @param index [in] For the moment 0
+    * @param value [in] For the moment 0
+    * @param role  [in] For the moment 0
+    *
+    * @return bool
+    */
+    // ----------------------------------------------------------------------------
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    //==============================================================================
+    /**
+    * @brief // flags <BR>
+    * iStat = oModel.flags (index);
+    *
+    * @param index [in] For the moment 0
+    */
+    // ----------------------------------------------------------------------------
     Qt::ItemFlags flags(const QModelIndex & index) const ;
+    //==============================================================================
+    /**
+    * @brief // removeRows  <BR>
+    * iStat = oModel.removeRows ( position, rows, index);
+    *
+    * @param position [in] For the moment 0
+    * @param rows     [in] For the moment 0
+    * @param index    [in] For the moment 0
+    *
+    * @return bool
+    */
+    // ----------------------------------------------------------------------------
     bool removeRows(int position, int rows, const QModelIndex &index);
+    //==============================================================================
+    /**
+    * @brief // insertRows <BR>
+    * iStat = oModel.insertRows ( position, rows, index);
+    *
+    * @param position [in] For the moment 0
+    * @param rows     [in] For the moment 0
+    * @param index    [in] For the moment 0
+    *
+    * @return bool
+    */
+    // ----------------------------------------------------------------------------
     bool insertRows(int position, int rows, const QModelIndex &index);
-
+    //==============================================================================
 
 private:
     sstRec04TestRec1FncCls oTestRec1Table;  // is a table and function object for test rec1
@@ -114,20 +219,117 @@ class TstRec2ModelCls : public sstQt01TabMdlCls
 {
     Q_OBJECT
 public:
+  //==============================================================================
+  /**
+  * @brief // Constructor TstRec2ModelCls <BR>
+  * TstRec2ModelCls oTstRec2TabMdl(parent);
+  *
+  * @param parent [in] parent
+  */
+  // ----------------------------------------------------------------------------
   TstRec2ModelCls(QObject *parent);
   ~TstRec2ModelCls();
+  //==============================================================================
+  /**
+  * @brief // rowCount <BR>
+  * iStat = oModel.rowCount ( parent);
+  *
+  * @param parent [in] For the moment 0
+  *
+  * @return Errorstate
+  *
+  * @retval   = 0: OK
+  * @retval   < 0: Unspecified Error
+  */
+  // ----------------------------------------------------------------------------
     int rowCount(const QModelIndex &parent = QModelIndex()) const ;
+    //==============================================================================
+    /**
+    * @brief // columnCount <BR>
+    * iStat = oModel.columnCount( parent);
+    *
+    * @param parent [in] For the moment 0
+    *
+    * @return Errorstate
+    *
+    * @retval   = 0: OK
+    * @retval   < 0: Unspecified Error
+    */
+    // ----------------------------------------------------------------------------
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    //==============================================================================
+    /**
+    * @brief // data <BR>
+    * iStat = oModel.data(index, role);
+    *
+    * @param index [in] For the moment 0
+    * @param role  [in] For the moment 0
+    */
+    // ----------------------------------------------------------------------------
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    //==============================================================================
+    /**
+    * @brief // headerData <BR>
+    * iStat = oModel.headerData ( section, orientation, role);
+    *
+    * @param section     [in] For the moment 0
+    * @param orientation [in] For the moment 0
+    * @param role        [in] For the moment 0
+    */
+    // ----------------------------------------------------------------------------
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    //==============================================================================
+    /**
+    * @brief // setData <BR>
+    * iStat = oModl.setData( index, value, role);
+    *
+    * @param index [in] For the moment 0
+    * @param value [in] For the moment 0
+    * @param role  [in] For the moment 0
+    *
+    * @return bool
+    */
+    // ----------------------------------------------------------------------------
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    //==============================================================================
+    /**
+    * @brief // flags <BR>
+    * iStat = oModel.flags (index);
+    *
+    * @param index [in] For the moment 0
+    */
+    // ----------------------------------------------------------------------------
     Qt::ItemFlags flags(const QModelIndex & index) const ;
+    //==============================================================================
+    /**
+    * @brief // removeRows  <BR>
+    * iStat = oModel.removeRows ( position, rows, index);
+    *
+    * @param position [in] For the moment 0
+    * @param rows     [in] For the moment 0
+    * @param index    [in] For the moment 0
+    *
+    * @return bool
+    */
+    // ----------------------------------------------------------------------------
     bool removeRows(int position, int rows, const QModelIndex &index);
+    //==============================================================================
+    /**
+    * @brief // insertRows <BR>
+    * iStat = oModel.insertRows ( position, rows, index);
+    *
+    * @param position [in] For the moment 0
+    * @param rows     [in] For the moment 0
+    * @param index    [in] For the moment 0
+    *
+    * @return bool
+    */
+    // ----------------------------------------------------------------------------
     bool insertRows(int position, int rows, const QModelIndex &index);
-
+    //==============================================================================
 
 private:
-    sstRec04TestRec2FncCls oTestRec2Table;
+    sstRec04TestRec2FncCls oTestRec2Table;   /**< oTestRec2Table */
     // std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
 };
 //==============================================================================//==============================================================================
@@ -203,11 +405,6 @@ public:
     *
     * @param index [in] For the moment 0
     * @param role  [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
     */
     // ----------------------------------------------------------------------------
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
@@ -219,11 +416,6 @@ public:
     * @param section     [in] For the moment 0
     * @param orientation [in] For the moment 0
     * @param role        [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
     */
     // ----------------------------------------------------------------------------
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
@@ -249,11 +441,6 @@ public:
     * iStat = oPathTabMdl.flags (index);
     *
     * @param index [in] For the moment 0
-    *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
     */
     // ----------------------------------------------------------------------------
     Qt::ItemFlags flags(const QModelIndex & index) const ;
@@ -266,10 +453,7 @@ public:
     * @param rows     [in] For the moment 0
     * @param index    [in] For the moment 0
     *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
+    * @return bool
     */
     // ----------------------------------------------------------------------------
     bool removeRows(int position, int rows, const QModelIndex &index);
@@ -282,27 +466,37 @@ public:
     * @param rows     [in] For the moment 0
     * @param index    [in] For the moment 0
     *
-    * @return Errorstate
-    *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
+    * @return bool
     */
     // ----------------------------------------------------------------------------
     bool insertRows(int position, int rows, const QModelIndex &index);
 public slots:
     //==============================================================================
     /**
-    * @brief Slot Table data changed
+    * @brief Slot -Table data changed- direction table to map
     */
     // ----------------------------------------------------------------------------
     void ChangeTab();
+    //==============================================================================
+    /**
+    * @brief Slot -Table data changed- direction map to table
+    */
+    // ----------------------------------------------------------------------------
+    void UpdateTab();
 signals:
     //==============================================================================
     /**
-    * @brief Signal Table data changed
+    * @brief Signal -Table data changed- table to map
     */
     // ----------------------------------------------------------------------------
     void TabChanged();
+    //==============================================================================
+    /**
+    * @brief Signal -Table data changed- map to table
+    */
+    // ----------------------------------------------------------------------------
+    void TabUpdated();
+    //==============================================================================
 
     //==============================================================================
 private:
