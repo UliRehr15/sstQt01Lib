@@ -78,6 +78,8 @@ Window::Window()
     connect(poPathTabWidget, SIGNAL(TabChanged()), poPathMapWidget, SLOT(update()));
     // for refreshing table from map
     connect(poPathMapWidget, SIGNAL(PathMoveEvent()), poPathTabWidget, SLOT(UpdateTab()));
+    connect(poPathMapWidget,SIGNAL(sstSgnlBeginInsertRows(int,int)),poPathTabWidget,SLOT(sstSlotBeginInsertRows(int,int)));
+    connect(poPathMapWidget,SIGNAL(sstSgnlEndInsertRows()),poPathTabWidget,SLOT(sstSlotEndInsertRows()));
 }
 Window::~Window()
 {

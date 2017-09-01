@@ -75,6 +75,7 @@ int sstQt01PathTabMdlCls::columnCount(const QModelIndex & /*parent*/) const
 //=============================================================================
 QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
 {
+  int iStat = 0;
   int col = index.column();
 
   switch(role){
@@ -82,7 +83,8 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
     {
       sstQt01PathElementCsvCls oTestRec1;
 
-      poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+      iStat = poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+      assert(iStat == 0);
 
       switch (index.column())
       {
@@ -209,16 +211,38 @@ void sstQt01PathTabMdlCls::ChangeTab()
 //=============================================================================
 void sstQt01PathTabMdlCls::UpdateTab()
 {
+
   // Get actual size of path data table
   int iRow = (int) this->poPathStorage->RecordCount();
   int iCol = (int) this->poPathStorage->ColumnCount();
 
   // Indexing whole model table
   QModelIndex oIndex1 = this->index(0,0);
-  QModelIndex oIndex2 = this->index(iCol-1,iRow-1);
+  QModelIndex oIndex2 = this->index(iRow-1,iCol-1);
 
   // emit system signal -dataChanged- is nessesary, because
   // data are changed outside of Table Model in map.
   emit this->dataChanged(oIndex1,oIndex2);
+}
+//=============================================================================
+void sstQt01PathTabMdlCls::sstSlotBeginInsertRows(int first, int last)
+{
+  // Create new records at end of TabVector and insert new record number of PathStorage records
+  dREC04RECNUMTYP dNumRecPathTab = this->poPathStorage->RecordCount();
+
+  for (int ii=first; ii<=last; ii++)
+  {
+    dNumRecPathTab++;
+    this->sstTabVector.push_back(dNumRecPathTab);
+  }
+
+  // Emit System Signal to QAbstractTableModel
+  emit this->beginInsertRows( QModelIndex(), first, last);
+}
+//=============================================================================
+void sstQt01PathTabMdlCls::sstSlotEndInsertRows()
+{
+  // Emit System Signal to QAbstractTableModel
+  emit this->endInsertRows();
 }
 //=============================================================================

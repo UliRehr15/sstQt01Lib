@@ -252,7 +252,14 @@ void sstQt01PathPaintWidgetCls::createShapeItem(const QPainterPath &path,
     shapeItem.setToolTip(toolTip);
     shapeItem.setPosition(pos);
     shapeItem.setColor(color);
+    int iBegin=0;
+    int iEnd=0;
+    // Insert rows at end of table
+    iBegin = (int) this->oPathStorage->RecordCount() +1;
+    iEnd = iBegin + (int) path.elementCount() -1;
+    emit sstSgnlBeginInsertRows(iBegin,iEnd);
     this->oPathStorage->appendShapeItem(shapeItem);
+    emit sstSgnlEndInsertRows();
     update();
 }
 //=============================================================================

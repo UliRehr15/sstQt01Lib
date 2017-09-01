@@ -23,7 +23,6 @@ release{
   win32-g++:QMAKE_LFLAGS_EXCEPTIONS_ON -= -mthreads
   win32-g++:QMAKE_CXXFLAGS_EXCEPTIONS_ON -= -mthreads
 
-
   LIBS        += ../../libs/libsstQt01Lib_r.a
   LIBS        += ../../libs/libsst_rec04_lib_r.a
   LIBS        += ../../libs/libsst_misc01_lib_r.a

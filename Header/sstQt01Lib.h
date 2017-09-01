@@ -1111,6 +1111,22 @@ public slots:
     */
     // ----------------------------------------------------------------------------
     void ChangeTab();
+    //==============================================================================
+    /**
+    * @brief // slot: sst begin inserting rocords in path storage  <BR>
+    * iStat = oTabView.sstSgnlBeginInsertRows(first,last);
+    *
+    * @param first [in] first record for inserting
+    * @param last  [in] last record for inserting
+    */
+    // ----------------------------------------------------------------------------
+    void sstSlotBeginInsertRows(int first, int last);
+    //==============================================================================
+    /**
+    * @brief Slot -Insert records in path storage <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstSlotEndInsertRows();
 signals:
     //==============================================================================
     /**
@@ -1125,12 +1141,27 @@ signals:
     // ----------------------------------------------------------------------------
     void TabUpdated();
     //==============================================================================
+    /**
+    * @brief // signal: sst begin inserting rocords in path storage  <BR>
+    * iStat = oTabView.sstSgnlBeginInsertRows(first,last);
+    *
+    * @param first [in] first record for inserting
+    * @param last  [in] last record for inserting
+    */
+    // ----------------------------------------------------------------------------
+    void sstSgnlBeginInsertRows(int first, int last);
+    //==============================================================================
+    /**
+    * @brief // signal: sst End inserting records in path storage.  <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstSgnlEndInsertRows();
+    //==============================================================================
 
 private:  // Private functions
   QAction *cell_InsAction;   /**< Insert Table Rows Action */
   QAction *cell_DelAction;   /**< Delete Table Rows Action */
   sstMisc01PrtFilCls    *poTmpPrt;  /**< Pointer to protocol object */
-  // sstQt01PathTabMdlCls *poTabMdl;
 };
 //==============================================================================
 /**
@@ -1320,6 +1351,23 @@ signals:
     */
     // ----------------------------------------------------------------------------
     void PathMoveEvent();
+    //==============================================================================
+    /**
+    * @brief // signal: sst begin inserting records in path storage  <BR>
+    * iStat = oPathPaintWidget.sstSgnlBeginInsertRows(first,last);
+    *
+    * @param first [in] first record for inserting
+    * @param last  [in] last record for inserting
+    */
+    // ----------------------------------------------------------------------------
+    void sstSgnlBeginInsertRows(int first, int last);
+    //==============================================================================
+    /**
+    * @brief // signal: sst End inserting records in path storage.  <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstSgnlEndInsertRows();
+    //==============================================================================
 
 
 private:

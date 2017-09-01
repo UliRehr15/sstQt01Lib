@@ -90,6 +90,16 @@ void sstQt01TabViewCls::actionRowsInsert()
 void sstQt01TabViewCls::ChangeTab()
 {
   emit this->TabChanged();
-  // emit this->valueChanged();
 }
+//=============================================================================
+void sstQt01TabViewCls::sstSlotBeginInsertRows(int first, int last)
+{
+  emit this->sstSgnlBeginInsertRows(first,last);
+}
+//=============================================================================
+void sstQt01TabViewCls::sstSlotEndInsertRows()
+{
+  emit this->sstSgnlEndInsertRows();
+}
+//=============================================================================
 

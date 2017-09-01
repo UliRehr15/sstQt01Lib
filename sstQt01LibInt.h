@@ -483,6 +483,24 @@ public slots:
     */
     // ----------------------------------------------------------------------------
     void UpdateTab();
+    //==============================================================================
+    /**
+    * @brief // slot: sst begin inserting records in PathStorage and TabVector  <BR>
+    * iStat = oPathTabModel.sstSgnlBeginInsertRows(first,last);
+    *
+    * Create new records at end of TabVector
+    *
+    * @param first [in] first record for inserting in TabVector
+    * @param last  [in] last record for inserting in TabVector
+    */
+    // ----------------------------------------------------------------------------
+    void sstSlotBeginInsertRows(int first, int last);
+    //==============================================================================
+    /**
+    * @brief Slot -End Inserting records in PathStorage and TabVector  <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstSlotEndInsertRows();
 signals:
     //==============================================================================
     /**

@@ -38,7 +38,8 @@ sstQt01PathTabViewCls::sstQt01PathTabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
   this->setModel( this->poTabMdl);
 
   connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
-
+  connect(this,SIGNAL(sstSgnlBeginInsertRows(int,int)),this->poTabMdl,SLOT(sstSlotBeginInsertRows(int,int)));
+  connect(this,SIGNAL(sstSgnlEndInsertRows()),this->poTabMdl,SLOT(sstSlotEndInsertRows()));
 }
 //=============================================================================
 sstQt01PathTabViewCls::~sstQt01PathTabViewCls()
@@ -49,5 +50,6 @@ sstQt01PathTabViewCls::~sstQt01PathTabViewCls()
 void sstQt01PathTabViewCls::UpdateTab()
 {
   emit this->poTabMdl->TabUpdated();
+  this->resizeRowsToContents();
 }
 //=============================================================================

@@ -7,8 +7,9 @@ Storing QPainterPath data into csv file.
 Widget for Editing QPainterPath Objects.
 
 Tool sstQt01LibTestTab for test editing general csv tables.
-Tool sstQt01LibTestView for showing QPainterPath data from csv file.
-Tool sstQt01LibTabPath for editing QPainterPath data in table from csv file.
+Tool sstQt01LibTestTab2 for test editing more tables in one view widget.
+Tool sstQt01LibTestView for showing/editing QPainterPath data from csv file in map view.
+Tool sstQt01LibTabPath for editing QPainterPath data in table view from csv file.
 Tool sstQt01PathTabView for combined Painter Path data editing in Table and Map.
 
 Licence model:
@@ -53,4 +54,5 @@ Structure of coding projects should be:
 11.08.2017: Version 1.18: Linking sstMath01Lib. New Class sstQt01FormatViewCls. <BR>
 11.08.2017: Version 1.19: More Transformation functions for Viewing. <BR>
 18.08.2017: Version 1.20: Tool PathTabView: Now refreshing in both directions while editing path data. <BR>
+01.09.2017: Version 1.21: Patch Refreshing/Resizing PathTable while inserting items in PathMap. <BR>
 
