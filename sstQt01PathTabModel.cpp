@@ -48,7 +48,7 @@ sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent,
     this->sstTabVector.push_back(ll);;
   }
 
-  connect(this,SIGNAL(TabUpdated()),this,SLOT(UpdateTab()));
+  connect(this,SIGNAL(sstSgnlTabUpdated()),this,SLOT(sstSlotUpdateTab()));
 
 
   // Fatal Errors goes to an assert
@@ -155,7 +155,7 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
     }
 
     // For refreshing map
-    emit this->TabChanged();
+    emit this->sstSgnlTabChanged();
 
     return true;
 }
@@ -204,12 +204,12 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
     return true;
 }
 //=============================================================================
-void sstQt01PathTabMdlCls::ChangeTab()
+void sstQt01PathTabMdlCls::sstSlotChangeTab()
 {
-  emit this->TabChanged();
+  emit this->sstSgnlTabChanged();
 }
 //=============================================================================
-void sstQt01PathTabMdlCls::UpdateTab()
+void sstQt01PathTabMdlCls::sstSlotUpdateTab()
 {
 
   // Get actual size of path data table
@@ -244,5 +244,26 @@ void sstQt01PathTabMdlCls::sstSlotEndInsertRows()
 {
   // Emit System Signal to QAbstractTableModel
   emit this->endInsertRows();
+}
+//=============================================================================
+void sstQt01PathTabMdlCls::sstSlotBeginRemoveRows(int first, int last)
+{
+  // Create new records at end of TabVector and insert new record number of PathStorage records
+  dREC04RECNUMTYP dNumRecPathTab = this->poPathStorage->RecordCount();
+
+//  for (int ii=first; ii<=last; ii++)
+//  {
+//    dNumRecPathTab++;
+//    this->sstTabVector.push_back(dNumRecPathTab);
+//  }
+
+  // Emit System Signal to QAbstractTableModel
+  emit this->beginRemoveRows( QModelIndex(), first, last);
+}
+//=============================================================================
+void sstQt01PathTabMdlCls::sstSlotEndRemoveRows()
+{
+  // Emit System Signal to QAbstractTableModel
+  emit this->endRemoveRows();
 }
 //=============================================================================

@@ -75,11 +75,15 @@ Window::Window()
     setWindowTitle(tr("Basic Drawing"));
 
     // For refreshing map from table
-    connect(poPathTabWidget, SIGNAL(TabChanged()), poPathMapWidget, SLOT(update()));
+    connect(poPathTabWidget, SIGNAL(sstSgnlTabChanged()), poPathMapWidget, SLOT(update()));
     // for refreshing table from map
-    connect(poPathMapWidget, SIGNAL(PathMoveEvent()), poPathTabWidget, SLOT(UpdateTab()));
+    connect(poPathMapWidget, SIGNAL(PathMoveEvent()), poPathTabWidget, SLOT(sstSlotUpdateTab()));
+
     connect(poPathMapWidget,SIGNAL(sstSgnlBeginInsertRows(int,int)),poPathTabWidget,SLOT(sstSlotBeginInsertRows(int,int)));
     connect(poPathMapWidget,SIGNAL(sstSgnlEndInsertRows()),poPathTabWidget,SLOT(sstSlotEndInsertRows()));
+
+    connect(poPathMapWidget,SIGNAL(sstSgnlBeginRemoveRows(int,int)),poPathTabWidget,SLOT(sstSlotBeginRemoveRows(int,int)));
+    connect(poPathMapWidget,SIGNAL(sstSgnlEndRemoveRows()),poPathTabWidget,SLOT(sstSlotEndRemoveRows()));
 }
 Window::~Window()
 {

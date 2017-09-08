@@ -4,8 +4,8 @@ CONFIG    += qt
 CONFIG    += c++11
 
 
-# CONFIG    -= debug  # ist RELEASE aktiv
-CONFIG    -= release  # ist DEBUG aktiv
+# CONFIG    -= debug    # RELEASE is active
+CONFIG    -= release  # DEBUG is active
 
 CONFIG    += staticlib
 

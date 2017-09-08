@@ -37,9 +37,13 @@ sstQt01PathTabViewCls::sstQt01PathTabViewCls(sstMisc01PrtFilCls    *poTmpPrt,
   this->poTabMdl = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
   this->setModel( this->poTabMdl);
 
-  connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
+  connect(this->poTabMdl,SIGNAL(sstSgnlTabChanged()),this,SLOT(sstSlotChangeTab()));
+
   connect(this,SIGNAL(sstSgnlBeginInsertRows(int,int)),this->poTabMdl,SLOT(sstSlotBeginInsertRows(int,int)));
   connect(this,SIGNAL(sstSgnlEndInsertRows()),this->poTabMdl,SLOT(sstSlotEndInsertRows()));
+
+  connect(this,SIGNAL(sstSgnlBeginRemoveRows(int,int)),this->poTabMdl,SLOT(sstSlotBeginRemoveRows(int,int)));
+  connect(this,SIGNAL(sstSgnlEndRemoveRows()),this->poTabMdl,SLOT(sstSlotEndRemoveRows()));
 }
 //=============================================================================
 sstQt01PathTabViewCls::~sstQt01PathTabViewCls()
@@ -47,9 +51,9 @@ sstQt01PathTabViewCls::~sstQt01PathTabViewCls()
   delete this->poTabMdl;
 }
 //=============================================================================
-void sstQt01PathTabViewCls::UpdateTab()
+void sstQt01PathTabViewCls::sstSlotUpdateTab()
 {
-  emit this->poTabMdl->TabUpdated();
+  emit this->poTabMdl->sstSgnlTabUpdated();
   this->resizeRowsToContents();
 }
 //=============================================================================

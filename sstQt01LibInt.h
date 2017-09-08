@@ -476,13 +476,13 @@ public slots:
     * @brief Slot -Table data changed- direction table to map
     */
     // ----------------------------------------------------------------------------
-    void ChangeTab();
+    void sstSlotChangeTab();
     //==============================================================================
     /**
     * @brief Slot -Table data changed- direction map to table
     */
     // ----------------------------------------------------------------------------
-    void UpdateTab();
+    void sstSlotUpdateTab();
     //==============================================================================
     /**
     * @brief // slot: sst begin inserting records in PathStorage and TabVector  <BR>
@@ -501,19 +501,36 @@ public slots:
     */
     // ----------------------------------------------------------------------------
     void sstSlotEndInsertRows();
+    //==============================================================================
+    /**
+    * @brief // slot: sst begin deleting records in PathStorage and TabVector  <BR>
+    * iStat = oPathTabModel.sstSgnlBeginRemoveRows(first,last);
+    *
+    * @param first [in] first record for deleting in TabVector
+    * @param last  [in] last record for deleting in TabVector
+    */
+    // ----------------------------------------------------------------------------
+    void sstSlotBeginRemoveRows(int first, int last);
+    //==============================================================================
+    /**
+    * @brief Slot -End Inserting records in PathStorage and TabVector  <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstSlotEndRemoveRows();
+    //==============================================================================
 signals:
     //==============================================================================
     /**
     * @brief Signal -Table data changed- table to map
     */
     // ----------------------------------------------------------------------------
-    void TabChanged();
+    void sstSgnlTabChanged();
     //==============================================================================
     /**
     * @brief Signal -Table data changed- map to table
     */
     // ----------------------------------------------------------------------------
-    void TabUpdated();
+    void sstSgnlTabUpdated();
     //==============================================================================
 
     //==============================================================================

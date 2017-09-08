@@ -75,7 +75,7 @@ void sstQt01TabViewCls::actionRowsDelete()
 {
   const QModelIndex index = this->selectionModel()->currentIndex();
   int row = index.row();  // Get Positon of selected Row
-  int count = 1;  // Delete always one row
+  int count = 1;          // Delete always one row
   this->model()->removeRows(row,count,index);
 }
 //=============================================================================
@@ -87,9 +87,9 @@ void sstQt01TabViewCls::actionRowsInsert()
   this->model()->insertRows(row,count,index);
 }
 //=============================================================================
-void sstQt01TabViewCls::ChangeTab()
+void sstQt01TabViewCls::sstSlotChangeTab()
 {
-  emit this->TabChanged();
+  emit this->sstSgnlTabChanged();
 }
 //=============================================================================
 void sstQt01TabViewCls::sstSlotBeginInsertRows(int first, int last)
@@ -100,6 +100,16 @@ void sstQt01TabViewCls::sstSlotBeginInsertRows(int first, int last)
 void sstQt01TabViewCls::sstSlotEndInsertRows()
 {
   emit this->sstSgnlEndInsertRows();
+}
+//=============================================================================
+void sstQt01TabViewCls::sstSlotBeginRemoveRows(int first, int last)
+{
+  emit this->sstSgnlBeginRemoveRows(first,last);
+}
+//=============================================================================
+void sstQt01TabViewCls::sstSlotEndRemoveRows()
+{
+  emit this->sstSgnlEndRemoveRows();
 }
 //=============================================================================
 

@@ -1110,7 +1110,7 @@ public slots:
     * @brief Slot -Table data changed- direction table to map
     */
     // ----------------------------------------------------------------------------
-    void ChangeTab();
+    void sstSlotChangeTab();
     //==============================================================================
     /**
     * @brief // slot: sst begin inserting rocords in path storage  <BR>
@@ -1127,19 +1127,36 @@ public slots:
     */
     // ----------------------------------------------------------------------------
     void sstSlotEndInsertRows();
+    //==============================================================================
+    /**
+    * @brief // slot: sst begin deleting records in path storage  <BR>
+    * iStat = oTabView.sstSgnlBeginRemoveRows(first,last);
+    *
+    * @param first [in] first record for deleting
+    * @param last  [in] last record for deleting
+    */
+    // ----------------------------------------------------------------------------
+    void sstSlotBeginRemoveRows(int first, int last);
+    //==============================================================================
+    /**
+    * @brief Slot -Insert records in path storage <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstSlotEndRemoveRows();
+    //==============================================================================
 signals:
     //==============================================================================
     /**
     * @brief Signal -Table data changed- direction table to map
     */
     // ----------------------------------------------------------------------------
-    void TabChanged();
+    void sstSgnlTabChanged();
     //==============================================================================
     /**
     * @brief Signal -Table data changed- direction map to table
     */
     // ----------------------------------------------------------------------------
-    void TabUpdated();
+    void sstSgnlTabUpdated();
     //==============================================================================
     /**
     * @brief // signal: sst begin inserting rocords in path storage  <BR>
@@ -1156,6 +1173,22 @@ signals:
     */
     // ----------------------------------------------------------------------------
     void sstSgnlEndInsertRows();
+    //==============================================================================
+    /**
+    * @brief // signal: sst begin deleting records in path storage  <BR>
+    * iStat = oTabView.sstSgnlBeginRemoveRows(first,last);
+    *
+    * @param first [in] first record for deleting
+    * @param last  [in] last record for deleting
+    */
+    // ----------------------------------------------------------------------------
+    void sstSgnlBeginRemoveRows(int first, int last);
+    //==============================================================================
+    /**
+    * @brief // signal: sst End inserting records in path storage.  <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstSgnlEndRemoveRows();
     //==============================================================================
 
 private:  // Private functions
@@ -1200,7 +1233,7 @@ public slots:
   * @brief Slot -Table data changed- direction map to table
   */
   // ----------------------------------------------------------------------------
-  void UpdateTab();
+  void sstSlotUpdateTab();
      //==============================================================================
      /**
      * @brief actionRowsInsert
@@ -1367,6 +1400,22 @@ signals:
     */
     // ----------------------------------------------------------------------------
     void sstSgnlEndInsertRows();
+    //==============================================================================
+    /**
+    * @brief // signal: sst begin deleting records in path storage  <BR>
+    * iStat = oPathPaintWidget.sstSgnlBeginRemoveRows(first,last);
+    *
+    * @param first [in] first record for delete
+    * @param last  [in] last record for delete
+    */
+    // ----------------------------------------------------------------------------
+    void sstSgnlBeginRemoveRows(int first, int last);
+    //==============================================================================
+    /**
+    * @brief // signal: sst End deleting records in path storage.  <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstSgnlEndRemoveRows();
     //==============================================================================
 
 
