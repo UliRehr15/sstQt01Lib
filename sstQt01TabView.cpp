@@ -75,6 +75,10 @@ void sstQt01TabViewCls::actionRowsDelete()
 {
   const QModelIndex index = this->selectionModel()->currentIndex();
   int row = index.row();  // Get Positon of selected Row
+
+  // Search PathItem in Main Table with Row Num from Element Table <BR>
+  // iStat = this->sstSgnlBeginRemoveRows(row,row);
+
   int count = 1;          // Delete always one row
   this->model()->removeRows(row,count,index);
 }

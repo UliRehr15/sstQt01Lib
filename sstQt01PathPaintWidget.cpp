@@ -127,10 +127,22 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
     int iPathCount = (int) this->oPathStorage->countItems();
     for (int ii=1; ii <= iPathCount; ii++)
     {
+      sstQt01ShapeItem oShapeItem;
+      int iStat = this->oPathStorage->getShapeItem2( 0, ii, &oShapeItem);
+      // Get delete state of record dRecNo
+      if (iStat >= 0)
+      {
         painter.translate(this->oPathStorage->getPosition(ii));
-        painter.setBrush(this->oPathStorage->getColor(ii));
-        painter.drawPath(this->oPathStorage->getPath(ii));
+//        painter.setBrush(this->oPathStorage->getColor(ii));
+//        painter.drawPath(this->oPathStorage->getPath(ii));
         painter.translate(-this->oPathStorage->getPosition(ii));
+
+                // painter.translate(oShapeItem.getPosition());
+                painter.setBrush(oShapeItem.getColor());
+                painter.drawPath(oShapeItem.getPath());
+                // painter.translate(-oShapeItem.getPosition());
+
+      }
     }
 }
 //=============================================================================

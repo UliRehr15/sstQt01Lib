@@ -455,7 +455,6 @@ QPainterPath sstQt01PathStorageCls::getPath(dREC04RECNUMTYP index)
 //=============================================================================
 sstQt01ShapeItem sstQt01PathStorageCls::getShapeItem(dREC04RECNUMTYP index)
 {
-  // assert(0);
   sstQt01ShapeItem oItem;
   QPainterPath oPath = this->getPath(index);
   QColor oCol = this->getColor(index);
@@ -464,6 +463,42 @@ sstQt01ShapeItem sstQt01PathStorageCls::getShapeItem(dREC04RECNUMTYP index)
   oItem.setPath(oPath);
 
   return oItem;
+}
+//=============================================================================
+int sstQt01PathStorageCls::getShapeItem2(int iKey, dREC04RECNUMTYP index,sstQt01ShapeItem *poShapeItem)
+{
+  int iRet  = 0;
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  if ( this->poShapeItemMainTable->RecGetDeleteStatus(0,index) == false)
+  {
+
+    // sstQt01ShapeItem oItem;
+    QPainterPath oPath = this->getPath(index);
+    QColor oCol = this->getColor(index);
+
+    poShapeItem->setColor(oCol);
+    poShapeItem->setPath(oPath);
+  }
+  else
+  {
+    return -1;
+  }
+  // Fatal Errors goes to an assert
+
+  // Pipe |
+  // Smaller <
+  // Greater >
+
+  assert(iRet >= 0);
+
+  // Small Errors will given back
+  iRet = iStat;
+
+
+  return iRet;
 }
 //=============================================================================
 int sstQt01PathStorageCls::appendShapeItem(sstQt01ShapeItem oItem)
@@ -556,4 +591,71 @@ QColor sstQt01PathStorageCls::initialItemColor()
   return QColor::fromHsv(((this->countItems() + 1) * 85) % 256, 255, 190);
 }
 //=============================================================================
+int sstQt01PathStorageCls::SearchPathItem(int iKey, dREC04RECNUMTYP dRowNum, dREC04RECNUMTYP *dItemNum)
+{
+  sstQt01PathMainRecCls oMainRec;
+  int iRet  = 0;
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
 
+  dREC04RECNUMTYP dMaxRow =  this->poShapeItemMainTable->count();
+
+  for (dREC04RECNUMTYP ll=1; ll <= dMaxRow; ll++)
+  {
+    iStat = this->poShapeItemMainTable->Read(0,ll,&oMainRec);
+    if (dRowNum >= oMainRec.getStartElementRecNo() && dRowNum <= oMainRec.getEndElementRecNo())
+    {
+      *dItemNum = ll;
+      return 0;
+    }
+  }
+
+  *dItemNum = 0;
+  iStat = -2;
+
+  // Fatal Errors goes to an assert
+
+  // Pipe |
+  // Smaller <
+  // Greater >
+
+  assert(iRet >= 0);
+
+  // Small Errors will given back
+  iRet = iStat;
+
+  return iRet;
+}
+//=============================================================================
+int sstQt01PathStorageCls::DeletePathItem(int iKey, dREC04RECNUMTYP dItemNum)
+{
+  sstQt01PathMainRecCls oMainRec;
+  int iRet  = 0;
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  iStat = this->poShapeItemMainTable->Read(0,dItemNum,&oMainRec);
+
+  for (dREC04RECNUMTYP ll = oMainRec.getStartElementRecNo();ll <= oMainRec.getEndElementRecNo();ll++)
+  {
+    this->poShapeItemRecTable->RecSetDeleted(0,ll);
+  }
+
+  this->poShapeItemMainTable->RecSetDeleted(0,dItemNum);
+
+  // Fatal Errors goes to an assert
+
+  // Pipe |
+  // Smaller <
+  // Greater >
+
+  assert(iRet >= 0);
+
+  // Small Errors will given back
+  iRet = iStat;
+
+  return iRet;
+}
+//=============================================================================

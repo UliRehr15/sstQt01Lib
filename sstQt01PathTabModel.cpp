@@ -81,10 +81,9 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
   switch(role){
   case Qt::DisplayRole:
     {
-      sstQt01PathElementCsvCls oTestRec1;
-
-      iStat = poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
-      assert(iStat == 0);
+    sstQt01PathElementCsvCls oTestRec1;
+    iStat = poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+    assert(iStat == 0);
 
       switch (index.column())
       {
@@ -168,17 +167,43 @@ Qt::ItemFlags sstQt01PathTabMdlCls::flags(const QModelIndex &index) const
 bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex &index)
 {
     Q_UNUSED(index);
-    beginRemoveRows(QModelIndex(), position, position + rows - 1);
+
+  sstQt01PathElementCsvCls oTestRec1;
+  int iStat = poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+  assert(iStat == 0);
+
+  if (oTestRec1.getIType() == 0)
+  {
+    // Search PathItem in Main Table with Row Num from Element Table
+    dREC04RECNUMTYP dItemNum;
+    iStat = poPathStorage->SearchPathItem ( 0, this->sstTabVector[index.row()], &dItemNum);
+
+    // Read Path from storage
+    QPainterPath oPath = poPathStorage->getPath(dItemNum);
+
+    // Get number of elements in path
+    int iPathElements = oPath.elementCount();
+
+    beginRemoveRows(QModelIndex(), position, position + iPathElements - 1);
+
+    // Delete Path Item with number from storage <BR>
+    iStat = poPathStorage->DeletePathItem( 0, dItemNum);
+
 
     // rows is always = 1 at the moment
     // Position is 0 > n-1
 
-    for (int row = 0; row < rows; ++row) {
-      poPathStorage->DeleteRecPos(0,position+1);
+    for (int row = 0; row < iPathElements; ++row)
+    {
+      // poPathStorage->DeleteRecPos(0,position+1);
+      this->sstTabVector.erase (this->sstTabVector.begin()+position);
     }
+
     endRemoveRows();
 
-    this->sstTabVector.erase (this->sstTabVector.begin()+position);
+  }
+
+  this->sstSgnlTabChanged();
 
     return true;
 }
@@ -250,6 +275,7 @@ void sstQt01PathTabMdlCls::sstSlotBeginRemoveRows(int first, int last)
 {
   // Create new records at end of TabVector and insert new record number of PathStorage records
   dREC04RECNUMTYP dNumRecPathTab = this->poPathStorage->RecordCount();
+  assert(dNumRecPathTab > 0);
 
 //  for (int ii=first; ii<=last; ii++)
 //  {

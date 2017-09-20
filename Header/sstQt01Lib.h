@@ -869,8 +869,8 @@ class sstQt01PathStorageCls
      int WriteRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr);
      //==============================================================================
      /**
-     * @brief // mark deleted QPainterPath record in sst table object.  <BR>
-     * iStat = oPathStorage.LoadAllPathFromFile (iKey, oFilNam);
+     * @brief // mark deleted QPainterPath record in Path element sst table.  <BR>
+     * iStat = oPathStorage.DeleteRecPos (iKey, dRecNo);
      *
      * @param iKey   [in] For the moment 0
      * @param dRecNo [in] record number
@@ -997,6 +997,7 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      sstQt01ShapeItem getShapeItem(dREC04RECNUMTYP index);
+     int getShapeItem2(int iKey, dREC04RECNUMTYP index,sstQt01ShapeItem *oShapeItem);
      //==============================================================================
      /**
      * @brief // append item to storage at table end <BR>
@@ -1034,10 +1035,69 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int createDefaultItems(int iKey);
-// ----------------------------------------------------------------------------
+     //==============================================================================
+     /**
+     * @brief // Search PathItem in Main Table with Row Num from Element Table <BR>
+     * iStat = oPathStorage.SearchPathItem ( iKey, dRowNum, dItemNum);
+     *
+     * @param iKey     [in] For the moment 0
+     * @param dRowNum  [in] Row Number in Element Table
+     * @param dItemNum [out] Row Num in Main Table
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int SearchPathItem(int iKey, dREC04RECNUMTYP dRowNum, dREC04RECNUMTYP *dItemNum);
+     //==============================================================================
+     /**
+     * @brief // Delete Path Item with number from storage <BR>
+     * iStat = oPathStorage.DeletePathItem( iKey, dItemNum);
+     *
+     * @param iKey     [in] For the moment 0
+     * @param dItemNum [in] Record number of item in main table
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int DeletePathItem(int iKey, dREC04RECNUMTYP dItemNum);
+     //==============================================================================
+
   private:  // Private functions
+     //==============================================================================
+     /**
+     * @brief // Shortstory <BR>
+     * iStat = oPathStorage.Func_1(iKey);
+     *
+     * @param iKey [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
      QPoint initialItemPosition(const QPainterPath &path);
+     //==============================================================================
+     /**
+     * @brief // Shortstory <BR>
+     * iStat = oPathStorage.Func_1(iKey);
+     *
+     * @param iKey [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
      QColor initialItemColor();
+     //==============================================================================
 
 
      sstRec04Cls *poShapeItemRecTable;   /**< painter path element record table */
