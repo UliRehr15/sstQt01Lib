@@ -229,6 +229,7 @@ bool TstRec2ModelCls::insertRows(int position, int rows, const QModelIndex &inde
 
     for (int row = 0; row < rows; ++row) {
       sstRec04TestRec2Cls oTestRec;
+      oTestRec2Table.ReadRecPos(0,oTestRec2Table.RecordCount(),&oTestRec);
       oTestRec2Table.WriteNew(0,&dRecNo,&oTestRec);
     }
 

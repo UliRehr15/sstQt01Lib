@@ -997,6 +997,18 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      sstQt01ShapeItem getShapeItem(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
+     * @brief // Get Shape Item from path table <BR>
+     * iStat = oPathStorage.getShapeItem2(iKey, index, oShapeItem);
+     *
+     * @param iKey  [in] Zero for the moment
+     * @param index [in] index of path
+     * @param oShapeItem [out] index of path
+     *
+     * @return Path geometry
+     */
+     // ----------------------------------------------------------------------------
      int getShapeItem2(int iKey, dREC04RECNUMTYP index,sstQt01ShapeItem *oShapeItem);
      //==============================================================================
      /**
@@ -1066,6 +1078,21 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int DeletePathItem(int iKey, dREC04RECNUMTYP dItemNum);
+     //==============================================================================
+     /**
+     * @brief // Update number of elements of Path Item in main table <BR>
+     * iStat = oPathStorage.UpdatePathItem( iKey, dItemNum);
+     *
+     * @param iKey     [in] For the moment 0
+     * @param dItemNum [in] Record number of item in main table
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int UpdatePathItem (int iKey, dREC04RECNUMTYP dItemNum);
      //==============================================================================
 
   private:  // Private functions

@@ -257,6 +257,7 @@ int sstQt01PathStorageCls::ReadPath(int iKey, dREC04RECNUMTYP dStartElementRecNo
   sstQt01PathElementCsvCls oShapeItemCsv1;
   sstQt01PathElementCsvCls oShapeItemCsv2;
   sstQt01PathElementCsvCls oShapeItemCsv3;
+  int iStat = 0;
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
@@ -278,7 +279,9 @@ int sstQt01PathStorageCls::ReadPath(int iKey, dREC04RECNUMTYP dStartElementRecNo
   for (dREC04RECNUMTYP ll=this->dActualReadPos+1; ll <= this->poShapeItemRecTable->count();ll++)
   {
     // Read record from table
-    this->poShapeItemRecTable->Read( 0, ll, &oShapeItemCsv1);
+    iStat = this->poShapeItemRecTable->Read( 0, ll, &oShapeItemCsv1);
+    if (iStat < 0) continue;  // next for loop, if element is deleted
+
     switch (oShapeItemCsv1.getIType())
     {
     case 0:
@@ -294,8 +297,8 @@ int sstQt01PathStorageCls::ReadPath(int iKey, dREC04RECNUMTYP dStartElementRecNo
       break;
     case 2:
       // Read additional two Type 3 records and create 1/4 circle
-      this->poShapeItemRecTable->Read( 0, ll+1, &oShapeItemCsv2);
-      this->poShapeItemRecTable->Read( 0, ll+2, &oShapeItemCsv3);
+      iStat = this->poShapeItemRecTable->Read( 0, ll+1, &oShapeItemCsv2);
+      iStat = this->poShapeItemRecTable->Read( 0, ll+2, &oShapeItemCsv3);
       oTmpPath->cubicTo(oShapeItemCsv1.getIXX(),oShapeItemCsv1.getIYY(),
                         oShapeItemCsv2.getIXX(),oShapeItemCsv2.getIYY(),
                         oShapeItemCsv3.getIXX(),oShapeItemCsv3.getIYY());
@@ -419,7 +422,8 @@ int sstQt01PathStorageCls::addPosition(dREC04RECNUMTYP index)
   {
      sstQt01PathElementCsvCls oElementRec;
      iStat = this->poShapeItemRecTable->Read(0,ii,&oElementRec);
-     assert(iStat >= 0);
+     // assert(iStat >= 0);
+     assert(iStat >= 0 || iStat == -3);
      oElementRec.addIXX(oPnt.rx());
      oElementRec.addIYY(oPnt.ry());
      this->poShapeItemRecTable->Writ(0,&oElementRec,ii);
@@ -505,7 +509,6 @@ int sstQt01PathStorageCls::appendShapeItem(sstQt01ShapeItem oItem)
 {
   // Append to element table
   QPainterPath oPath = oItem.getPath();
-  // oPath.moveTo(oItem.getPosition());
   int iStat = this->AppendPath(0,oPath,oItem.getColor());
   assert(iStat >= 0);
 
@@ -637,6 +640,7 @@ int sstQt01PathStorageCls::DeletePathItem(int iKey, dREC04RECNUMTYP dItemNum)
   if ( iKey != 0) return -1;
 
   iStat = this->poShapeItemMainTable->Read(0,dItemNum,&oMainRec);
+  assert(iStat >= 0);
 
   for (dREC04RECNUMTYP ll = oMainRec.getStartElementRecNo();ll <= oMainRec.getEndElementRecNo();ll++)
   {
@@ -657,5 +661,21 @@ int sstQt01PathStorageCls::DeletePathItem(int iKey, dREC04RECNUMTYP dItemNum)
   iRet = iStat;
 
   return iRet;
+}
+//=============================================================================
+int sstQt01PathStorageCls::UpdatePathItem(int iKey, dREC04RECNUMTYP dItemNo)
+{
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  sstQt01PathMainRecCls oMainRec;
+  iStat = this->poShapeItemMainTable->Read(0,dItemNo,&oMainRec);
+  dREC04RECNUMTYP dNumElements =  oMainRec.getNumElements();
+  dNumElements++;
+  oMainRec.setNumElements(dNumElements);
+  iStat = this->poShapeItemMainTable->Writ( 0, &oMainRec, dItemNo);
+
+  return iStat;
 }
 //=============================================================================

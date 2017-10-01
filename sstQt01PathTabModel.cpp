@@ -50,7 +50,6 @@ sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent,
 
   connect(this,SIGNAL(sstSgnlTabUpdated()),this,SLOT(sstSlotUpdateTab()));
 
-
   // Fatal Errors goes to an assert
   if (iStat < 0)
   {
@@ -134,7 +133,7 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
         //save value from editor to oTestRecDss
       sstQt01PathElementCsvCls oTestRec1;
 
-      dREC04RECNUMTYP dRecNo = index.row() +1;
+      // dREC04RECNUMTYP dRecNo = index.row() +1;
       poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
 
       bool bOK = 1;
@@ -149,7 +148,7 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
       case 5: oTestRec1.setIColB( value.toInt(&bOK)); break;
       }
 
-      if (bOK) poPathStorage->WriteRecPos( 0, dRecNo, &oTestRec1);
+      if (bOK) poPathStorage->WriteRecPos( 0, this->sstTabVector[index.row()], &oTestRec1);
 
     }
 
@@ -166,17 +165,21 @@ Qt::ItemFlags sstQt01PathTabMdlCls::flags(const QModelIndex &index) const
 //=============================================================================
 bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex &index)
 {
-    Q_UNUSED(index);
+  Q_UNUSED(index);
+
+  if (rows != 1) assert(0);
 
   sstQt01PathElementCsvCls oTestRec1;
   int iStat = poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
-  assert(iStat == 0);
+  assert(iStat >= 0);
 
-  if (oTestRec1.getIType() == 0)
+  // Search PathItem in Main Table with Row Num from Element Table
+  dREC04RECNUMTYP dItemNum = 0;
+  iStat = poPathStorage->SearchPathItem ( 0, this->sstTabVector[index.row()], &dItemNum);
+  assert(iStat >= 0);
+
+  if (oTestRec1.getIType() == 0)  // Begin of Path Item
   {
-    // Search PathItem in Main Table with Row Num from Element Table
-    dREC04RECNUMTYP dItemNum;
-    iStat = poPathStorage->SearchPathItem ( 0, this->sstTabVector[index.row()], &dItemNum);
 
     // Read Path from storage
     QPainterPath oPath = poPathStorage->getPath(dItemNum);
@@ -189,23 +192,27 @@ bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex 
     // Delete Path Item with number from storage <BR>
     iStat = poPathStorage->DeletePathItem( 0, dItemNum);
 
-
-    // rows is always = 1 at the moment
-    // Position is 0 > n-1
-
+    // Erase all records from TabVector
     for (int row = 0; row < iPathElements; ++row)
     {
-      // poPathStorage->DeleteRecPos(0,position+1);
       this->sstTabVector.erase (this->sstTabVector.begin()+position);
     }
 
     endRemoveRows();
 
   }
+  else if(oTestRec1.getIType() == 1)  // polygon
+  {
+    beginRemoveRows(QModelIndex(), position, position);
+    // Delete Path Item with number from storage <BR>
+    iStat = poPathStorage->DeleteRecPos(0, this->sstTabVector[index.row()]);
+    this->sstTabVector.erase (this->sstTabVector.begin()+position);
+    endRemoveRows();
+  }
 
   this->sstSgnlTabChanged();
 
-    return true;
+  return true;
 }
 //=============================================================================
 bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex &index)
@@ -219,12 +226,17 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
 
     for (int row = 0; row < rows; ++row) {
       sstQt01PathElementCsvCls oTestRec;
+      poPathStorage->ReadRecPos(0,poPathStorage->RecordCount(),&oTestRec);
       poPathStorage->WriteNew(0,&dRecNo,&oTestRec);
+      this->sstTabVector.push_back(dRecNo);
     }
 
     endInsertRows();
 
-    this->sstTabVector.push_back(dRecNo);
+    // last item needs one element more
+    int iNumItems = poPathStorage->countItems();
+    int iStat = poPathStorage->UpdatePathItem(0,iNumItems);
+    assert(iStat >= 0);
 
     return true;
 }
@@ -245,7 +257,7 @@ void sstQt01PathTabMdlCls::sstSlotUpdateTab()
   QModelIndex oIndex1 = this->index(0,0);
   QModelIndex oIndex2 = this->index(iRow-1,iCol-1);
 
-  // emit system signal -dataChanged- is nessesary, because
+  // emit system signal -dataChanged- is nessasary, because
   // data are changed outside of Table Model in map.
   emit this->dataChanged(oIndex1,oIndex2);
 }

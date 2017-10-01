@@ -57,3 +57,4 @@ Structure of coding projects should be:
 01.09.2017: Version 1.21: Patch Refreshing/Resizing PathTable while inserting items in PathMap. <BR>
 08.09.2017: Version 1.22: Preparing BeginRemoveRows/EndRemoveRows in PathTable. <BR>
 20.09.2017: Version 1.23: Delete QPainterPath object from table, repaint map. <BR>
+01.10.2017: Version 1.24: Insert/Delete Row function in QPainterPath object. <BR>

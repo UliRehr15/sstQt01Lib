@@ -133,15 +133,9 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
       if (iStat >= 0)
       {
         painter.translate(this->oPathStorage->getPosition(ii));
-//        painter.setBrush(this->oPathStorage->getColor(ii));
-//        painter.drawPath(this->oPathStorage->getPath(ii));
+        painter.setBrush(oShapeItem.getColor());
+        painter.drawPath(oShapeItem.getPath());
         painter.translate(-this->oPathStorage->getPosition(ii));
-
-                // painter.translate(oShapeItem.getPosition());
-                painter.setBrush(oShapeItem.getColor());
-                painter.drawPath(oShapeItem.getPath());
-                // painter.translate(-oShapeItem.getPosition());
-
       }
     }
 }
@@ -172,10 +166,10 @@ void sstQt01PathPaintWidgetCls::mousePressEvent(QMouseEvent *event)
 
           oActualItem = this->oPathStorage->getShapeItem(index);
           // itemInMotion = &oActualItem;
-            previousPosition = event->pos();
-            // Move acual item to end of list. Will be found first with mouse
-            //shapeItems.move(index, shapeItems.size() - 1);
-            update();
+          previousPosition = event->pos();
+          // Move acual item to end of list. Will be found first with mouse
+          //shapeItems.move(index, shapeItems.size() - 1);
+          update();
         }
     }
 }
@@ -240,9 +234,9 @@ void sstQt01PathPaintWidgetCls::moveItemTo(const QPoint &pos)
 {
   QPoint offset = pos - previousPosition;
   QPoint oItemPos = this->oPathStorage->getPosition(iItemInMotionIndex);
-    this->oPathStorage->setPosition(this->iActualItemIndex, oItemPos + offset);
-    previousPosition = pos;
-    update();
+  this->oPathStorage->setPosition(this->iActualItemIndex, oItemPos + offset);
+  previousPosition = pos;
+  update();
 }
 //=============================================================================
 int sstQt01PathPaintWidgetCls::updateButtonGeometry(QToolButton *button, int x, int y)
