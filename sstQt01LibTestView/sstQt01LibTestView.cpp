@@ -58,8 +58,8 @@ Dialog::Dialog()
   iStat = this->poPrt->SST_PrtAuf(1,(char*)"sstQt01LibTestView.log");
   assert(iStat == 0);
 
-  this->poPathStorage = new sstQt01PathStorageCls;
-  iStat = this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
+  this->poPathStorage = new sstQt01PathStorageCls(this->poPrt);
+  iStat = this->poPathStorage->LoadAllPathFromFile2(0,"Paint.csv");
   // assert(iStat == 0);
 
   if (poPathStorage->countItems() <= 0)

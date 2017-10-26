@@ -21,7 +21,6 @@ HEADERS		+= sstQt01LibInt.h
 
 SOURCES		+= sstQt01Tab.cpp \
              sstQt01PathStorage.cpp \
-             sstQt01PathElementCsv.cpp \
     sstQt01TabView.cpp \
     sstQt01ShapeItem.cpp \
     sstQt01PathTabModel.cpp \
@@ -32,7 +31,9 @@ SOURCES		+= sstQt01Tab.cpp \
     sstQt01_tstrec1_TabView.cpp \
     sstQt01_tstrec2_TabMdl.cpp \
     sstQt01_tstrec2_TabView.cpp \
-    sstQt01BaseTabMdl.cpp
+    sstQt01BaseTabMdl.cpp \
+    sstQt01PathElementCsv1.cpp \
+    sstQt01PathElementCsv2.cpp
 
 OTHER_FILES += README.md
 

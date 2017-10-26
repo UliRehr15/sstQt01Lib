@@ -134,6 +134,7 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
       {
         painter.translate(this->oPathStorage->getPosition(ii));
         painter.setBrush(oShapeItem.getColor());
+        painter.setPen(oShapeItem.getPen());
         painter.drawPath(oShapeItem.getPath());
         painter.translate(-this->oPathStorage->getPosition(ii));
       }
@@ -195,28 +196,28 @@ void sstQt01PathPaintWidgetCls::createNewCircle()
 {
     static int count = 1;
     createShapeItem(circlePath, tr("Circle <%1>").arg(++count),
-                    randomItemPosition(), randomItemColor());
+                    randomItemPosition(), randomItemColor(), randomItemPen());
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createNewSquare()
 {
     static int count = 1;
     createShapeItem(squarePath, tr("Square <%1>").arg(++count),
-                    randomItemPosition(), randomItemColor());
+                    randomItemPosition(), randomItemColor(), randomItemPen());
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createNewTriangle()
 {
     static int count = 1;
     createShapeItem(trianglePath, tr("Triangle <%1>").arg(++count),
-                    randomItemPosition(), randomItemColor());
+                    randomItemPosition(), randomItemColor(), randomItemPen());
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createNewLine()
 {
     static int count = 1;
     createShapeItem(linePath, tr("Line <%1>").arg(++count),
-                    randomItemPosition(), randomItemColor());
+                    randomItemPosition(), randomItemColor(), randomItemPen());
 }
 //=============================================================================
 int sstQt01PathPaintWidgetCls::itemAt(const QPoint &pos)
@@ -251,13 +252,14 @@ int sstQt01PathPaintWidgetCls::updateButtonGeometry(QToolButton *button, int x, 
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createShapeItem(const QPainterPath &path,
                                  const QString &toolTip, const QPoint &pos,
-                                 const QColor &color)
+                                 const QColor &color, const QPen &oPen)
 {
     sstQt01ShapeItem shapeItem;
     shapeItem.setPath(path);
     shapeItem.setToolTip(toolTip);
     shapeItem.setPosition(pos);
     shapeItem.setColor(color);
+    shapeItem.setPen(oPen);
     int iBegin=0;
     int iEnd=0;
     // Insert rows at end of table
@@ -310,6 +312,18 @@ QColor sstQt01PathPaintWidgetCls::randomItemColor()
     return QColor::fromHsv(qrand() % 256, 255, 190);
 }
 //=============================================================================
+QPen sstQt01PathPaintWidgetCls::initialItemPen()
+{
+  QPen oPen;
+  return oPen;
+}
+//=============================================================================
+QPen sstQt01PathPaintWidgetCls::randomItemPen()
+{
+  QPen oPen;
+  return oPen;
+}
+//=============================================================================
 int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
 //-----------------------------------------------------------------------------
 {
@@ -332,6 +346,8 @@ int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
   {
     iPathNo++;
     int iElements = poPath->elementCount();
+    assert(iElements > 0);
+
     switch (iElements)
     {
     case 2:
@@ -347,7 +363,8 @@ int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
       this->oPathStorage->setToolTip( iPathNo, tr("Circle"));
       break;
     default:
-      assert(0);
+      this->oPathStorage->setToolTip( iPathNo, tr("Object"));
+      // assert(0);
       break;
     }
 
@@ -376,13 +393,13 @@ int sstQt01PathPaintWidgetCls::ItemsCreate (int iKey)
   if ( iKey != 0) return -1;
 
   createShapeItem(circlePath, tr("Circle"), initialItemPosition(circlePath),
-                  initialItemColor());
+                  initialItemColor(), initialItemPen());
   createShapeItem(squarePath, tr("Square"), initialItemPosition(squarePath),
-                  initialItemColor());
+                  initialItemColor(), initialItemPen());
   createShapeItem(trianglePath, tr("Triangle"),
-                  initialItemPosition(trianglePath), initialItemColor());
+                  initialItemPosition(trianglePath), initialItemColor(), initialItemPen());
   createShapeItem(linePath, tr("Line"),
-                  initialItemPosition(linePath), initialItemColor());
+                  initialItemPosition(linePath), initialItemColor(), initialItemPen());
 
   return iRet;
 }

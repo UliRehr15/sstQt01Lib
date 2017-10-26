@@ -43,6 +43,11 @@ QColor sstQt01ShapeItem::getColor() const
     return myColor;
 }
 //=============================================================================
+QPen sstQt01ShapeItem::getPen() const
+{
+    return myPen;
+}
+//=============================================================================
 QString sstQt01ShapeItem::getToolTip() const
 {
     return myToolTip;
@@ -66,6 +71,11 @@ void sstQt01ShapeItem::setPosition(const QPoint &position)
 void sstQt01ShapeItem::setColor(const QColor &color)
 {
     myColor = color;
+}
+//=============================================================================
+void sstQt01ShapeItem::setPen(const QPen &oPen)
+{
+    myPen = oPen;
 }
 //=============================================================================
 void sstQt01ShapeItem::createShapeItem(const QPainterPath &path,

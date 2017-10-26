@@ -27,7 +27,7 @@
 #include <QPoint>
 
 #include <sstStr01Lib.h>
-#include <sstMath01Lib.h>
+// #include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
@@ -43,8 +43,8 @@ sstQt01PathElementCsv2Cls::sstQt01PathElementCsv2Cls()
   this->iColR = 0;        /**< Color Red */
   this->iColG = 0;        /**< Color Green */
   this->iColB = 0;        /**< Color Blue */
-  this->iPenWidth = 0;    /**< Pen Width */
-  this->iPenStyle = 0;    /**< Pen Style */
+  this->iPenWidth = 1;    /**< Pen Width */
+  this->iPenStyle = 1;    /**< Pen Style */
 }
 //=============================================================================
 int sstQt01PathElementCsv2Cls::ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr)
@@ -96,6 +96,22 @@ std::string sstQt01PathElementCsv2Cls::GetCsvFileTitle()
   oLocStr = "iType;iXX;iYY;iColR;iColG;iColB;iPenWidth;iPenStyle";
 
   return oLocStr;
+}
+//=============================================================================
+void sstQt01PathElementCsv2Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol)
+{
+  int iTmpColR = 0;
+  int iTmpColG = 0;
+  int iTmpColB = 0;
+
+  oTmpCol.getRgb(&iTmpColR,&iTmpColG,&iTmpColB);
+
+  this->iType = iTmpType;
+  this->iXX = iTmpXX;
+  this->iYY = iTmpYY;
+  this->iColR = iTmpColR;
+  this->iColG = iTmpColG;
+  this->iColB = iTmpColB;
 }
 //=============================================================================
 void sstQt01PathElementCsv2Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol, QPen oTmpPen)
@@ -216,5 +232,22 @@ return iPenStyle;
 void sstQt01PathElementCsv2Cls::setIPenStyle(int value)
 {
 iPenStyle = value;
+}
+//=============================================================================
+unsigned int sstQt01PathElementCsv2Cls::ColumnCount()
+{
+  return 8;
+}
+//=============================================================================
+void sstQt01PathElementCsv2Cls::setFromVers1(sstQt01PathElementCsv1Cls oShapeItemCsv1)
+{
+  this->iType = oShapeItemCsv1.getIType();        /**< Shape Item Type */
+  this->iXX   = oShapeItemCsv1.getIXX();          /**< Coordinate X */
+  this->iYY   = oShapeItemCsv1.getIYY();          /**< Coordinate Y */
+  this->iColR = oShapeItemCsv1.getIColR();        /**< Color Red */
+  this->iColG = oShapeItemCsv1.getIColG();        /**< Color Green */
+  this->iColB = oShapeItemCsv1.getIColB();        /**< Color Blue */
+  // this->iPenWidth;    /**< Pen Width */
+  // this->iPenStyle;    /**< Pen Style */
 }
 //=============================================================================

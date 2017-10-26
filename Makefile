@@ -47,7 +47,6 @@ OBJECTS_DIR   = ./
 
 SOURCES       = sstQt01Tab.cpp \
 		sstQt01PathStorage.cpp \
-		sstQt01PathElementCsv.cpp \
 		sstQt01TabView.cpp \
 		sstQt01ShapeItem.cpp \
 		sstQt01PathTabModel.cpp \
@@ -58,12 +57,13 @@ SOURCES       = sstQt01Tab.cpp \
 		sstQt01_tstrec1_TabView.cpp \
 		sstQt01_tstrec2_TabMdl.cpp \
 		sstQt01_tstrec2_TabView.cpp \
-		sstQt01BaseTabMdl.cpp qrc_tooltips.cpp \
+		sstQt01BaseTabMdl.cpp \
+		sstQt01PathElementCsv1.cpp \
+		sstQt01PathElementCsv2.cpp qrc_tooltips.cpp \
 		moc_sstQt01Lib.cpp \
 		moc_sstQt01LibInt.cpp
 OBJECTS       = sstQt01Tab.o \
 		sstQt01PathStorage.o \
-		sstQt01PathElementCsv.o \
 		sstQt01TabView.o \
 		sstQt01ShapeItem.o \
 		sstQt01PathTabModel.o \
@@ -75,6 +75,8 @@ OBJECTS       = sstQt01Tab.o \
 		sstQt01_tstrec2_TabMdl.o \
 		sstQt01_tstrec2_TabView.o \
 		sstQt01BaseTabMdl.o \
+		sstQt01PathElementCsv1.o \
+		sstQt01PathElementCsv2.o \
 		qrc_tooltips.o \
 		moc_sstQt01Lib.o \
 		moc_sstQt01LibInt.o
@@ -139,7 +141,6 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		sstQt01Lib.pro Header/sstQt01Lib.h \
 		sstQt01LibInt.h sstQt01Tab.cpp \
 		sstQt01PathStorage.cpp \
-		sstQt01PathElementCsv.cpp \
 		sstQt01TabView.cpp \
 		sstQt01ShapeItem.cpp \
 		sstQt01PathTabModel.cpp \
@@ -150,7 +151,9 @@ DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		sstQt01_tstrec1_TabView.cpp \
 		sstQt01_tstrec2_TabMdl.cpp \
 		sstQt01_tstrec2_TabView.cpp \
-		sstQt01BaseTabMdl.cpp
+		sstQt01BaseTabMdl.cpp \
+		sstQt01PathElementCsv1.cpp \
+		sstQt01PathElementCsv2.cpp
 QMAKE_TARGET  = sstQt01Lib_d
 DESTDIR       = ../libs/#avoid trailing-slash linebreak
 TARGET        = libsstQt01Lib_d.a
@@ -331,7 +334,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents tooltips.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents Header/sstQt01Lib.h sstQt01LibInt.h $(DISTDIR)/
-	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01PathElementCsv.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp sstQt01PathTabView.cpp sstQt01_tstrec1_TabMdl.cpp sstQt01_tstrec1_TabView.cpp sstQt01_tstrec2_TabMdl.cpp sstQt01_tstrec2_TabView.cpp sstQt01BaseTabMdl.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01PathStorage.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp sstQt01PathTabView.cpp sstQt01_tstrec1_TabMdl.cpp sstQt01_tstrec1_TabView.cpp sstQt01_tstrec2_TabMdl.cpp sstQt01_tstrec2_TabView.cpp sstQt01BaseTabMdl.cpp sstQt01PathElementCsv1.cpp sstQt01PathElementCsv2.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -406,13 +409,6 @@ sstQt01PathStorage.o: sstQt01PathStorage.cpp ../sst_str01_lib/Header/sstStr01Lib
 		sstQt01LibInt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathStorage.o sstQt01PathStorage.cpp
 
-sstQt01PathElementCsv.o: sstQt01PathElementCsv.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
-		../sst_misc01_lib/Header/sstMisc01Lib.h \
-		../sst_rec04_lib/Header/sstRec04Lib.h \
-		Header/sstQt01Lib.h \
-		sstQt01LibInt.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathElementCsv.o sstQt01PathElementCsv.cpp
-
 sstQt01TabView.o: sstQt01TabView.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
@@ -486,6 +482,20 @@ sstQt01BaseTabMdl.o: sstQt01BaseTabMdl.cpp ../sst_str01_lib/Header/sstStr01Lib.h
 		Header/sstQt01Lib.h \
 		sstQt01LibInt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01BaseTabMdl.o sstQt01BaseTabMdl.cpp
+
+sstQt01PathElementCsv1.o: sstQt01PathElementCsv1.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathElementCsv1.o sstQt01PathElementCsv1.cpp
+
+sstQt01PathElementCsv2.o: sstQt01PathElementCsv2.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathElementCsv2.o sstQt01PathElementCsv2.cpp
 
 qrc_tooltips.o: qrc_tooltips.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_tooltips.o qrc_tooltips.cpp

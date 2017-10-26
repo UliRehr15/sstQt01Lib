@@ -33,12 +33,19 @@
 sstQt01PathTabDialogCls::sstQt01PathTabDialogCls()
 {
   poPrt = new sstMisc01PrtFilCls;
-  poPathStorage = new sstQt01PathStorageCls;
+  poPathStorage = new sstQt01PathStorageCls(poPrt);
 
   int iStat = 0;
   iStat = poPrt->SST_PrtAuf(1,(char*)"sstQt01LibTabPath.log");
   assert(iStat == 0);
-  iStat = poPathStorage->LoadAllPathFromFile( 0, (char*) "Paint.csv");
+
+  // Try Read Csv File (Format Version 2)
+  iStat = poPathStorage->LoadAllPathFromFile2( 0, (char*) "Paint.csv");
+  if(iStat == -3) // Correct Header String not found
+  {
+    // Try Read Csv File (Format Version 1)
+    iStat = poPathStorage->LoadAllPathFromFile1( 0, (char*) "Paint.csv");
+  }
   // assert(iStat == 0);
 
   if (poPathStorage->countItems() <= 0)

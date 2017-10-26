@@ -27,7 +27,7 @@
 #include <QPoint>
 
 #include <sstStr01Lib.h>
-#include <sstMath01Lib.h>
+// #include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
@@ -201,6 +201,8 @@ sstQt01PathMainRecCls::sstQt01PathMainRecCls()
   this->dNumElements = 0;        /**< Number of elements in path */
   this->iXX = 0;
   this->iYY = 0;
+  this->iPenStyle = 1;
+  this->iPenWidth = 1;
 }
 //=============================================================================
 int sstQt01PathMainRecCls::getIColR() const

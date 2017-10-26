@@ -38,9 +38,14 @@ Window::Window()
 
   oPrt->SST_PrtAuf(1,(char*)"sstQt01PathTabView.log");
 
-  this->poPathStorage = new sstQt01PathStorageCls;
-  iStat = this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
+  this->poPathStorage = new sstQt01PathStorageCls( oPrt);
+  iStat = this->poPathStorage->LoadAllPathFromFile2(0,"Paint.csv");
   // assert(iStat == 0);
+  if (iStat == -3)
+  {
+    iStat = this->poPathStorage->LoadAllPathFromFile1(0,"Paint.csv");
+    if (iStat < 0) assert(0);
+  }
 
   if (poPathStorage->countItems() <= 0)
   {
