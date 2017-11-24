@@ -25,7 +25,7 @@
 //=============================================================================
 QPainterPath sstQt01ShapeItem::getPath() const
 {
-    return myPath;
+  return myPath;
 }
 //=============================================================================
 QRectF sstQt01ShapeItem::getBoundingBox() const

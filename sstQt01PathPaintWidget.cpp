@@ -60,6 +60,15 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTm
     newLineButton = createToolButton(tr("New Line"),
                                          QIcon(":/images/line.png"),
                                          SLOT(createNewLine()));
+    newPolyLineButton = createToolButton(tr("New PolyLine"),
+                                         QIcon(":/images/polyline.png"),
+                                         SLOT(createNewPolyLine()));
+    newArcButton = createToolButton(tr("New Arc"),
+                                         QIcon(":/images/arc.png"),
+                                         SLOT(createNewArc()));
+    newTextButton = createToolButton(tr("New Text"),
+                                         QIcon(":/images/text.png"),
+                                         SLOT(createNewText()));
 
     //=============================================================================
     // Create item templates
@@ -75,10 +84,25 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTm
 
     linePath.moveTo( 0, 0);
     linePath.lineTo(100, 100);
+
+    polylinePath.moveTo( 0, 0);
+    polylinePath.lineTo(25, 75);
+    polylinePath.lineTo(100, 100);
+
+    arcPath.moveTo( 150, 150);
+    QRect oRect(100,100,200,200);
+    arcPath.arcTo(oRect,0,45);
+
+    QFont oFont;
+    oFont.setPointSize(50);
+    // oFont.s
+    QString oQStr = "A";
+    textPath.moveTo( 0, 0);
+    textPath.addText(50,50,oFont,oQStr);
     //=============================================================================
 
     setWindowTitle(tr("Tool Tips"));
-    resize(500, 300);
+    this->setMinimumSize(350,350);  // Get Size for 7 Buttons
 
     iActualItemIndex = 0;
     iItemInMotionIndex = 0;
@@ -117,7 +141,10 @@ void sstQt01PathPaintWidgetCls::resizeEvent(QResizeEvent * /* event */)
     y = updateButtonGeometry(newCircleButton, x, y);
     y = updateButtonGeometry(newSquareButton, x, y);
     y = updateButtonGeometry(newTriangleButton, x, y);
-    updateButtonGeometry(newLineButton, x, y);
+    y = updateButtonGeometry(newLineButton, x, y);
+    y = updateButtonGeometry(newPolyLineButton, x, y);
+    y = updateButtonGeometry(newArcButton, x, y);
+    y = updateButtonGeometry(newTextButton, x, y);
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
@@ -132,8 +159,13 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
       // Get delete state of record dRecNo
       if (iStat >= 0)
       {
+        // painter.setBrush();
+        QBrush oBrush;
+        oBrush.setColor(oShapeItem.getColor());
+        oBrush.setStyle(Qt::NoBrush);
         painter.translate(this->oPathStorage->getPosition(ii));
-        painter.setBrush(oShapeItem.getColor());
+        // painter.setBrush(oShapeItem.getColor(),Qt::NoBrush);
+        painter.setBrush(oBrush);
         painter.setPen(oShapeItem.getPen());
         painter.drawPath(oShapeItem.getPath());
         painter.translate(-this->oPathStorage->getPosition(ii));
@@ -217,6 +249,27 @@ void sstQt01PathPaintWidgetCls::createNewLine()
 {
     static int count = 1;
     createShapeItem(linePath, tr("Line <%1>").arg(++count),
+                    randomItemPosition(), randomItemColor(), randomItemPen());
+}
+//=============================================================================
+void sstQt01PathPaintWidgetCls::createNewPolyLine()
+{
+    static int count = 1;
+    createShapeItem(polylinePath, tr("Line <%1>").arg(++count),
+                    randomItemPosition(), randomItemColor(), randomItemPen());
+}
+//=============================================================================
+void sstQt01PathPaintWidgetCls::createNewArc()
+{
+    static int count = 1;
+    createShapeItem(arcPath, tr("Line <%1>").arg(++count),
+                    randomItemPosition(), randomItemColor(), randomItemPen());
+}
+//=============================================================================
+void sstQt01PathPaintWidgetCls::createNewText()
+{
+    static int count = 1;
+    createShapeItem(textPath, tr("Line <%1>").arg(++count),
                     randomItemPosition(), randomItemColor(), randomItemPen());
 }
 //=============================================================================

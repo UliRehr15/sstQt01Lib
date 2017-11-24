@@ -4,5 +4,8 @@
         <file>images/square.png</file>
         <file>images/triangle.png</file>
         <file>images/line.png</file>
+        <file>images/polyline.png</file>
+        <file>images/arc.png</file>
+        <file>images/text.png</file>
     </qresource>
 </RCC>

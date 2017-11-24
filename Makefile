@@ -360,6 +360,9 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_tooltips.cpp
 qrc_tooltips.cpp: tooltips.qrc \
 		images/circle.png \
+		images/polyline.png \
+		images/text.png \
+		images/arc.png \
 		images/line.png \
 		images/square.png \
 		images/triangle.png

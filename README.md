@@ -59,3 +59,4 @@ Structure of coding projects should be:
 20.09.2017: Version 1.23: Delete QPainterPath object from table, repaint map. <BR>
 01.10.2017: Version 1.24: Insert/Delete Row function in QPainterPath object. <BR>
 26.10.2017: Version 1.25: Restore Version 1.15. Lost with Project Copy. <BR>
+24.11.2017: Version 1.26: New Buttons -Add polyline, arc, text-. <BR>

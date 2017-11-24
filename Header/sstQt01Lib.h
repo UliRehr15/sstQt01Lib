@@ -2136,6 +2136,9 @@ private slots:
     void createNewSquare();
     void createNewTriangle();
     void createNewLine();
+    void createNewPolyLine();
+    void createNewArc();
+    void createNewText();
 signals:
     //==============================================================================
     /**
@@ -2204,6 +2207,9 @@ private:
     QPainterPath squarePath;
     QPainterPath trianglePath;
     QPainterPath linePath;
+    QPainterPath polylinePath;
+    QPainterPath arcPath;
+    QPainterPath textPath;
 
     QPoint previousPosition;
     // sstQt01ShapeItem *itemInMotion;
@@ -2215,6 +2221,9 @@ private:
     QToolButton *newSquareButton;
     QToolButton *newTriangleButton;
     QToolButton *newLineButton;
+    QToolButton *newPolyLineButton;
+    QToolButton *newArcButton;
+    QToolButton *newTextButton;
     sstQt01PathStorageCls *oPathStorage;
     sstMisc01PrtFilCls *poPrt;
 };
