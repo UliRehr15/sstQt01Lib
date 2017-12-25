@@ -23,6 +23,11 @@
 #include <sstQt01Lib.h>
 
 //=============================================================================
+sstQt01ShapeItem::sstQt01ShapeItem()
+{
+  this->eShapeType = eSstQt01PathUnknown;
+}
+//=============================================================================
 QPainterPath sstQt01ShapeItem::getPath() const
 {
   return myPath;
@@ -80,14 +85,23 @@ void sstQt01ShapeItem::setPen(const QPen &oPen)
 //=============================================================================
 void sstQt01ShapeItem::createShapeItem(const QPainterPath &path,
                                  const QString &toolTip, const QPoint &pos,
-                                 const QColor &color)
+                                 const QColor &color,
+                                 sstQt01ShapeType_enum eShapeType)
 {
-    // ShapeItem shapeItem;
     this->setPath(path);
     this->setToolTip(toolTip);
     this->setPosition(pos);
     this->setColor(color);
-    // shapeItems.append(shapeItem);
-    // update();
+    this->setShapeType(eShapeType);
+}
+//=============================================================================
+sstQt01ShapeType_enum sstQt01ShapeItem::getShapeType() const
+{
+return eShapeType;
+}
+//=============================================================================
+void sstQt01ShapeItem::setShapeType(const sstQt01ShapeType_enum &value)
+{
+eShapeType = value;
 }
 //=============================================================================

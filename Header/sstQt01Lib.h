@@ -47,6 +47,93 @@ class TstRec2ModelCls;
 // Structures and Classes ------------------------------------------------------
 //==============================================================================
 /**
+* @brief Definition Enum ShapeType_enum
+*
+* Type of Shape Item.
+*
+* Changed: 10.05.16  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 10.05.16
+*/
+// ----------------------------------------------------------------------------
+enum _sstQt01ShapeType_enum
+{ eSstQt01PathArea,      //!< Path Type Area
+  eSstQt01PathCircle,    //!< Path Type Circle
+  eSstQt01PathLine,      //!< Path Type Line
+  eSstQt01PathPLine,     //!< Path Type Polyline
+  eSstQt01PathText,      //!< Path Type Text
+  eSstQt01PathObject,    //!< Path Type Object
+  eSstQt01PathArc,       //!< Path Type Arc
+  eSstQt01PathUnknown,   //!< Path Type Unknown
+  eSstQt01PathError,     //!< Path Type Error
+};
+typedef enum _sstQt01ShapeType_enum sstQt01ShapeType_enum;
+//==============================================================================
+/**
+* @brief String convert class for enum ShapeType_enum
+*
+* Converts enum to string and back <BR>
+*
+* Changed: 08.07.15  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 08.07.15
+*/
+// ----------------------------------------------------------------------------
+class sstQt01ShapeTypeCls
+{
+  public:   // Public functions
+     sstQt01ShapeTypeCls();  // Constructor
+    //~sstTestBaseCls();  // Destructor
+     //==============================================================================
+     /**
+     * @brief // convert string II,DD,CC ... to type enum <BR>
+     * iStat = oVarType.Str2Enm ( iKey, oTypeStr, &eLocType);
+     *
+     * @param iKey     [in]  For the moment 0
+     * @param oTypeStr [in]  For the moment 0
+     * @param eLocType [out] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int Str2Enm (int                   iKey,
+                              std::string           oTypeStr,
+                              sstQt01ShapeType_enum *eLocType);
+     //==============================================================================
+     /**
+     * @brief // convert type enum to cpp var type string II, DD, CC ... <BR>
+     * iStat = oVarType.Enm2Str ( iKey, eCppType, *oTypeStr);
+     *
+     * @param iKey     [in]  For the moment 0
+     * @param eCppType [in] For the moment 0
+     * @param oTypeStr [out]  return string int, double, char ...
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int Enm2Str (int                    iKey,
+                  sstQt01ShapeType_enum   eCppType,
+                  std::string           *oTypeStr);
+     //==============================================================================
+  private:  // Private functions
+  // int Dum;        /**< Dummy */
+};
+//==============================================================================
+/**
 * @brief sst extended QPainterPath shape class
 *
 * one Path object Extended with color and string tooltip <BR>
@@ -63,6 +150,8 @@ class TstRec2ModelCls;
 class sstQt01ShapeItem
 {
 public:
+  //==============================================================================
+  sstQt01ShapeItem();
   //==============================================================================
   /**
   * @brief // set path object <BR>
@@ -165,12 +254,13 @@ public:
     //==============================================================================
     /**
     * @brief // createShapeItem
-    * iStat = oShapeItem.createShapeItem( path, toolTip, pos, color);
+    * iStat = oShapeItem.createShapeItem( path, toolTip, pos, color, eShapeType);
     *
-    * @param path    [in] path
-    * @param toolTip [in] tooltip
-    * @param pos     [in] pos
-    * @param color   [in] color
+    * @param path         [in] path
+    * @param toolTip      [in] tooltip
+    * @param pos          [in] pos
+    * @param color        [in] color
+    * @param eShapeType   [in] Type
     *
     * @return Errorstate
     *
@@ -180,7 +270,26 @@ public:
     // ----------------------------------------------------------------------------
     void createShapeItem(const QPainterPath &path,
                          const QString &toolTip, const QPoint &pos,
-                         const QColor &color);
+                         const QColor &color,
+                         sstQt01ShapeType_enum eShapeType);
+    //==============================================================================
+    /**
+    * @brief // Get ShapeType <BR>
+    * oPen = PathItem.getShapeType();
+    *
+    * @return eShapeType
+    */
+    // ----------------------------------------------------------------------------
+    sstQt01ShapeType_enum getShapeType() const;
+    //==============================================================================
+    /**
+    * @brief // set ShapeType <BR>
+    * iStat = oPathItem.setShapeType(value);
+    *
+    * @param value [in] eShapeType
+    */
+    // ----------------------------------------------------------------------------
+    void setShapeType(const sstQt01ShapeType_enum &value);
     //==============================================================================
 
 private:
@@ -189,6 +298,7 @@ private:
     QColor  myColor;
     QPen    myPen;  // Width and Style
     QString myToolTip;
+    sstQt01ShapeType_enum eShapeType;  // Area, Circle, Line ...
 };
 //==============================================================================
 /**
@@ -680,7 +790,6 @@ private:  // Private functions
      int iColB;        /**< Color Blue */
 };
 //==============================================================================
-//==============================================================================
 /**
 * @brief Path Element record plus Color as csv string <BR>
 *
@@ -986,11 +1095,348 @@ private:  // Private functions
      int iColR;        /**< Color Red */
      int iColG;        /**< Color Green */
      int iColB;        /**< Color Blue */
-     int iPenWidth;    /**< Pen Width */
-     int iPenStyle;    /**< Pen Style */
+     int iPenWidth;    /**< Pen Width NEW */
+     int iPenStyle;    /**< Pen Style NEW */
 
 };
 //==============================================================================
+/**
+* @brief Path Element record plus Color as csv string <BR>
+*
+* for example: <BR>
+* 0;215;193;111;190;0 <BR>
+* element type = 0, Coordinates X,Y = 215, 193 <BR>
+* Color 111,190,0 RGB <BR>
+*
+* Changed: 04.09.16  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 04.09.16
+*/
+// ----------------------------------------------------------------------------
+class sstQt01PathElementCsv3Cls
+{
+  public:   // Public functions
+     sstQt01PathElementCsv3Cls();  // Constructor
+     //==============================================================================
+     /**
+     * @brief // Read path element object from csv string <BR>
+     * iStat = oPathElement.ReadFromCsv( iKey, oCsvStr, *oErrStr);
+     *
+     * @param iKey    [in]     For the moment 0
+     * @param oCsvStr [in]  Csv string
+     * @param oErrStr [out] Result error string
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr);
+     //==============================================================================
+     /**
+     * @brief // write path element object to csv string <BR>
+     * iStat = oPathElement.WriteToCsv( iKey, &oCsvStr, &oErrStr);
+     *
+     * @param iKey    [in]  For the moment 0
+     * @param oCsvStr [out] result Csv string with path element / color data
+     * @param oErrStr [out] Result error string
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr);
+     //==============================================================================
+     /**
+     * @brief // Get Title row for PainterPath Csv file <BR>
+     * oTitleRowStr = oPathElement.GetCsvFileTitle();
+     *
+     * @return Title row string
+     */
+     // ----------------------------------------------------------------------------
+     std::string GetCsvFileTitle();
+     //==============================================================================
+     /**
+     * @brief // Get number of data elements in class <BR>
+     * uiColumns = oPathElement.ColumnCount();
+     *
+     * @return Number of data elements
+     */
+     // ----------------------------------------------------------------------------
+     unsigned int ColumnCount();
+     //==============================================================================
+     /**
+     * @brief // set all data to path element object <BR>
+     * iStat = oPathElement.setAll( iType, iXX, iYY, oColor);
+     *
+     * @param iType    [in]  int type
+     * @param iXX      [in]  int coordinate x
+     * @param iYY      [in]  int coordinate y
+     * @param oColor   [in]  color
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     void setAll(int iType,int iXX, int iYY, QColor oColor);
+     //==============================================================================
+     /**
+     * @brief // set all data to path element object <BR>
+     * iStat = oPathElement.setAll( iType, iXX, iYY, oColor);
+     *
+     * @param iTmpType    [in]  int type
+     * @param iTmpXX      [in]  int coordinate x
+     * @param iTmpYY      [in]  int coordinate y
+     * @param oTmpCol     [in]  color
+     * @param oTmpPen     [in]  color
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     void setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol, QPen oTmpPen);
+     //==============================================================================
+     /**
+     * @brief // Get Element Type <BR>
+     * oSection = oPathElement.GetIType()
+     *
+     * @return Type Int
+     */
+     // ----------------------------------------------------------------------------
+     int getIType() const;
+     //==============================================================================
+     /**
+     * @brief // Set Element Type <BR>
+     * oPathElement.SetIType ( value);
+     *
+     * @param value [in] Element type 0,1,2 or 3
+     */
+     // ----------------------------------------------------------------------------
+     void setIType(int value);
+     //==============================================================================
+     /**
+     * @brief // Get X Coordinate <BR>
+     *  iXX = oPathElement.GetIXX()
+     *
+     * @return X Coordinate
+     */
+     // ----------------------------------------------------------------------------
+     int getIXX() const;
+     //==============================================================================
+     /**
+     * @brief // Set X coordinate <BR>
+     * oPathElement.SetIXX(oSection);
+     *
+     * @param value [in] coordinate X
+     */
+     // ----------------------------------------------------------------------------
+     void setIXX(int value);
+     //==============================================================================
+     /**
+     * @brief // add value to X coordinate <BR>
+     * oPathElement.addIXX(oValue);
+     *
+     * @param value [in] coordinate X
+     */
+     // ----------------------------------------------------------------------------
+     void addIXX(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Y Coordinate <BR>
+     *  iYY = oPathElement.GetIYY()
+     *
+     * @return Y Coordinate
+     */
+     // ----------------------------------------------------------------------------
+     int getIYY() const;
+     //==============================================================================
+     /**
+     * @brief // Set Y Coordnate <BR>
+     * oPathElement.SetIYY(value);
+     *
+     * @param value [in] Coordinate Y
+     */
+     // ----------------------------------------------------------------------------
+     void setIYY(int value);
+     //==============================================================================
+     /**
+     * @brief // add value to Y Coordnate <BR>
+     * oPathElement.addIYY(value);
+     *
+     * @param value [in] Coordinate Y
+     */
+     // ----------------------------------------------------------------------------
+     void addIYY(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Color Red <BR>
+     *  iColR = oPathElement.GetSection()
+     *
+     * @return int color red
+     */
+     // ----------------------------------------------------------------------------
+     int getIColR() const;
+     //==============================================================================
+     /**
+     * @brief // Set Color Red <BR>
+     * oPathElement.SetColR(value);
+     *
+     * @param value [in] color red
+     */
+     // ----------------------------------------------------------------------------
+     void setIColR(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Color green <BR>
+     *  iColG = oPathElement.GetIColG()
+     *
+     * @return int color green
+     */
+     // ----------------------------------------------------------------------------
+     int getIColG() const;
+     //==============================================================================
+     /**
+     * @brief // Set color green <BR>
+     * oPathElement.setIColG(value);
+     *
+     * @param value [in] color green
+     */
+     // ----------------------------------------------------------------------------
+     void setIColG(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Color Blue <BR>
+     *  iColB = oPathElement.getIColB()
+     *
+     * @return int color blue
+     */
+     // ----------------------------------------------------------------------------
+     int getIColB() const;
+     //==============================================================================
+     /**
+     * @brief // Set color blue <BR>
+     * oPathElement.setIColB(value);
+     *
+     * @param value [in] color blue
+     */
+     // ----------------------------------------------------------------------------
+     void setIColB(int value);
+     //==============================================================================
+     /**
+     * @brief // Set QColor <BR>
+     * oPathElement.setQCol(value);
+     *
+     * @param oQCol [in] QColor
+     */
+     // ----------------------------------------------------------------------------
+     void setQCol(QColor oQCol);
+     //==============================================================================
+     /**
+     * @brief // Get QColor <BR>
+     *  oQCol = oPathElement.getQCol()
+     *
+     * @return QColor
+     */
+     // ----------------------------------------------------------------------------
+     QColor getQCol();
+     //==============================================================================
+     /**
+     * @brief // Get pen width <BR>
+     *  oQCol = oPathElement.getIPenWidth();
+     *
+     * @return QColor
+     */
+     // ----------------------------------------------------------------------------
+     int getIPenWidth() const;
+     //==============================================================================
+     /**
+     * @brief // Set Pen Width <BR>
+     * oPathElement.setIPenWidth(value);
+     *
+     * @param value [in] Pen Width
+     */
+     // ----------------------------------------------------------------------------
+     void setIPenWidth(int value);
+     //==============================================================================
+     /**
+     * @brief // Get Pen Style <BR>
+     *  iPenStyle = oPathElement.getIPenStyle()
+     *
+     * @return int Pen Style
+     */
+     // ----------------------------------------------------------------------------
+     int getIPenStyle() const;
+     //==============================================================================
+     /**
+     * @brief // Set Pen Style <BR>
+     * oPathElement.setIPenStyle(value);
+     *
+     * @param value [in] Pen Style
+     */
+     // ----------------------------------------------------------------------------
+     void setIPenStyle(int value);
+     //==============================================================================
+     /**
+     * @brief // Set from format version 2 record <BR>
+     * oPathElement.setFromVers2(oShapeItemCsv2);
+     *
+     * @param oShapeItemCsv2 [in] Format version 2 record
+     */
+     // ----------------------------------------------------------------------------
+     void setFromVers2(sstQt01PathElementCsv2Cls oShapeItemCsv2);
+     //==============================================================================
+     /**
+     * @brief // Get ShapeType <BR>
+     * eTypePen = PathElement.getShapeType();
+     *
+     * @return eShapeType
+     */
+     // ----------------------------------------------------------------------------
+     sstQt01ShapeType_enum getShapeType() const;
+     //==============================================================================
+     /**
+     * @brief // set ShapeType <BR>
+     * iStat = oPathElement.setShapeType(value);
+     *
+     * @param value [in] eShapeType
+     */
+     // ----------------------------------------------------------------------------
+     void setShapeType(const sstQt01ShapeType_enum &value);
+     //==============================================================================
+     /**
+     * @brief // return type of path csv row <BR>
+     * iStat = oPathElement.isShapeType();
+     *
+     * @return bool true or false is Shape Type
+     */
+     // ----------------------------------------------------------------------------
+     bool isShapeType();
+     //==============================================================================
+
+private:  // Private functions
+     int iType;        /**< Shape Item Type */
+     int iXX;          /**< Coordinate X */
+     int iYY;          /**< Coordinate Y */
+     int iColR;        /**< Color Red */
+     int iColG;        /**< Color Green */
+     int iColB;        /**< Color Blue */
+     int iPenWidth;    /**< Pen Width */
+     int iPenStyle;    /**< Pen Style */
+     // char cItemType[11];   /**< Area, Circle,Line,Polyline,Arc,Text */
+     sstQt01ShapeType_enum eShapeType;   /**< Area, Circle,Line,Polyline,Arc,Text */
+
+};
 //==============================================================================
 /**
 * @brief Path Element record plus Color as csv string <BR>
@@ -1334,6 +1780,24 @@ class sstQt01PathMainRecCls
      // ----------------------------------------------------------------------------
      void setIPenWidth(int value);
      //==============================================================================
+     /**
+     * @brief // Get ShapeType <BR>
+     * oPen = PathItem.getShapeType();
+     *
+     * @return eShapeType
+     */
+     // ----------------------------------------------------------------------------
+     sstQt01ShapeType_enum getShapeType() const;
+     //==============================================================================
+     /**
+     * @brief // set ShapeType <BR>
+     * iStat = oPathItem.setShapeType(value);
+     *
+     * @param value [in] eShapeType
+     */
+     // ----------------------------------------------------------------------------
+     void setShapeType(const sstQt01ShapeType_enum &value);
+     //==============================================================================
 
 private:
      int iXX;        /**< Position X */
@@ -1346,6 +1810,7 @@ private:
      char cTooltip[30];  /**< Tooltip char string */
      dREC04RECNUMTYP dStartElementRecNo;  /**< Start of Path in Element table */
      dREC04RECNUMTYP dNumElements;        /**< Number of elements in path */
+     sstQt01ShapeType_enum eShapeType;   /**< Area, Circle,Line,Polyline,Arc,Text */
 };
 //==============================================================================
 /**
@@ -1764,6 +2229,22 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int UpdatePathItem (int iKey, dREC04RECNUMTYP dItemNum);
+     //==============================================================================
+     /**
+     * @brief // Update path element table with infos from main table <BR>
+     * iStat = oPathStorage.UpdateTabElement( iKey);
+     *
+     * Update Path Type in element table <BR>
+     *
+     * @param iKey     [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int UpdateTabElement(int iKey);
      //==============================================================================
 
   private:  // Private functions
@@ -2184,7 +2665,8 @@ signals:
 private:
     int updateButtonGeometry(QToolButton *button, int x, int y);
     void createShapeItem(const QPainterPath &path, const QString &toolTip,
-                         const QPoint &pos, const QColor &color, const QPen &oPen);
+                         const QPoint &pos, const QColor &color, const QPen &oPen,
+                         const sstQt01ShapeType_enum eShapeType);
     int itemAt(const QPoint &pos);
     void moveItemTo(const QPoint &pos);
     int ItemsLoadFromFile3 (int iKey);
@@ -2436,4 +2918,5 @@ private:  // Private functions
 #endif
 
 // --------------------------------------------------------------- File End ----
+
 

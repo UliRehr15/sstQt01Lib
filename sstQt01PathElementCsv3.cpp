@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathElementCsv.cpp    02.09.16  Re.    02.09.16  Re.
+// sstQt01PathElementCsv3.cpp    06.06.17  Re.    06.06.17  Re.
 //
 
 #include <stdio.h>
@@ -35,7 +35,7 @@
 #include "sstQt01LibInt.h"
 
 //=============================================================================
-sstQt01PathElementCsv1Cls::sstQt01PathElementCsv1Cls()
+sstQt01PathElementCsv3Cls::sstQt01PathElementCsv3Cls()
 {
   this->iType = 0;        /**< Shape Item Type */
   this->iXX = 0;          /**< Coordinate X */
@@ -43,12 +43,18 @@ sstQt01PathElementCsv1Cls::sstQt01PathElementCsv1Cls()
   this->iColR = 0;        /**< Color Red */
   this->iColG = 0;        /**< Color Green */
   this->iColB = 0;        /**< Color Blue */
-
+  this->iPenWidth = 1;    /**< Pen Width */
+  this->iPenStyle = 1;    /**< Pen Style */
+  // memset(this->cItemType,0,11);
+  this->eShapeType = eSstQt01PathUnknown;
 }
 //=============================================================================
-int sstQt01PathElementCsv1Cls::ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr)
+int sstQt01PathElementCsv3Cls::ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr)
 {
   sstStr01Cls oCsvCnvt;
+  std::string sPathType;
+  sstQt01ShapeTypeCls oPathTypeCnvt;
+  sstQt01ShapeType_enum ePathType;
 
   int iStat = 0;
   // int iVal = 0;
@@ -61,11 +67,24 @@ int sstQt01PathElementCsv1Cls::ReadFromCsv(int iKey, std::string oCsvStr, std::s
   if (iStat >= 0) iStat = oCsvCnvt.CsvString2_Int2( 0, &oCsvStr,&this->iColR);  // Color R
   if (iStat >= 0) iStat = oCsvCnvt.CsvString2_Int2( 0, &oCsvStr,&this->iColG);  // Color G
   if (iStat >= 0) iStat = oCsvCnvt.CsvString2_Int2( 0, &oCsvStr,&this->iColB);  // Color B
+  if (iStat >= 0) iStat = oCsvCnvt.CsvString2_Int2( 0, &oCsvStr,&this->iPenWidth);
+  if (iStat >= 0) iStat = oCsvCnvt.CsvString2_Int2( 0, &oCsvStr,&this->iPenStyle);
+  if (iStat >= 0) iStat = oCsvCnvt.CsvString2_Str( 0, &oCsvStr,&sPathType);
+  if (sPathType.length() > 0 && iStat >= 0)
+  {
+    iStat = oPathTypeCnvt.Str2Enm(0,sPathType,&ePathType);
+    assert(iStat == 0);
+    this->setShapeType(ePathType);
+  }
+  else
+  {
+    this->setShapeType(eSstQt01PathUnknown);
+  }
   *oErrStr = oCsvCnvt.GetErrorString();
   return iStat;
 }
 //=============================================================================
-int sstQt01PathElementCsv1Cls::WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr)
+int sstQt01PathElementCsv3Cls::WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr)
 {
   sstStr01Cls oCsvCnvt;
   int iStat = 0;
@@ -78,22 +97,31 @@ int sstQt01PathElementCsv1Cls::WriteToCsv(int iKey, std::string *oCsvStr, std::s
   if (iStat >= 0) iStat = oCsvCnvt.Csv_Int2_2String( 0, this->iColR, oCsvStr);
   if (iStat >= 0) iStat = oCsvCnvt.Csv_Int2_2String( 0, this->iColG, oCsvStr);
   if (iStat >= 0) iStat = oCsvCnvt.Csv_Int2_2String( 0, this->iColB, oCsvStr);
+  if (iStat >= 0) iStat = oCsvCnvt.Csv_Int2_2String( 0, this->iPenWidth, oCsvStr);
+  if (iStat >= 0) iStat = oCsvCnvt.Csv_Int2_2String( 0, this->iPenStyle, oCsvStr);
+  if (iStat >= 0)
+  {
+    std::string sShapeType;
+    sstQt01ShapeTypeCls oShapeTypeCnvt;
+    iStat = oShapeTypeCnvt.Enm2Str(0,this->eShapeType,&sShapeType);
+    if (iStat >= 0) iStat = oCsvCnvt.Csv_Str_2String( 0, sShapeType, oCsvStr);
+  }
   *oErrStr = oCsvCnvt.GetErrorString();
 
   return iStat;
 }
 //=============================================================================
-std::string sstQt01PathElementCsv1Cls::GetCsvFileTitle()
+std::string sstQt01PathElementCsv3Cls::GetCsvFileTitle()
 {
   std::string oLocStr;
   //-----------------------------------------------------------------------------
 
-  oLocStr = "iType;iXX;iYY;iColR;iColG;iColB";
+  oLocStr = "iType;iXX;iYY;iColR;iColG;iColB;iPenWidth;iPenStyle;cShapeType";
 
   return oLocStr;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol)
+void sstQt01PathElementCsv3Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol)
 {
   int iTmpColR = 0;
   int iTmpColG = 0;
@@ -109,240 +137,162 @@ void sstQt01PathElementCsv1Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QCol
   this->iColB = iTmpColB;
 }
 //=============================================================================
-int sstQt01PathElementCsv1Cls::getIType() const
+void sstQt01PathElementCsv3Cls::setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol, QPen oTmpPen)
+{
+  int iTmpColR = 0;
+  int iTmpColG = 0;
+  int iTmpColB = 0;
+
+  oTmpCol.getRgb(&iTmpColR,&iTmpColG,&iTmpColB);
+
+  this->iType = iTmpType;
+  this->iXX = iTmpXX;
+  this->iYY = iTmpYY;
+  this->iColR = iTmpColR;
+  this->iColG = iTmpColG;
+  this->iColB = iTmpColB;
+  this->iPenStyle = (int) oTmpPen.style();
+  this->iPenWidth = (int) oTmpPen.width();
+}
+//=============================================================================
+int sstQt01PathElementCsv3Cls::getIType() const
 {
   return iType;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::setIType(int value)
+void sstQt01PathElementCsv3Cls::setIType(int value)
 {
   iType = value;
 }
 //=============================================================================
-int sstQt01PathElementCsv1Cls::getIXX() const
+int sstQt01PathElementCsv3Cls::getIXX() const
 {
   return iXX;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::setIXX(int value)
+void sstQt01PathElementCsv3Cls::setIXX(int value)
 {
   iXX = value;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::addIXX(int value)
+void sstQt01PathElementCsv3Cls::addIXX(int value)
 {
   iXX = iXX + value;
 }
 //=============================================================================
-int sstQt01PathElementCsv1Cls::getIYY() const
+int sstQt01PathElementCsv3Cls::getIYY() const
 {
   return iYY;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::setIYY(int value)
+void sstQt01PathElementCsv3Cls::setIYY(int value)
 {
   iYY = value;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::addIYY(int value)
+void sstQt01PathElementCsv3Cls::addIYY(int value)
 {
   iYY = iYY + value;
 }
 //=============================================================================
-int sstQt01PathElementCsv1Cls::getIColR() const
+int sstQt01PathElementCsv3Cls::getIColR() const
 {
   return iColR;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::setIColR(int value)
+void sstQt01PathElementCsv3Cls::setIColR(int value)
 {
   iColR = value;
 }
 //=============================================================================
-int sstQt01PathElementCsv1Cls::getIColG() const
+int sstQt01PathElementCsv3Cls::getIColG() const
 {
   return iColG;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::setIColG(int value)
+void sstQt01PathElementCsv3Cls::setIColG(int value)
 {
   iColG = value;
 }
 //=============================================================================
-int sstQt01PathElementCsv1Cls::getIColB() const
+int sstQt01PathElementCsv3Cls::getIColB() const
 {
   return iColB;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::setIColB(int value)
+void sstQt01PathElementCsv3Cls::setIColB(int value)
 {
   iColB = value;
 }
 //=============================================================================
-void sstQt01PathElementCsv1Cls::setQCol(QColor oQCol)
+void sstQt01PathElementCsv3Cls::setQCol(QColor oQCol)
 {
   oQCol.getRgb(&this->iColR,&this->iColG,&this->iColB);
 }
 //=============================================================================
-QColor sstQt01PathElementCsv1Cls::getQCol()
+QColor sstQt01PathElementCsv3Cls::getQCol()
 {
   QColor oCol;
   oCol.setRgb(this->iColR,this->iColG,this->iColB);
   return oCol;
 }
 //=============================================================================
-sstQt01PathMainRecCls::sstQt01PathMainRecCls()
-{
-  this->iColR = 0;        /**< Color Red */
-  this->iColG = 0;        /**< Color Green */
-  this->iColB = 0;        /**< Color Blue */
-  memset(this->cTooltip,0,30);
-  this->dStartElementRecNo = 0;  /**< Start of Path in Element table */
-  this->dNumElements = 0;        /**< Number of elements in path */
-  this->iXX = 0;
-  this->iYY = 0;
-  this->iPenStyle = 1;
-  this->iPenWidth = 1;
-  this->eShapeType = eSstQt01PathUnknown;
-}
-//=============================================================================
-int sstQt01PathMainRecCls::getIColR() const
-{
-  return iColR;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setIColR(int value)
-{
-  iColR = value;
-}
-//=============================================================================
-int sstQt01PathMainRecCls::getIColG() const
-{
-  return iColG;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setIColG(int value)
-{
-  iColG = value;
-}
-//=============================================================================
-int sstQt01PathMainRecCls::getIColB() const
-{
-  return iColB;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setIColB(int value)
-{
-  iColB = value;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setTooltip(std::string oTooltip)
-{
-  strncpy(this->cTooltip,oTooltip.c_str(),30);
-}
-//=============================================================================
-std::string sstQt01PathMainRecCls::getTooltip()
-{
-  return this->cTooltip;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setQCol(QColor oQCol)
-{
-  oQCol.getRgb(&this->iColR,&this->iColG,&this->iColB);
-}
-//=============================================================================
-QColor sstQt01PathMainRecCls::getQCol()
-{
-  QColor oCol;
-  oCol.setRgb(this->iColR,this->iColG,this->iColB);
-  return oCol;
-}
-//=============================================================================
-QPen sstQt01PathMainRecCls::getQPen()
-{
-  QPen oPen;
-  QColor oColor;
-  Qt::PenStyle eStyle;
-  oColor.setRgb(this->iColR,this->iColG,this->iColB);
-  oPen.setColor(oColor);
-  eStyle = (Qt::PenStyle) this->getIPenStyle();
-  oPen.setStyle(eStyle);
-  oPen.setWidth(this->getIPenWidth());
-  return oPen;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setQPen(QPen oQPen)
-{
-  this->iPenStyle = oQPen.style();
-  this->iPenWidth = oQPen.width();
-}
-//=============================================================================
-dREC04RECNUMTYP sstQt01PathMainRecCls::getStartElementRecNo() const
-{
-return dStartElementRecNo;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setStartElementRecNo(const dREC04RECNUMTYP &value)
-{
-dStartElementRecNo = value;
-}
-//=============================================================================
-dREC04RECNUMTYP sstQt01PathMainRecCls::getNumElements() const
-{
-return dNumElements;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setNumElements(const dREC04RECNUMTYP &value)
-{
-  dNumElements = value;
-}
-//=============================================================================
-dREC04RECNUMTYP sstQt01PathMainRecCls::getEndElementRecNo() const
-{
-return dStartElementRecNo+dNumElements-1;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setPosition(QPoint oPosition)
-{
-  this->iXX = oPosition.rx();
-  this->iYY = oPosition.ry();
-}
-//=============================================================================
-QPoint sstQt01PathMainRecCls::getPosition()
-{
-  QPoint oPnt;
-  oPnt.setX(this->iXX);
-  oPnt.setY(this->iYY);
-  return oPnt;
-}
-//=============================================================================
-int sstQt01PathMainRecCls::getIPenStyle() const
-{
-return iPenStyle;
-}
-//=============================================================================
-void sstQt01PathMainRecCls::setIPenStyle(int value)
-{
-iPenStyle = value;
-}
-//=============================================================================
-int sstQt01PathMainRecCls::getIPenWidth() const
+int sstQt01PathElementCsv3Cls::getIPenWidth() const
 {
 return iPenWidth;
 }
 //=============================================================================
-void sstQt01PathMainRecCls::setIPenWidth(int value)
+void sstQt01PathElementCsv3Cls::setIPenWidth(int value)
 {
 iPenWidth = value;
 }
 //=============================================================================
-sstQt01ShapeType_enum sstQt01PathMainRecCls::getShapeType() const
+int sstQt01PathElementCsv3Cls::getIPenStyle() const
 {
-return eShapeType;
+return iPenStyle;
 }
 //=============================================================================
-void sstQt01PathMainRecCls::setShapeType(const sstQt01ShapeType_enum &value)
+void sstQt01PathElementCsv3Cls::setIPenStyle(int value)
 {
-eShapeType = value;
+iPenStyle = value;
+}
+//=============================================================================
+unsigned int sstQt01PathElementCsv3Cls::ColumnCount()
+{
+  return 9;
+}
+//=============================================================================
+void sstQt01PathElementCsv3Cls::setFromVers2(sstQt01PathElementCsv2Cls oShapeItemCsv2)
+{
+  this->iType = oShapeItemCsv2.getIType();        /**< Shape Item Type */
+  this->iXX   = oShapeItemCsv2.getIXX();          /**< Coordinate X */
+  this->iYY   = oShapeItemCsv2.getIYY();          /**< Coordinate Y */
+  this->iColR = oShapeItemCsv2.getIColR();        /**< Color Red */
+  this->iColG = oShapeItemCsv2.getIColG();        /**< Color Green */
+  this->iColB = oShapeItemCsv2.getIColB();        /**< Color Blue */
+  this->iPenWidth = oShapeItemCsv2.getIPenWidth();    /**< Pen Width */
+  this->iPenStyle = oShapeItemCsv2.getIPenStyle();    /**< Pen Style */
+}
+//=============================================================================
+sstQt01ShapeType_enum sstQt01PathElementCsv3Cls::getShapeType() const
+{
+  return eShapeType;
+}
+//=============================================================================
+void sstQt01PathElementCsv3Cls::setShapeType(const sstQt01ShapeType_enum &value)
+{
+  eShapeType = value;
+}
+//=============================================================================
+bool sstQt01PathElementCsv3Cls::isShapeType()
+{
+  switch (this->eShapeType)
+  {
+    case eSstQt01PathError:
+    case eSstQt01PathUnknown:
+        return false; break;
+  default: return true; break;
+  }
+  return false;
 }
 //=============================================================================

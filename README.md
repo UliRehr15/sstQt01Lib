@@ -47,7 +47,7 @@ Structure of coding projects should be:
 22.05.2017: Version 1.12: Creation of PainterPath storage now outside of Tab widget. <BR>
 28.05.2017: Version 1.13: Signals/Slots to update PathMapWidget after changing PathTabWidget.<BR>
 01.06.2017: Version 1.14: New function CreateDefaultItems.  <BR>
-20.06.2017: Version 1.15: Extended Csv PainterPath Format with PenWidth, PenStyle. <BR>
+20.06.2017: Version 1.15: Extended Csv PainterPath Format with PenWidth, PenStyle.(Vers.2) <BR>
                           Doxygen Documentation for private elements too. <BR>
 22.06.2017: Version 1.16: Path Table View/Model corrected. <BR>
 24.06.2017: Version 1.17: Editing/Viewing PenStyle and PenWidth. <BR>
@@ -60,3 +60,4 @@ Structure of coding projects should be:
 01.10.2017: Version 1.24: Insert/Delete Row function in QPainterPath object. <BR>
 26.10.2017: Version 1.25: Restore Version 1.15. Lost with Project Copy. <BR>
 24.11.2017: Version 1.26: New Buttons -Add polyline, arc, text-. <BR>
+25.12.2017: Version 1.27: Extended Csv PainterPath Format with Objekt Type Flag. (Vers.3) <BR>

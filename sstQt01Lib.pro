@@ -33,7 +33,10 @@ SOURCES		+= sstQt01Tab.cpp \
     sstQt01_tstrec2_TabView.cpp \
     sstQt01BaseTabMdl.cpp \
     sstQt01PathElementCsv1.cpp \
-    sstQt01PathElementCsv2.cpp
+    sstQt01PathElementCsv2.cpp \
+    sstQt01PathElementCsv3.cpp \
+    sstQt01ShapeType.cpp
+#    sstStr01DefType.cpp \
 
 OTHER_FILES += README.md
 
