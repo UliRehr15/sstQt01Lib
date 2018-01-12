@@ -80,7 +80,7 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
   switch(role){
   case Qt::DisplayRole:
     {
-    sstQt01PathElementCsv2Cls oTestRec1;
+    sstQt01PathElementCsv3Cls oTestRec1;
     iStat = poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
     assert(iStat == 0);
 
@@ -94,6 +94,7 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
       case 5:  return oTestRec1.getIColB();
       case 6:  return oTestRec1.getIPenWidth();
       case 7:  return oTestRec1.getIPenStyle();
+      case 8:  return oTestRec1.getSType();
       default: return QString("Row%1, Column%2").arg(index.row() + 1).arg(index.column() +1); break;
       }
     }
@@ -124,6 +125,7 @@ QVariant sstQt01PathTabMdlCls::headerData(int section, Qt::Orientation orientati
             case 5: return QString("iColB");
             case 6: return QString("iPenWidth");
             case 7: return QString("iPenStyle");
+            case 8: return QString("sPathType");
             }
         }
     }
@@ -135,7 +137,7 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
     if (role == Qt::EditRole)
     {
         //save value from editor to oTestRecDss
-      sstQt01PathElementCsv2Cls oTestRec1;
+      sstQt01PathElementCsv3Cls oTestRec1;
 
       // dREC04RECNUMTYP dRecNo = index.row() +1;
       poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
@@ -152,6 +154,7 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
       case 5: oTestRec1.setIColB( value.toInt(&bOK)); break;
       case 6: oTestRec1.setIPenWidth( value.toInt(&bOK)); break;
       case 7: oTestRec1.setIPenStyle(value.toInt(&bOK)); break;
+      case 8: oTestRec1.setSType(value.toString()); break;
       }
 
       if (bOK) poPathStorage->WriteRecPos( 0, this->sstTabVector[index.row()], &oTestRec1);

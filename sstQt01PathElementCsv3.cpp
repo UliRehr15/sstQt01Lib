@@ -272,6 +272,7 @@ void sstQt01PathElementCsv3Cls::setFromVers2(sstQt01PathElementCsv2Cls oShapeIte
   this->iColB = oShapeItemCsv2.getIColB();        /**< Color Blue */
   this->iPenWidth = oShapeItemCsv2.getIPenWidth();    /**< Pen Width */
   this->iPenStyle = oShapeItemCsv2.getIPenStyle();    /**< Pen Style */
+  if (this->iType == 0) this->eShapeType = eSstQt01PathObject;
 }
 //=============================================================================
 sstQt01ShapeType_enum sstQt01PathElementCsv3Cls::getShapeType() const
@@ -279,9 +280,29 @@ sstQt01ShapeType_enum sstQt01PathElementCsv3Cls::getShapeType() const
   return eShapeType;
 }
 //=============================================================================
+QString sstQt01PathElementCsv3Cls::getSType() const
+{
+  sstQt01ShapeTypeCls oTypeCnvt;
+  std::string sShapeType;
+  int iStat = oTypeCnvt.Enm2Str( 0, this->eShapeType, &sShapeType);
+  assert(iStat == 0);
+
+  return QString::fromStdString(sShapeType);
+}
+//=============================================================================
 void sstQt01PathElementCsv3Cls::setShapeType(const sstQt01ShapeType_enum &value)
 {
   eShapeType = value;
+}
+//=============================================================================
+void sstQt01PathElementCsv3Cls::setSType(const QString value)
+{
+  sstQt01ShapeTypeCls oTypeCnvt;
+  sstQt01ShapeType_enum eValue;
+  int iStat = oTypeCnvt.Str2Enm(0,value.toStdString(),&eValue);
+  assert(iStat == 0);
+
+  eShapeType = eValue;
 }
 //=============================================================================
 bool sstQt01PathElementCsv3Cls::isShapeType()

@@ -33,19 +33,14 @@ const int IdRole = Qt::UserRole;
 //! [1]
 Window::Window()
 {
-  int iStat = 0;
+  // int iStat = 0;
   this->oPrt = new sstMisc01PrtFilCls;
 
   oPrt->SST_PrtAuf(1,(char*)"sstQt01PathTabView.log");
 
   this->poPathStorage = new sstQt01PathStorageCls( oPrt);
-  iStat = this->poPathStorage->LoadAllPathFromFile2(0,"Paint.csv");
+  this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
   // assert(iStat == 0);
-  if (iStat == -3)
-  {
-    iStat = this->poPathStorage->LoadAllPathFromFile1(0,"Paint.csv");
-    if (iStat < 0) assert(0);
-  }
 
   if (poPathStorage->countItems() <= 0)
   {

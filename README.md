@@ -61,3 +61,4 @@ Structure of coding projects should be:
 26.10.2017: Version 1.25: Restore Version 1.15. Lost with Project Copy. <BR>
 24.11.2017: Version 1.26: New Buttons -Add polyline, arc, text-. <BR>
 25.12.2017: Version 1.27: Extended Csv PainterPath Format with Objekt Type Flag. (Vers.3) <BR>
+12.01.2018: Version 1.28: Improve handling with format versions. <BR>

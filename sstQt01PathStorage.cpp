@@ -40,6 +40,7 @@ sstQt01PathStorageCls::sstQt01PathStorageCls(sstMisc01PrtFilCls *poTmpPrt)
   this->poShapeItemMainTable = new sstRec04Cls(sizeof(sstQt01PathMainRecCls));
   dActualReadPos = 1;  // table reading starts at begin of table
   this->poPrt = poTmpPrt;
+  this->uiVersion = 0;  // default not known format version in csv file
 }
 //=============================================================================
 sstQt01PathStorageCls::~sstQt01PathStorageCls()
@@ -48,14 +49,40 @@ sstQt01PathStorageCls::~sstQt01PathStorageCls()
   delete this->poShapeItemRecTable;
 }
 //=============================================================================
-int sstQt01PathStorageCls::LoadAllPathFromFile2 (int iKey, std::string oFilNam)
+int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
+{
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  int iVers = this->FindCsvFileVersion(0,oFilNam);
+  if (iVers <= 0)return -2;
+
+  switch (iVers)
+  {
+  case 1:
+    iStat = this->LoadAllPathFromFile1(0,oFilNam);
+    break;
+  case 2:
+    iStat = this->LoadAllPathFromFile2(0,oFilNam);
+    break;
+  case 3:
+    iStat = this->LoadAllPathFromFile3(0,oFilNam);
+    break;
+  default:
+    assert(0);
+    break;
+  }
+
+  return iStat;
+}
+//=============================================================================
+int sstQt01PathStorageCls::LoadAllPathFromFile3 (int iKey, std::string oFilNam)
 {
   sstMisc01AscFilCls oPainterCsvFile;
   std::string oCsvStr;
   std::string oErrStr;
-  // sstStr01Cls oCsvCnvt;
-  sstQt01PathElementCsv3Cls oShapeItemCsv;
-  dREC04RECNUMTYP dRecNo = 0;
+  sstQt01PathElementCsv3Cls oShapeItemCsv3;
 
   int iStat1  = 0;
   int iStat = 0;
@@ -67,89 +94,43 @@ int sstQt01PathStorageCls::LoadAllPathFromFile2 (int iKey, std::string oFilNam)
 
   // Read and test title row
   iStat = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
-  iStat =oCsvStr.compare(oShapeItemCsv.GetCsvFileTitle());
-  if (iStat != 0)
-  {
-    // assert(0);
-    oPainterCsvFile.fcloseFil(0);
-    return -3;
-  }
 
-  this->poPrt->SST_PrtWrt(1,(char*)"Version 2 found");
+  this->poPrt->SST_PrtWrt(1,(char*)"Version 3 found");
 
   // load csv file into sst record table
   iStat1 = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
   while (iStat1 >= 0)
   {
     // interpret file row as path element
-    iStat = oShapeItemCsv.ReadFromCsv( 0, oCsvStr, &oErrStr);
+    iStat = oShapeItemCsv3.ReadFromCsv( 0, oCsvStr, &oErrStr);
     assert (iStat == 0);
 
     // store path element in table
-    iStat = this->poShapeItemRecTable->WritNew(0,&oShapeItemCsv,&dRecNo);
+    iStat = this->poShapeItemRecTable->WritNew(0,&oShapeItemCsv3,&this->dActualReadPos);
 
-    if (oShapeItemCsv.getIType() == 0 && oShapeItemCsv.isShapeType())
-    {  // new path, create path item record and store in path main table
-      QColor oQCol = oShapeItemCsv.getQCol();
-      QPen oPen;
-      oPen.setWidth(oShapeItemCsv.getIPenWidth());
-      Qt::PenStyle oStyle;
-      oStyle = (Qt::PenStyle) oShapeItemCsv.getIPenStyle();
-      oPen.setStyle(oStyle);
-      sstQt01PathMainRecCls oPathRec;
-      oPathRec.setQCol(oQCol);
-      oPathRec.setQPen(oPen);
-      oPathRec.setStartElementRecNo(dRecNo);
-      oPathRec.setShapeType(oShapeItemCsv.getShapeType());
-      // oPathRec.setTooltip("aaa");;
-      iStat = this->poShapeItemMainTable->WritNew(0,&oPathRec,&dRecNo);
-    }
+    // Write new Main Record in table if Element is next path <BR>
+    iStat = this->NewMainWithElement(0,&oShapeItemCsv3);
 
     // Read next row from csv file
     iStat1 = oPainterCsvFile.Rd_StrDS1(0,&oCsvStr);
   }
 
-  // if main table is empty, do nothing and return.
-  if (this->poShapeItemMainTable->count() <= 0)
-  {
-    return 0;
-  }
+  // close csv file
+  oPainterCsvFile.fcloseFil(0);
 
-  // update number records per path in main table
-  sstQt01PathMainRecCls oPathRec1;
-  sstQt01PathMainRecCls oPathRec2;
-  dREC04RECNUMTYP dNumRecs = 0;
-  for (dREC04RECNUMTYP ii=1; ii <= this->poShapeItemMainTable->count(); ii++)
-  {
-    iStat = this->poShapeItemMainTable->Read( 0, ii, &oPathRec1);
-    if (ii > 1)
-    {
-      dNumRecs = oPathRec1.getStartElementRecNo()-oPathRec2.getStartElementRecNo();
-      oPathRec2.setNumElements(dNumRecs);
-      iStat = this->poShapeItemMainTable->Writ(0,&oPathRec2,ii-1);
-      assert (iStat >= 0);
-    }
-    oPathRec2 = oPathRec1;
-  }
-
-  // Update last record in main table
-  dNumRecs = this->poShapeItemRecTable->count() - oPathRec2.getStartElementRecNo()+1;
-  oPathRec2.setNumElements(dNumRecs);
-  iStat = this->poShapeItemMainTable->Writ(0,&oPathRec2,this->poShapeItemMainTable->count());
-  assert (iStat >= 0);
+  // Update Maintable from Elementtable
+  iStat = this->UpdateMainFromElementTab(0);
 
   return iStat;
 }
 //=============================================================================
-int sstQt01PathStorageCls::LoadAllPathFromFile1 (int iKey, std::string oFilNam)
+int sstQt01PathStorageCls::LoadAllPathFromFile2 (int iKey, std::string oFilNam)
 {
   sstMisc01AscFilCls oPainterCsvFile;
   std::string oCsvStr;
   std::string oErrStr;
-  // sstStr01Cls oCsvCnvt;
   sstQt01PathElementCsv2Cls oShapeItemCsv2;
   sstQt01PathElementCsv3Cls oShapeItemCsv3;
-  dREC04RECNUMTYP dRecNo = 0;
 
   int iStat1  = 0;
   int iStat = 0;
@@ -161,15 +142,8 @@ int sstQt01PathStorageCls::LoadAllPathFromFile1 (int iKey, std::string oFilNam)
 
   // Read and test title row
   iStat = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
-  iStat =oCsvStr.compare(oShapeItemCsv2.GetCsvFileTitle());
-  if (iStat != 0)
-  {
-    // assert(0);
-    oPainterCsvFile.fcloseFil(0);
-    return -3;
-  }
 
-  this->poPrt->SST_PrtWrt(1,(char*)"Version 1 found");
+  this->poPrt->SST_PrtWrt(1,(char*)"Version 2 found");
 
   // load csv file into sst record table
   iStat1 = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
@@ -182,50 +156,72 @@ int sstQt01PathStorageCls::LoadAllPathFromFile1 (int iKey, std::string oFilNam)
     oShapeItemCsv3.setFromVers2(oShapeItemCsv2);
 
     // store path element in table
-    iStat = this->poShapeItemRecTable->WritNew(0,&oShapeItemCsv3,&dRecNo);
+    iStat = this->poShapeItemRecTable->WritNew(0,&oShapeItemCsv3,&this->dActualReadPos);
 
-    if (oShapeItemCsv2.getIType() == 0)
-    {  // new path, create path item record and store in path main table
-      QColor oQCol = oShapeItemCsv3.getQCol();
-      sstQt01PathMainRecCls oPathRec;
-      oPathRec.setQCol(oQCol);
-      oPathRec.setStartElementRecNo(dRecNo);
-      // oPathRec.setTooltip("aaa");;
-      iStat = this->poShapeItemMainTable->WritNew(0,&oPathRec,&dRecNo);
-    }
+    // Write new Main Record in table if Element is next path <BR>
+    iStat = this->NewMainWithElement(0,&oShapeItemCsv3);
 
     // Read next row from csv file
     iStat1 = oPainterCsvFile.Rd_StrDS1(0,&oCsvStr);
   }
 
-  // if main table is empty, do nothing and return.
-  if (this->poShapeItemMainTable->count() <= 0)
+  // close csv file
+  oPainterCsvFile.fcloseFil(0);
+
+  // Update Maintable from Elementtable
+  iStat = this->UpdateMainFromElementTab(0);
+
+  return iStat;
+}
+//=============================================================================
+int sstQt01PathStorageCls::LoadAllPathFromFile1 (int iKey, std::string oFilNam)
+{
+  sstMisc01AscFilCls oPainterCsvFile;
+  std::string oCsvStr;
+  std::string oErrStr;
+  sstQt01PathElementCsv1Cls oShapeItemCsv1;
+  sstQt01PathElementCsv2Cls oShapeItemCsv2;
+  sstQt01PathElementCsv3Cls oShapeItemCsv3;
+
+  int iStat1  = 0;
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  iStat = oPainterCsvFile.fopenRd(0,oFilNam.c_str());
+  if (iStat < 0) return -2;
+
+  // Read and test title row
+  iStat = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
+
+  this->poPrt->SST_PrtWrt(1,(char*)"Version 1 found");
+
+  // load csv file into sst record table
+  iStat1 = oPainterCsvFile.Rd_StrDS1( 0, &oCsvStr);
+  while (iStat1 >= 0)
   {
-    return 0;
+    // interpret file row as path element
+    iStat = oShapeItemCsv1.ReadFromCsv( 0, oCsvStr, &oErrStr);
+    assert (iStat == 0);
+
+    oShapeItemCsv2.setFromVers1(oShapeItemCsv1);
+    oShapeItemCsv3.setFromVers2(oShapeItemCsv2);
+
+    // store path element in table
+    iStat = this->poShapeItemRecTable->WritNew(0,&oShapeItemCsv3,&this->dActualReadPos);
+
+    // Write new Main Record in table if Element is next path <BR>
+    iStat = this->NewMainWithElement(0,&oShapeItemCsv3);
+
+    // Read next row from csv file
+    iStat1 = oPainterCsvFile.Rd_StrDS1(0,&oCsvStr);
   }
 
-  // update number records per path in main table
-  sstQt01PathMainRecCls oPathRec1;
-  sstQt01PathMainRecCls oPathRec2;
-  dREC04RECNUMTYP dNumRecs = 0;
-  for (dREC04RECNUMTYP ii=1; ii <= this->poShapeItemMainTable->count(); ii++)
-  {
-    iStat = this->poShapeItemMainTable->Read( 0, ii, &oPathRec1);
-    if (ii > 1)
-    {
-      dNumRecs = oPathRec1.getStartElementRecNo()-oPathRec2.getStartElementRecNo();
-      oPathRec2.setNumElements(dNumRecs);
-      iStat = this->poShapeItemMainTable->Writ(0,&oPathRec2,ii-1);
-      assert (iStat >= 0);
-    }
-    oPathRec2 = oPathRec1;
-  }
+  // close csv file
+  oPainterCsvFile.fcloseFil(0);
 
-  // Update last record in main table
-  dNumRecs = this->poShapeItemRecTable->count() - oPathRec2.getStartElementRecNo()+1;
-  oPathRec2.setNumElements(dNumRecs);
-  iStat = this->poShapeItemMainTable->Writ(0,&oPathRec2,this->poShapeItemMainTable->count());
-  assert (iStat >= 0);
+  // Update Maintable from Elementtable
+  iStat = this->UpdateMainFromElementTab(0);
 
   return iStat;
 }
@@ -818,5 +814,140 @@ int sstQt01PathStorageCls::UpdateTabElement(int iKey)
   }
 
   return iStat;
+}
+//=============================================================================
+int sstQt01PathStorageCls::FindCsvFileVersion(int iKey, const std::string sFilNam)
+{
+  sstQt01PathElementCsv1Cls oCsvVers1;
+  sstQt01PathElementCsv2Cls oCsvVers2;
+  sstQt01PathElementCsv3Cls oCsvVers3;
+  sstMisc01AscFilCls oPathCsvFil;
+  int iVers = 0;
+  // int iRet  = 0;
+  int iStat = 0;
+//-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  // Open Asc File for reading
+  iStat = oPathCsvFil.fopenRd ( 0, sFilNam.c_str());
+  if (iStat < 0) return -2;
+
+  // Read Header row from Path csv file
+  std::string sHeaderRow;
+  iStat = oPathCsvFil.Rd_StrDS1( 0, &sHeaderRow);
+
+  iStat =sHeaderRow.compare(oCsvVers3.GetCsvFileTitle());
+  if (iStat == 0)
+  {
+    iVers = 3;
+  }
+  iStat =sHeaderRow.compare(oCsvVers2.GetCsvFileTitle());
+  if (iStat == 0)
+  {
+    iVers = 2;
+  }
+  iStat =sHeaderRow.compare(oCsvVers1.GetCsvFileTitle());
+  if (iStat == 0)
+  {
+    iVers = 1;
+  }
+
+  iStat = oPathCsvFil.fcloseFil(0);
+  assert(iStat == 0);
+
+  return iVers;
+}
+//=============================================================================
+int sstQt01PathStorageCls::UpdateMainFromElementTab (int iKey)
+//-----------------------------------------------------------------------------
+{
+  int iRet  = 0;
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  // if main table is empty, do nothing and return.
+  if (this->poShapeItemMainTable->count() <= 0)
+  {
+    return 0;
+  }
+
+  // update number records per path in main table
+  sstQt01PathMainRecCls oPathRec1;
+  sstQt01PathMainRecCls oPathRec2;
+  dREC04RECNUMTYP dNumRecs = 0;
+  for (dREC04RECNUMTYP ii=1; ii <= this->poShapeItemMainTable->count(); ii++)
+  {
+    iStat = this->poShapeItemMainTable->Read( 0, ii, &oPathRec1);
+    if (ii > 1)
+    {
+      dNumRecs = oPathRec1.getStartElementRecNo()-oPathRec2.getStartElementRecNo();
+      oPathRec2.setNumElements(dNumRecs);
+      iStat = this->poShapeItemMainTable->Writ(0,&oPathRec2,ii-1);
+      assert (iStat >= 0);
+    }
+    oPathRec2 = oPathRec1;
+  }
+
+  // Update last record in main table
+  dNumRecs = this->poShapeItemRecTable->count() - oPathRec2.getStartElementRecNo()+1;
+  oPathRec2.setNumElements(dNumRecs);
+  iStat = this->poShapeItemMainTable->Writ(0,&oPathRec2,this->poShapeItemMainTable->count());
+  assert (iStat >= 0);
+
+  // Fatal Errors goes to an assert
+
+  // Pipe |
+  // Smaller <
+  // Greater >
+
+  assert(iRet >= 0);
+
+  // Small Errors will given back
+  iRet = iStat;
+
+  return iRet;
+}
+//=============================================================================
+int sstQt01PathStorageCls::NewMainWithElement (int iKey, sstQt01PathElementCsv3Cls *oShapeItemCsv3)
+//-----------------------------------------------------------------------------
+{
+  int iRet  = 0;
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  if (oShapeItemCsv3->getIType() == 0 && oShapeItemCsv3->isShapeType())
+  {  // new path, create path item record and store in path main table
+    QColor oQCol = oShapeItemCsv3->getQCol();
+    QPen oPen;
+    oPen.setWidth(oShapeItemCsv3->getIPenWidth());
+    Qt::PenStyle oStyle;
+    oStyle = (Qt::PenStyle) oShapeItemCsv3->getIPenStyle();
+    oPen.setStyle(oStyle);
+    sstQt01PathMainRecCls oPathMainRec;
+    oPathMainRec.setQCol(oQCol);
+    oPathMainRec.setQPen(oPen);
+    // oPathMainRec.setStartElementRecNo(dRecNo);
+    oPathMainRec.setStartElementRecNo(this->dActualReadPos);
+    oPathMainRec.setShapeType(oShapeItemCsv3->getShapeType());
+    // oPathRec.setTooltip("aaa");;
+    // iStat = this->poShapeItemMainTable->WritNew(0,&oPathMainRec,&dRecNo);
+    iStat = this->poShapeItemMainTable->WritNew(0,&oPathMainRec, &this->dActualReadPos);
+  }
+
+
+  // Fatal Errors goes to an assert
+
+  // Pipe |
+  // Smaller <
+  // Greater >
+
+  assert(iRet >= 0);
+
+  // Small Errors will given back
+  iRet = iStat;
+
+  return iRet;
 }
 //=============================================================================
