@@ -161,6 +161,9 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
 
     }
 
+    // Update color, pen in main tab from element table
+    this->poPathStorage->UpdateMainAttribFromElemTab(0);
+
     // For refreshing map
     emit this->sstSgnlTabChanged();
 

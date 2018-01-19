@@ -162,7 +162,14 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
         // painter.setBrush();
         QBrush oBrush;
         oBrush.setColor(oShapeItem.getColor());
-        oBrush.setStyle(Qt::NoBrush);
+        switch (oShapeItem.getShapeType())
+        {
+          case eSstQt01PathArea:
+          case eSstQt01PathCircle: oBrush.setStyle(Qt::SolidPattern);break;
+          default: oBrush.setStyle(Qt::NoBrush); break;
+        }
+
+        // oBrush.setStyle(Qt::NoBrush);
         painter.translate(this->oPathStorage->getPosition(ii));
         // painter.setBrush(oShapeItem.getColor(),Qt::NoBrush);
         painter.setBrush(oBrush);

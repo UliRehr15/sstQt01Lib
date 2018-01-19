@@ -119,7 +119,7 @@ int sstQt01PathStorageCls::LoadAllPathFromFile3 (int iKey, std::string oFilNam)
   oPainterCsvFile.fcloseFil(0);
 
   // Update Maintable from Elementtable
-  iStat = this->UpdateMainFromElementTab(0);
+  iStat = this->UpdateMainPathSizeFromEleTab(0);
 
   return iStat;
 }
@@ -169,7 +169,7 @@ int sstQt01PathStorageCls::LoadAllPathFromFile2 (int iKey, std::string oFilNam)
   oPainterCsvFile.fcloseFil(0);
 
   // Update Maintable from Elementtable
-  iStat = this->UpdateMainFromElementTab(0);
+  iStat = this->UpdateMainPathSizeFromEleTab(0);
 
   return iStat;
 }
@@ -221,7 +221,7 @@ int sstQt01PathStorageCls::LoadAllPathFromFile1 (int iKey, std::string oFilNam)
   oPainterCsvFile.fcloseFil(0);
 
   // Update Maintable from Elementtable
-  iStat = this->UpdateMainFromElementTab(0);
+  iStat = this->UpdateMainPathSizeFromEleTab(0);
 
   return iStat;
 }
@@ -263,10 +263,13 @@ int sstQt01PathStorageCls::StoreAllPathToFile (int iKey, std::string oFilNam)
   return 0;
 }
 //=============================================================================
-int sstQt01PathStorageCls::AppendPath(int iKey, QPainterPath oTmpPath, QColor oTmpColor)
+int sstQt01PathStorageCls::AppendPath(int          iKey,
+                                      QPainterPath oTmpPath,
+                                      sstQt01ShapeType_enum eTmpPathType,
+                                      QColor       oTmpColor,
+                                      QPen         oTmpPen)
 {
 
-  sstQt01PathElementCsv3Cls oShapeItemCsv;
   dREC04RECNUMTYP dRecNo = 0;
   //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
@@ -274,9 +277,16 @@ int sstQt01PathStorageCls::AppendPath(int iKey, QPainterPath oTmpPath, QColor oT
   int iEleNum = oTmpPath.elementCount();
   for (int ii =1; ii <= iEleNum; ii++)
   {
+    sstQt01PathElementCsv3Cls oShapeItemCsv;
     QPainterPath::Element oElement;
     oElement = oTmpPath.elementAt(ii-1);
     oShapeItemCsv.setAll(oElement.type,oElement.x,oElement.y, oTmpColor);
+    if (oElement.type == 0)
+    {
+      oShapeItemCsv.setIPenStyle(oTmpPen.style());
+      oShapeItemCsv.setIPenWidth(oTmpPen.width());
+      oShapeItemCsv.setShapeType(eTmpPathType);
+    }
     this->poShapeItemRecTable->WritNew(0, &oShapeItemCsv, &dRecNo);
   }
 
@@ -594,6 +604,7 @@ int sstQt01PathStorageCls::getShapeItem2(int iKey, dREC04RECNUMTYP index,sstQt01
     QColor oCol = this->getColor(index);
     QPen oPen = this->getPen(index);
 
+    poShapeItem->setShapeType(this->getShapeType(index));
     poShapeItem->setColor(oCol);
     poShapeItem->setPath(oPath);
     poShapeItem->setPen(oPen);
@@ -621,7 +632,7 @@ int sstQt01PathStorageCls::appendShapeItem(sstQt01ShapeItem oItem)
 {
   // Append to element table
   QPainterPath oPath = oItem.getPath();
-  int iStat = this->AppendPath(0,oPath,oItem.getColor());
+  int iStat = this->AppendPath(0,oPath,oItem.getShapeType(), oItem.getColor(),oItem.getPen());
   assert(iStat >= 0);
 
   // Append to main table
@@ -816,6 +827,37 @@ int sstQt01PathStorageCls::UpdateTabElement(int iKey)
   return iStat;
 }
 //=============================================================================
+int sstQt01PathStorageCls::UpdateMainAttribFromElemTab(int iKey)
+{
+  sstQt01PathMainRecCls oMainRec;
+  sstQt01PathElementCsv3Cls oElementRec;
+  dREC04RECNUMTYP dElementNo = 0;  // record number of path element
+  // dREC04RECNUMTYP dMainNo = 0;     // record number of path
+  int iStat = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+  dREC04RECNUMTYP dMainRecs = 0;  // number of recs in main table
+  dMainRecs = this->poShapeItemMainTable->count();
+
+  for (dREC04RECNUMTYP ll=1; ll <= dMainRecs; ll++)
+  {
+    iStat = this->poShapeItemMainTable->Read( 0, ll, &oMainRec);
+    dElementNo = oMainRec.getStartElementRecNo();
+    iStat = this->poShapeItemRecTable->Read( 0, dElementNo, &oElementRec);
+    // oElementRec.setShapeType(oMainRec.getShapeType());
+    oMainRec.setIColB(oElementRec.getIColB());
+    oMainRec.setIColG(oElementRec.getIColG());
+    oMainRec.setIColR(oElementRec.getIColR());
+    oMainRec.setIPenWidth(oElementRec.getIPenWidth());
+    oMainRec.setIPenStyle(oElementRec.getIPenStyle());
+    // iStat = this->poShapeItemRecTable->Writ( 0, &oElementRec, dElementNo);
+    iStat = this->poShapeItemMainTable->Writ( 0, &oMainRec, ll);
+  }
+
+  return iStat;
+}
+//=============================================================================
 int sstQt01PathStorageCls::FindCsvFileVersion(int iKey, const std::string sFilNam)
 {
   sstQt01PathElementCsv1Cls oCsvVers1;
@@ -858,7 +900,7 @@ int sstQt01PathStorageCls::FindCsvFileVersion(int iKey, const std::string sFilNa
   return iVers;
 }
 //=============================================================================
-int sstQt01PathStorageCls::UpdateMainFromElementTab (int iKey)
+int sstQt01PathStorageCls::UpdateMainPathSizeFromEleTab (int iKey)
 //-----------------------------------------------------------------------------
 {
   int iRet  = 0;
@@ -949,5 +991,12 @@ int sstQt01PathStorageCls::NewMainWithElement (int iKey, sstQt01PathElementCsv3C
   iRet = iStat;
 
   return iRet;
+}
+//=============================================================================
+sstQt01ShapeType_enum sstQt01PathStorageCls::getShapeType(int index)
+{
+  sstQt01PathMainRecCls oMainRec;
+  this->poShapeItemMainTable->Read(0,index,&oMainRec);
+  return oMainRec.getShapeType();
 }
 //=============================================================================

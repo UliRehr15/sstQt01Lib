@@ -82,7 +82,7 @@ int sstQt01ShapeTypeCls::Str2Enm (int                   iKey,
   }
   else
   {
-    *eLocType = eSstQt01PathUnknown;
+    *eLocType = eSstQt01PathNoObj;
     iStat = -1;
   }
   // Fatal Errors goes to an assert
@@ -114,7 +114,7 @@ int sstQt01ShapeTypeCls::Enm2Str (int                    iKey,
 //    eSstQt01PathText,      //!< Text        */
 //    eSstQt01PathObject,    //!< Object      */
 //    eSstQt01PathArc,       //!< Arc         */
-//    eSstQt01PathUnknown,   //!< Path Type Unknown     */
+//    eSstQt01PathNoObj,   //!< Path Type Unknown     */
 //    eSstQt01PathError,     //!< Path Type Error       */
 
   switch (eCppType)
@@ -126,7 +126,7 @@ int sstQt01ShapeTypeCls::Enm2Str (int                    iKey,
   case eSstQt01PathText:     *oTypeStr = "[PathTypeText]";break;
   case eSstQt01PathObject:   *oTypeStr = "[PathTypeObject]";break;
   case eSstQt01PathArc:      *oTypeStr = "[PathTypeArc]";break;
-  case eSstQt01PathUnknown:
+  case eSstQt01PathNoObj:
   case eSstQt01PathError:
   default: *oTypeStr = "";break;
   }

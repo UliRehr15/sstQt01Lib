@@ -25,7 +25,7 @@
 //=============================================================================
 sstQt01ShapeItem::sstQt01ShapeItem()
 {
-  this->eShapeType = eSstQt01PathUnknown;
+  this->eShapeType = eSstQt01PathNoObj;
 }
 //=============================================================================
 QPainterPath sstQt01ShapeItem::getPath() const

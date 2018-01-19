@@ -61,14 +61,14 @@ class TstRec2ModelCls;
 */
 // ----------------------------------------------------------------------------
 enum _sstQt01ShapeType_enum
-{ eSstQt01PathArea,      //!< Path Type Area
+{ eSstQt01PathNoObj,     //!< Path Type No Object
+  eSstQt01PathArea,      //!< Path Type Area
   eSstQt01PathCircle,    //!< Path Type Circle
   eSstQt01PathLine,      //!< Path Type Line
   eSstQt01PathPLine,     //!< Path Type Polyline
   eSstQt01PathText,      //!< Path Type Text
   eSstQt01PathObject,    //!< Path Type Object
   eSstQt01PathArc,       //!< Path Type Arc
-  eSstQt01PathUnknown,   //!< Path Type Unknown
   eSstQt01PathError,     //!< Path Type Error
 };
 typedef enum _sstQt01ShapeType_enum sstQt01ShapeType_enum;
@@ -1652,11 +1652,13 @@ class sstQt01PathStorageCls
      //==============================================================================
      /**
      * @brief // append one QPainterPath at end of sst table object  <BR>
-     * iStat = oPathStorage.AppendPath (iKey, oPath, oColor);
+     * iStat = oPathStorage.AppendPath (iKey, oPath, ePathType, oColor, oPen);
      *
-     * @param iKey   [in] For the moment 0
-     * @param oPath  [in] QPainterPath object to store
-     * @param oColor [in] Color of Path
+     * @param iKey      [in] For the moment 0
+     * @param oPath     [in] QPainterPath object to store
+     * @param ePathType [in] Color of Path
+     * @param oColor    [in] Color of Path
+     * @param oPen      [in] Color of Path
      *
      * @return Errorstate
      *
@@ -1664,7 +1666,11 @@ class sstQt01PathStorageCls
      * @retval   < 0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
-     int AppendPath(int iKey,  QPainterPath oPath, QColor oColor);
+     int AppendPath(int                   iKey,
+                    QPainterPath          oPath,
+                    sstQt01ShapeType_enum ePathType,
+                    QColor                oColor,
+                    QPen                  oPen);
      //==============================================================================
      /**
      * @brief // read next QPainterPath object from sst table object.  <BR>
@@ -2001,6 +2007,20 @@ class sstQt01PathStorageCls
      // ----------------------------------------------------------------------------
      int UpdateTabElement(int iKey);
      //==============================================================================
+     /**
+     * @brief // Update color, pen in main tab from element table <BR>
+     * iStat = oPathStorage.UpdateMainAttribFromEleTab( iKey);
+     *
+     * @param iKey     [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int UpdateMainAttribFromElemTab(int iKey);
+     //==============================================================================
 
   private:  // Private functions
      //==============================================================================
@@ -2110,8 +2130,8 @@ class sstQt01PathStorageCls
         int LoadAllPathFromFile1 (int iKey, std::string oFilNam);
         //==============================================================================
         /**
-        * @brief // Update Maintable from Elementtable <BR>
-        * iStat = oPathStorage.UpdateMainFromElementTab(iKey);
+        * @brief // Update Number of elements per path in Maintable from Elementtable <BR>
+        * iStat = oPathStorage.UpdateMainPathSizeFromEleTab(iKey);
         *
         * @param iKey [in] For the moment 0
         *
@@ -2121,7 +2141,7 @@ class sstQt01PathStorageCls
         * @retval   < 0: Unspecified Error
         */
         // ----------------------------------------------------------------------------
-        int UpdateMainFromElementTab (int iKey);
+        int UpdateMainPathSizeFromEleTab (int iKey);
         //==============================================================================
         /**
         * @brief // Write new Main Record in table if Element is next path <BR>
@@ -2136,6 +2156,8 @@ class sstQt01PathStorageCls
         */
         // ----------------------------------------------------------------------------
         int NewMainWithElement (int iKey, sstQt01PathElementCsv3Cls *oShapeItemCsv3);
+        //==============================================================================
+        sstQt01ShapeType_enum getShapeType(int index);
         //==============================================================================
 
      sstRec04Cls *poShapeItemRecTable;   /**< painter path element record table */

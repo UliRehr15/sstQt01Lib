@@ -46,7 +46,7 @@ sstQt01PathElementCsv3Cls::sstQt01PathElementCsv3Cls()
   this->iPenWidth = 1;    /**< Pen Width */
   this->iPenStyle = 1;    /**< Pen Style */
   // memset(this->cItemType,0,11);
-  this->eShapeType = eSstQt01PathUnknown;
+  this->eShapeType = eSstQt01PathNoObj;
 }
 //=============================================================================
 int sstQt01PathElementCsv3Cls::ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr)
@@ -78,7 +78,7 @@ int sstQt01PathElementCsv3Cls::ReadFromCsv(int iKey, std::string oCsvStr, std::s
   }
   else
   {
-    this->setShapeType(eSstQt01PathUnknown);
+    this->setShapeType(eSstQt01PathNoObj);
   }
   *oErrStr = oCsvCnvt.GetErrorString();
   return iStat;
@@ -310,7 +310,7 @@ bool sstQt01PathElementCsv3Cls::isShapeType()
   switch (this->eShapeType)
   {
     case eSstQt01PathError:
-    case eSstQt01PathUnknown:
+    case eSstQt01PathNoObj:
         return false; break;
   default: return true; break;
   }

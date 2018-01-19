@@ -421,12 +421,12 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     //==============================================================================
     /**
-    * @brief // setData <BR>
+    * @brief // Painter Path Table: setData <BR>
     * iStat = oPathTabMdl.setData( index, value, role);
     *
-    * @param index [in] For the moment 0
-    * @param value [in] For the moment 0
-    * @param role  [in] For the moment 0
+    * @param index [in] index
+    * @param value [in] value
+    * @param role  [in] role
     *
     * @return Errorstate
     *

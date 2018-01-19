@@ -203,7 +203,7 @@ sstQt01PathMainRecCls::sstQt01PathMainRecCls()
   this->iYY = 0;
   this->iPenStyle = 1;
   this->iPenWidth = 1;
-  this->eShapeType = eSstQt01PathUnknown;
+  this->eShapeType = eSstQt01PathNoObj;
 }
 //=============================================================================
 int sstQt01PathMainRecCls::getIColR() const
