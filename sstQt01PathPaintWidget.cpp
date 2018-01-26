@@ -89,8 +89,9 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTm
     polylinePath.lineTo(25, 75);
     polylinePath.lineTo(100, 100);
 
-    arcPath.moveTo( 150, 150);
+    // arcPath.moveTo( 150, 150);
     QRect oRect(100,100,200,200);
+    arcPath.arcMoveTo(oRect,0);
     arcPath.arcTo(oRect,0,45);
 
     QFont oFont;

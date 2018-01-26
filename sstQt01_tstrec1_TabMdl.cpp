@@ -101,7 +101,8 @@ QVariant TstRec1ModelCls::data(const QModelIndex &index, int role) const
     {
       sstRec04TestRec1Cls oTestRec1;
 
-      oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+      int iStat = oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+      assert (iStat == 0);
 
       switch (index.column())
       {

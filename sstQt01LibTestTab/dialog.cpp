@@ -51,8 +51,6 @@ Dialog::~Dialog()
 {
   this->poPrt->SST_PrtZu(1);
   delete this->poPrt;
-  // delete(pTstRec1Model);
-  // delete(pTstRec2Model);
 }
 //=============================================================================
 void Dialog::createMenu()

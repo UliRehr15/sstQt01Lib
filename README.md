@@ -24,9 +24,10 @@ Structure of coding projects should be:
 
 .. [libs]
    [Doxygen_Output] <BR>
-   [sst_str01_lib] <BR>
-   [sst_misc01_lib] <BR>
-   [sst_rec04_lib] <BR>
+   [sst_str01_lib] (Lib for R/W of csv data) <BR>
+   [sst_misc01_lib] (Lib of Log File handling) <BR>
+   [sst_rec04_lib] (Lib for storing Table Data) <BR>
+   [sstQt01Lib] <BR>
 
 12.08.2016  Version 1.0: Checkin of test table project. <BR>
 05.09.2016  Version 1.1: Classes for storing QPainterPath objects. <BR>
@@ -64,3 +65,4 @@ Structure of coding projects should be:
 12.01.2018: Version 1.28: Improve handling with format versions. <BR>
 19.01.2018: Version 1.29: Fix problem with write/read object type flag . <BR>
                           Fix problem with editing tab attributes. <BR>
+26.01.2018: Version 1.30: Fix problem with drawing element arc. <BR>

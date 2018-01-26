@@ -29,8 +29,6 @@
 
 #include "sstQt01LibInt.h"
 
-// #include "sst_qt_lib_test_tab.h"
-
 //=============================================================================
 sstQt01TstRec1ViewCls::sstQt01TstRec1ViewCls(sstMisc01PrtFilCls    *poTmpPrt) : sstQt01TabViewCls(poTmpPrt)
 {

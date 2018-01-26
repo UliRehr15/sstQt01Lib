@@ -48,9 +48,6 @@ TstRec2ModelCls::TstRec2ModelCls(QObject *parent)
     iStat = oLocTestRec.SetAll(1,1,2,2,1.1,2.2,true,(char*)"Test2");
 
     iStat = oTestRec2Table.WriteNew(0,&dLocRecNo,&oLocTestRec);
-    // iStat = oTestRec2Table.CloseCsvFile(0,(char*)"test_rec2.csv");
-
-    // iStat = oTestRec2Table.OpenReadCsvFile(0,(char*) "test_rec2.csv");
     assert(iStat == 0);
 
   }
@@ -98,7 +95,8 @@ QVariant TstRec2ModelCls::data(const QModelIndex &index, int role) const
       qlonglong lVal = 0;
       qulonglong ulVal = 0;
 
-      oTestRec2Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec2);
+      int iStat = this->oTestRec2Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec2);
+      assert (iStat == 0);
 
       switch (index.column())
       {
