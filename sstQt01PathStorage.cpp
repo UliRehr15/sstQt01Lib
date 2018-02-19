@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathStorage.cpp    02.09.16  Re.    02.09.16  Re.
+// sstQt01PathStorage.cpp    19.02.18  Re.    02.09.16  Re.
 //
 
 #include <stdio.h>
@@ -644,6 +644,8 @@ int sstQt01PathStorageCls::appendShapeItem(sstQt01ShapeItem oItem)
   oMainRec.setStartElementRecNo(dLastRecNo-iNumElements+1);
   oMainRec.setNumElements(iNumElements);
   oMainRec.setShapeType(oItem.getShapeType());
+  QString oToolTipStr = oItem.getToolTip();
+  oMainRec.setTooltip(oToolTipStr.toStdString());
 
   dREC04RECNUMTYP dRecNo = 0;
   iStat = this->poShapeItemMainTable->WritNew(0,&oMainRec,&dRecNo);
