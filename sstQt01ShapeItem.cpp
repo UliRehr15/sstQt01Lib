@@ -26,6 +26,7 @@
 sstQt01ShapeItem::sstQt01ShapeItem()
 {
   this->eShapeType = eSstQt01PathNoObj;
+  this->dID = 0;
 }
 //=============================================================================
 QPainterPath sstQt01ShapeItem::getPath() const
@@ -103,5 +104,15 @@ return eShapeType;
 void sstQt01ShapeItem::setShapeType(const sstQt01ShapeType_enum &value)
 {
 eShapeType = value;
+}
+//=============================================================================
+dREC04RECNUMTYP sstQt01ShapeItem::getId() const
+{
+  return dID;
+}
+//=============================================================================
+void sstQt01ShapeItem::setId(const dREC04RECNUMTYP &value)
+{
+  dID = value;
 }
 //=============================================================================

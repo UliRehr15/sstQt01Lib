@@ -582,6 +582,8 @@ sstQt01ShapeItem sstQt01PathStorageCls::getShapeItem(dREC04RECNUMTYP index)
   sstQt01ShapeItem oItem;
   QPainterPath oPath = this->getPath(index);
   QColor oCol = this->getColor(index);
+  dREC04RECNUMTYP dID = this->getId(index);
+  oItem.setId(dID);
 
   oItem.setColor(oCol);
   oItem.setPath(oPath);
@@ -1002,3 +1004,12 @@ sstQt01ShapeType_enum sstQt01PathStorageCls::getShapeType(int index)
   return oMainRec.getShapeType();
 }
 //=============================================================================
+dREC04RECNUMTYP sstQt01PathStorageCls::getId(dREC04RECNUMTYP index)
+{
+  sstQt01PathMainRecCls oMainRec;
+  int iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
+  assert(iStat >= 0);
+  return oMainRec.getId();
+}
+//=============================================================================
+

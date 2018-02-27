@@ -67,3 +67,4 @@ Structure of coding projects should be:
                           Fix problem with editing tab attributes. <BR>
 26.01.2018: Version 1.30: Fix problem with drawing element arc. <BR>
 19.02.2018: Version 1.31: Fix problem with showing tooltip string. <BR>
+27.02.2018: Version 1.32: sstPathItem get new property -Extern Identifier-.  <BR>

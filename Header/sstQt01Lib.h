@@ -291,6 +291,24 @@ public:
     // ----------------------------------------------------------------------------
     void setShapeType(const sstQt01ShapeType_enum &value);
     //==============================================================================
+    /**
+    * @brief // Get ID of parent object <BR>
+    * dID = PathItem.getId();
+    *
+    * @return dID
+    */
+    // ----------------------------------------------------------------------------
+    dREC04RECNUMTYP getId() const;
+    //==============================================================================
+    /**
+    * @brief // set ID of parent object <BR>
+    * iStat = oPathItem.setId(value);
+    *
+    * @param value [in] dID
+    */
+    // ----------------------------------------------------------------------------
+    void setId(const dREC04RECNUMTYP &value);
+    //==============================================================================
 
 private:
     QPainterPath myPath;
@@ -299,8 +317,8 @@ private:
     QPen    myPen;  // Width and Style
     QString myToolTip;
     sstQt01ShapeType_enum eShapeType;  // Area, Circle, Line ...
+    dREC04RECNUMTYP dID;                 /**< Identifier of parent object */
 };
-//==============================================================================
 //==============================================================================
 /**
 * @brief Path Element record plus Color as csv string <BR>
@@ -1574,6 +1592,24 @@ class sstQt01PathMainRecCls
      // ----------------------------------------------------------------------------
      void setShapeType(const sstQt01ShapeType_enum &value);
      //==============================================================================
+     /**
+     * @brief // Get ID of parent object <BR>
+     * dID = PathItem.getId();
+     *
+     * @return dID
+     */
+     // ----------------------------------------------------------------------------
+     dREC04RECNUMTYP getId() const;
+     //==============================================================================
+     /**
+     * @brief // set ID of parent object <BR>
+     * iStat = oPathItem.setId(value);
+     *
+     * @param value [in] dID
+     */
+     // ----------------------------------------------------------------------------
+     void setId(const dREC04RECNUMTYP &value);
+     //==============================================================================
 
 private:
      int iXX;        /**< Position X */
@@ -1586,6 +1622,7 @@ private:
      char cTooltip[30];  /**< Tooltip char string */
      dREC04RECNUMTYP dStartElementRecNo;  /**< Start of Path in Element table */
      dREC04RECNUMTYP dNumElements;        /**< Number of elements in path */
+     dREC04RECNUMTYP dID;                 /**< Identifier of parent object */
      sstQt01ShapeType_enum eShapeType;   /**< Area, Circle,Line,Polyline,Arc,Text */
 };
 //==============================================================================
@@ -2021,14 +2058,25 @@ class sstQt01PathStorageCls
      // ----------------------------------------------------------------------------
      int UpdateMainAttribFromElemTab(int iKey);
      //==============================================================================
+     /**
+     * @brief // Get ID of parent object <BR>
+     * dID = oPathStorage.getId(index);
+     *
+     * @param index   [in] Path number
+     *
+     * @return dID
+     */
+     // ----------------------------------------------------------------------------
+     dREC04RECNUMTYP getId(dREC04RECNUMTYP index);
+     //==============================================================================
 
   private:  // Private functions
      //==============================================================================
      /**
-     * @brief // Shortstory <BR>
-     * iStat = oPathStorage.Func_1(iKey);
+     * @brief // initialItemPosition <BR>
+     * iStat = oPathStorage.initialItemPosition(path);
      *
-     * @param iKey [in] For the moment 0
+     * @param path [in] path
      *
      * @return Errorstate
      *
@@ -2039,15 +2087,10 @@ class sstQt01PathStorageCls
      QPoint initialItemPosition(const QPainterPath &path);
      //==============================================================================
      /**
-     * @brief // Shortstory <BR>
-     * iStat = oPathStorage.Func_1(iKey);
+     * @brief // initialItemColor <BR>
+     * iStat = oPathStorage.initialItemColor();
      *
-     * @param iKey [in] For the moment 0
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @return Color
      */
      // ----------------------------------------------------------------------------
      QColor initialItemColor();
@@ -2157,6 +2200,15 @@ class sstQt01PathStorageCls
         // ----------------------------------------------------------------------------
         int NewMainWithElement (int iKey, sstQt01PathElementCsv3Cls *oShapeItemCsv3);
         //==============================================================================
+        /**
+        * @brief // Get Shapetype of path <BR>
+        * dID = oPathStorage.getShapeType(index);
+        *
+        * @param index   [in] Path number
+        *
+        * @return dID
+        */
+        // ----------------------------------------------------------------------------
         sstQt01ShapeType_enum getShapeType(int index);
         //==============================================================================
 
@@ -2800,5 +2852,3 @@ private:  // Private functions
 #endif
 
 // --------------------------------------------------------------- File End ----
-
-
