@@ -2557,10 +2557,16 @@ private slots:
 signals:
     //==============================================================================
     /**
-    * @brief // signal: sst paint event: map content is changed  <BR>
+    * @brief // signal: sst painterpath move release event: map content is changed  <BR>
     */
     // ----------------------------------------------------------------------------
-    void PathMoveEvent();
+    void sstPathMoveReleaseSgnl();
+    //==============================================================================
+    /**
+    * @brief // signal: sst painterpath move release event: map content is changed  <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void sstExtPathMoveReleaseSgnl(dREC04RECNUMTYP dId);
     //==============================================================================
     /**
     * @brief // signal: sst begin inserting records in path storage  <BR>

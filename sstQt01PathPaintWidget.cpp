@@ -228,8 +228,11 @@ void sstQt01PathPaintWidgetCls::mouseReleaseEvent(QMouseEvent *event)
         moveItemTo(event->pos());
         this->oPathStorage->addPosition(this->iActualItemIndex);
         iItemInMotionIndex = 0;
+        // sstQt01ShapeItem oPathItem;
+        dREC04RECNUMTYP dExtId = this->oPathStorage->getId(this->iActualItemIndex);
+        emit sstPathMoveReleaseSgnl();
+        emit sstExtPathMoveReleaseSgnl(dExtId);
     }
-    emit PathMoveEvent();
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::createNewCircle()
