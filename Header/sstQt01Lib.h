@@ -292,22 +292,22 @@ public:
     void setShapeType(const sstQt01ShapeType_enum &value);
     //==============================================================================
     /**
-    * @brief // Get ID of parent object <BR>
-    * dID = PathItem.getId();
+    * @brief // Get ID of extern object, for example dxf <BR>
+    * dID = PathItem.getExternId();
     *
     * @return dID
     */
     // ----------------------------------------------------------------------------
-    dREC04RECNUMTYP getId() const;
+    dREC04RECNUMTYP getExternId() const;
     //==============================================================================
     /**
-    * @brief // set ID of parent object <BR>
-    * iStat = oPathItem.setId(value);
+    * @brief // set ID of extern object, for example dxf <BR>
+    * iStat = oPathItem.setExternId(value);
     *
     * @param value [in] dID
     */
     // ----------------------------------------------------------------------------
-    void setId(const dREC04RECNUMTYP &value);
+    void setExternId(const dREC04RECNUMTYP &value);
     //==============================================================================
 
 private:
@@ -317,7 +317,7 @@ private:
     QPen    myPen;  // Width and Style
     QString myToolTip;
     sstQt01ShapeType_enum eShapeType;  // Area, Circle, Line ...
-    dREC04RECNUMTYP dID;                 /**< Identifier of parent object */
+    dREC04RECNUMTYP dExternID;         /**< Identifier of extern object, for example dxf */
 };
 //==============================================================================
 /**
@@ -1593,22 +1593,22 @@ class sstQt01PathMainRecCls
      void setShapeType(const sstQt01ShapeType_enum &value);
      //==============================================================================
      /**
-     * @brief // Get ID of parent object <BR>
+     * @brief // Get ID of extern object, for example dxf <BR>
      * dID = PathItem.getId();
      *
      * @return dID
      */
      // ----------------------------------------------------------------------------
-     dREC04RECNUMTYP getId() const;
+     dREC04RECNUMTYP getExternId() const;
      //==============================================================================
      /**
-     * @brief // set ID of parent object <BR>
+     * @brief // set ID of extern object, for example dxf <BR>
      * iStat = oPathItem.setId(value);
      *
      * @param value [in] dID
      */
      // ----------------------------------------------------------------------------
-     void setId(const dREC04RECNUMTYP &value);
+     void setExternId(const dREC04RECNUMTYP &value);
      //==============================================================================
 
 private:
@@ -1622,8 +1622,8 @@ private:
      char cTooltip[30];  /**< Tooltip char string */
      dREC04RECNUMTYP dStartElementRecNo;  /**< Start of Path in Element table */
      dREC04RECNUMTYP dNumElements;        /**< Number of elements in path */
-     dREC04RECNUMTYP dID;                 /**< Identifier of parent object */
-     sstQt01ShapeType_enum eShapeType;   /**< Area, Circle,Line,Polyline,Arc,Text */
+     dREC04RECNUMTYP dExternID;           /**< Identifier of extern object, for example dxf */
+     sstQt01ShapeType_enum eShapeType;    /**< Area, Circle,Line,Polyline,Arc,Text */
 };
 //==============================================================================
 /**
@@ -2059,7 +2059,7 @@ class sstQt01PathStorageCls
      int UpdateMainAttribFromElemTab(int iKey);
      //==============================================================================
      /**
-     * @brief // Get ID of parent object <BR>
+     * @brief // Get ID of extern object, for example dxf <BR>
      * dID = oPathStorage.getId(index);
      *
      * @param index   [in] Path number
@@ -2067,7 +2067,7 @@ class sstQt01PathStorageCls
      * @return dID
      */
      // ----------------------------------------------------------------------------
-     dREC04RECNUMTYP getId(dREC04RECNUMTYP index);
+     dREC04RECNUMTYP getExternId(dREC04RECNUMTYP index);
      //==============================================================================
 
   private:  // Private functions

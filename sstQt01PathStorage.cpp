@@ -582,8 +582,8 @@ sstQt01ShapeItem sstQt01PathStorageCls::getShapeItem(dREC04RECNUMTYP index)
   sstQt01ShapeItem oItem;
   QPainterPath oPath = this->getPath(index);
   QColor oCol = this->getColor(index);
-  dREC04RECNUMTYP dID = this->getId(index);
-  oItem.setId(dID);
+  dREC04RECNUMTYP dID = this->getExternId(index);
+  oItem.setExternId(dID);
 
   oItem.setColor(oCol);
   oItem.setPath(oPath);
@@ -648,6 +648,10 @@ int sstQt01PathStorageCls::appendShapeItem(sstQt01ShapeItem oItem)
   oMainRec.setShapeType(oItem.getShapeType());
   QString oToolTipStr = oItem.getToolTip();
   oMainRec.setTooltip(oToolTipStr.toStdString());
+
+  // Store Extern Id for example dxf in sstPathStorage
+  dREC04RECNUMTYP dExternId = oItem.getExternId();
+  oMainRec.setExternId(dExternId);
 
   dREC04RECNUMTYP dRecNo = 0;
   iStat = this->poShapeItemMainTable->WritNew(0,&oMainRec,&dRecNo);
@@ -1004,12 +1008,12 @@ sstQt01ShapeType_enum sstQt01PathStorageCls::getShapeType(int index)
   return oMainRec.getShapeType();
 }
 //=============================================================================
-dREC04RECNUMTYP sstQt01PathStorageCls::getId(dREC04RECNUMTYP index)
+dREC04RECNUMTYP sstQt01PathStorageCls::getExternId(dREC04RECNUMTYP index)
 {
   sstQt01PathMainRecCls oMainRec;
   int iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
   assert(iStat >= 0);
-  return oMainRec.getId();
+  return oMainRec.getExternId();
 }
 //=============================================================================
 

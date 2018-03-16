@@ -229,7 +229,7 @@ void sstQt01PathPaintWidgetCls::mouseReleaseEvent(QMouseEvent *event)
         this->oPathStorage->addPosition(this->iActualItemIndex);
         iItemInMotionIndex = 0;
         // sstQt01ShapeItem oPathItem;
-        dREC04RECNUMTYP dExtId = this->oPathStorage->getId(this->iActualItemIndex);
+        dREC04RECNUMTYP dExtId = this->oPathStorage->getExternId(this->iActualItemIndex);
         emit sstPathMoveReleaseSgnl();
         emit sstExtPathMoveReleaseSgnl(dExtId);
     }

@@ -204,7 +204,7 @@ sstQt01PathMainRecCls::sstQt01PathMainRecCls()
   this->iPenStyle = 1;
   this->iPenWidth = 1;
   this->eShapeType = eSstQt01PathNoObj;
-  this->dID = 0;
+  this->dExternID = 0;
 }
 //=============================================================================
 int sstQt01PathMainRecCls::getIColR() const
@@ -347,13 +347,13 @@ void sstQt01PathMainRecCls::setShapeType(const sstQt01ShapeType_enum &value)
 eShapeType = value;
 }
 //=============================================================================
-dREC04RECNUMTYP sstQt01PathMainRecCls::getId() const
+dREC04RECNUMTYP sstQt01PathMainRecCls::getExternId() const
 {
-  return dID;
+  return dExternID;
 }
 //=============================================================================
-void sstQt01PathMainRecCls::setId(const dREC04RECNUMTYP &value)
+void sstQt01PathMainRecCls::setExternId(const dREC04RECNUMTYP &value)
 {
-  dID = value;
+  dExternID = value;
 }
 //=============================================================================
