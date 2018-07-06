@@ -35,40 +35,6 @@
 // forward declaration ---------------------------------------------------------
 
 // Structures and Classes ------------------------------------------------------
-//==============================================================================
-/**
-* @brief sst base table model class
-*
-* More Comment
-*
-* Changed: 19.02.10  Re.
-*
-* @ingroup sstQt01Lib
-*
-* @author Re.
-*
-* @date 19.02.10
-*/
-// ----------------------------------------------------------------------------
-class sstQt01TabMdlCls : public QAbstractTableModel
-{
-    Q_OBJECT
-public:
-  //==============================================================================
-  /**
-  * @brief // Constructor sstQt01TabMdlCls <BR>
-  * sstQt01TabMdlCls oTabMdl(parent);
-  *
-  * @param parent [in] parent
-  */
-  // ----------------------------------------------------------------------------
-  sstQt01TabMdlCls(QObject *parent);
-  ~sstQt01TabMdlCls();
-protected:
-  std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
-private:
-};
-//==============================================================================
 /**
 * @brief Definition Class TstRec2ModelCls
 *

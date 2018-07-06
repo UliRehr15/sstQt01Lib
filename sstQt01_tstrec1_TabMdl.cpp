@@ -30,8 +30,6 @@
 
 #include "sstQt01LibInt.h"
 
-// #include "sst_qt_lib_test_tab.h"
-
 //=============================================================================
 TstRec1ModelCls::TstRec1ModelCls(QObject *parent)
     :sstQt01TabMdlCls(parent)

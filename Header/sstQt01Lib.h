@@ -45,6 +45,40 @@ class TstRec1ModelCls;
 class TstRec2ModelCls;
 
 // Structures and Classes ------------------------------------------------------
+
+//==============================================================================
+/**
+* @brief sst base qt table model class
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class sstQt01TabMdlCls : public QAbstractTableModel
+{
+    Q_OBJECT
+public:
+  //==============================================================================
+  /**
+  * @brief // Constructor sstQt01TabMdlCls <BR>
+  * sstQt01TabMdlCls oTabMdl(parent);
+  *
+  * @param parent [in] parent
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01TabMdlCls(QObject *parent);
+  ~sstQt01TabMdlCls();
+protected:
+  std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
+private:
+};
 //==============================================================================
 /**
 * @brief Definition Enum ShapeType_enum
@@ -1710,6 +1744,28 @@ class sstQt01PathStorageCls
                     QPen                  oPen);
      //==============================================================================
      /**
+     * @brief // append one QPainterPath at end of sst symbol table object  <BR>
+     * iStat = oPathStorage.AppendPathSymbol (iKey, oPath, ePathType, oColor, oPen);
+     *
+     * @param iKey      [in] For the moment 0
+     * @param oPath     [in] QPainterPath object to store
+     * @param ePathType [in] Color of Path
+     * @param oColor    [in] Color of Path
+     * @param oPen      [in] Color of Path
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int AppendPathSymbol(int                   iKey,
+                    QPainterPath          oPath,
+                    sstQt01ShapeType_enum ePathType,
+                    QColor                oColor,
+                    QPen                  oPen);
+     //==============================================================================
+     /**
      * @brief // read next QPainterPath object from sst table object.  <BR>
      * iStat = oPathStorage.ReadNextPath (iKey, oPath, oColor);
      *
@@ -1828,7 +1884,7 @@ class sstQt01PathStorageCls
      *
      * @param index [in] index of path
      *
-     * @return tooltip string
+     * @return tooltip Qt String
      */
      // ----------------------------------------------------------------------------
      QString getToolTip(dREC04RECNUMTYP index);
@@ -1838,7 +1894,7 @@ class sstQt01PathStorageCls
      * iStat = oPathStorage.setTooltip(index,oTooltip);
      *
      * @param index    [in] record number in main table
-     * @param oTooltip [in] Tooltip string
+     * @param oTooltip [in] Tooltip Qt String
      *
      * @return Errorstate
      *
@@ -1847,6 +1903,21 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int setToolTip(dREC04RECNUMTYP index, QString oTooltip);
+     //==============================================================================
+     /**
+     * @brief // set tooltip string in main table <BR>
+     * iStat = oPathStorage.setTooltip(index,oTooltip);
+     *
+     * @param index    [in] record number in main table
+     * @param oTooltip [in] Tooltip String
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int setToolTip(dREC04RECNUMTYP index, std::string oTooltip);
      //==============================================================================
      /**
      * @brief // set position to shape item in main table <BR>
@@ -1887,6 +1958,20 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int addPosition(dREC04RECNUMTYP index);
+     //==============================================================================
+     /**
+     * @brief // add position to shape item in main table <BR>
+     * iStat = oPathStorage.addPosition(index,oPosition);
+     *
+     * @param index     [in] record number in main table
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int addPositionSym(dREC04RECNUMTYP index);
      //==============================================================================
      /**
      * @brief // Get Color for index path <BR>
@@ -1947,7 +2032,7 @@ class sstQt01PathStorageCls
      //==============================================================================
      /**
      * @brief // append item to storage at table end <BR>
-     * iStat = oPathStorage.appendShapeItem();
+     * iStat = oPathStorage.appendShapeItem(oItem);
      *
      * @param oItem [in] sst Shape item to append to table storage
      *
@@ -1958,6 +2043,20 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int appendShapeItem(sstQt01ShapeItem oItem);
+     //==============================================================================
+     /**
+     * @brief // append symbol item to storage at symbol table end <BR>
+     * iStat = oPathStorage.appendItemSymbol(oItem);
+     *
+     * @param oItem [in] sst Shape item to append to table storage
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int appendItemSymbol(sstQt01ShapeItem oItem);
      //==============================================================================
      /**
      * @brief // return number of sst shape items in storage <BR>
@@ -2151,8 +2250,8 @@ class sstQt01PathStorageCls
      */
      // ----------------------------------------------------------------------------
      int LoadAllPathFromFile2 (int iKey, std::string oFilNam);
-        //==============================================================================
-        /**
+     //==============================================================================
+     /**
         * @brief // Load all pathes record rows from csv file into sst table object.  <BR>
         * iStat = oPathStorage.LoadAllPathFromFile1 (iKey, oFilNam);
         *
@@ -2169,10 +2268,10 @@ class sstQt01PathStorageCls
         * @retval   = -3: Wrong File Header
         * @retval   < 0: Unspecified Error
         */
-        // ----------------------------------------------------------------------------
-        int LoadAllPathFromFile1 (int iKey, std::string oFilNam);
-        //==============================================================================
-        /**
+     // ----------------------------------------------------------------------------
+     int LoadAllPathFromFile1 (int iKey, std::string oFilNam);
+     //==============================================================================
+     /**
         * @brief // Update Number of elements per path in Maintable from Elementtable <BR>
         * iStat = oPathStorage.UpdateMainPathSizeFromEleTab(iKey);
         *
@@ -2183,24 +2282,27 @@ class sstQt01PathStorageCls
         * @retval   = 0: OK
         * @retval   < 0: Unspecified Error
         */
-        // ----------------------------------------------------------------------------
-        int UpdateMainPathSizeFromEleTab (int iKey);
-        //==============================================================================
-        /**
+     // ----------------------------------------------------------------------------
+     int UpdateMainPathSizeFromEleTab (int iKey);
+     //==============================================================================
+     /**
         * @brief // Write new Main Record in table if Element is next path <BR>
         * iStat = oPathStorage.NewMainWithElement(iKey);
         *
-        * @param iKey [in] For the moment 0
+        * Write Attributes, Tooltip and Start Position to main record
+        *
+        * @param iKey           [in] For the moment 0
+        * @param oShapeItemCsv3 [in] Csv File Row Version 3
         *
         * @return Errorstate
         *
         * @retval   = 0: OK
         * @retval   < 0: Unspecified Error
         */
-        // ----------------------------------------------------------------------------
-        int NewMainWithElement (int iKey, sstQt01PathElementCsv3Cls *oShapeItemCsv3);
-        //==============================================================================
-        /**
+     // ----------------------------------------------------------------------------
+     int NewMainWithElement (int iKey, sstQt01PathElementCsv3Cls *oShapeItemCsv3);
+     //==============================================================================
+     /**
         * @brief // Get Shapetype of path <BR>
         * dID = oPathStorage.getShapeType(index);
         *
@@ -2208,13 +2310,16 @@ class sstQt01PathStorageCls
         *
         * @return dID
         */
-        // ----------------------------------------------------------------------------
-        sstQt01ShapeType_enum getShapeType(int index);
-        //==============================================================================
+     // ----------------------------------------------------------------------------
+     sstQt01ShapeType_enum getShapeType(int index);
+     //==============================================================================
 
      sstRec04Cls *poShapeItemRecTable;   /**< painter path element record table */
      sstRec04Cls *poShapeItemMainTable;  /**< painter path main table */
-     dREC04RECNUMTYP dActualReadPos;     /**< actual read position in table */
+     sstRec04Cls *poShapeItemRecSymTable;   /**< painter path element record Symbol table */
+     sstRec04Cls *poShapeItemMainSymTable;  /**< painter path main Symbol table */
+     dREC04RECNUMTYP dActualReadPos;     /**< actual read position in Record table */
+     dREC04RECNUMTYP dActualReadPosSym;     /**< actual read position in Record table */
      const int height = 300;
      const int width = 500;
      sstMisc01PrtFilCls *poPrt;
@@ -2604,13 +2709,16 @@ signals:
 
 private:
     int updateButtonGeometry(QToolButton *button, int x, int y);
-    void createShapeItem(const QPainterPath &path, const QString &toolTip,
-                         const QPoint &pos, const QColor &color, const QPen &oPen,
+    void createShapeItem(const QPainterPath &path,
+                         // const QString &toolTip,
+                         const QPoint &pos,
+                         const QColor &color,
+                         const QPen &oPen,
                          const sstQt01ShapeType_enum eShapeType);
     int itemAt(const QPoint &pos);
     void moveItemTo(const QPoint &pos);
     int ItemsLoadFromFile3 (int iKey);
-    int ItemsCreate (int iKey);
+    // int ItemsCreate (int iKey);
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 

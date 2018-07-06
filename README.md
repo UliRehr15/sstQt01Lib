@@ -70,4 +70,7 @@ Structure of coding projects should be:
 27.02.2018: Version 1.32: sstPathItem get new property -Extern Identifier-.  <BR>
 02.03.2018: Version 1.33: Emit Signal -Extern Identifier- after release move painterpath. <BR>
 15.03.2018: Version 1.34: Rename dID to dExternId, for example dxf. <BR>
+23.03.2018: Version 1.35: Class sstQt01TabMdlCls is now public for Dxf Table Classes. <BR>
+06.07.2018: Version 1.36: New Storage for symbol handling. Fixed problem with showing tooltips. <BR>
+                          Fixed problem with more objects pathes. <BR>
 

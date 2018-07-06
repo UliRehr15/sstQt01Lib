@@ -50,6 +50,13 @@ sstQt01PathTabDialogCls::sstQt01PathTabDialogCls()
     poPathStorage->createDefaultItems(0);
   }
 
+  // Store some Symbols
+  sstQt01ShapeItem oShapeItem;
+  QPainterPath oPath;
+  oPath.addEllipse(QRect(0, 0, 100, 100));
+  oShapeItem.setPath(oPath);
+  poPathStorage->appendItemSymbol(oShapeItem);
+
   createMenu();
   createHorizontalGroupBox1();
   QVBoxLayout *mainLayout = new QVBoxLayout;
