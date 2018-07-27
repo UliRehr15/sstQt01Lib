@@ -73,4 +73,6 @@ Structure of coding projects should be:
 23.03.2018: Version 1.35: Class sstQt01TabMdlCls is now public for Dxf Table Classes. <BR>
 06.07.2018: Version 1.36: New Storage for symbol handling. Fixed problem with showing tooltips. <BR>
                           Fixed problem with more objects pathes. <BR>
+27.07.2018: Version 1.37: New ShapeItem storage with QList for showing ShapeItems in MapView. <BR>
+                          First Works, not in Use. <BR>
 

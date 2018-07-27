@@ -42,7 +42,7 @@
 *
 * Changed: 19.02.10  Re.
 *
-* @ingroup sstQt01Lib
+* @ingroup sstQt01LibInt
 *
 * @author Re.
 *
@@ -174,7 +174,7 @@ private:
 *
 * Changed: 19.02.10  Re.
 *
-* @ingroup sstQt01Lib
+* @ingroup sstQt01LibInt
 *
 * @author Re.
 *
@@ -306,7 +306,7 @@ private:
 *
 * Changed: 19.02.10  Re.
 *
-* @ingroup sstQt01Lib
+* @ingroup sstQt01LibInt
 *
 * @author Re.
 *
