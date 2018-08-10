@@ -25,7 +25,8 @@
 
 //=============================================================================
 sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTmpPrt,
-                                                     sstQt01PathStorageCls *poTmpPathStorage)
+                                                     // sstQt01PathStorageCls *poTmpPathStorage)
+                                                     sstQt01PathStoreViewCls *poTmpPathStorage)
 {
 
   Q_INIT_RESOURCE(tooltips);
@@ -39,7 +40,7 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTm
   int iStat = 0;
 
   // Write tooltip strings to path items
-  iStat = this->ItemsLoadFromFile3(0);
+  iStat = this->updateTooltips(0);
   assert(iStat == 0);
 
   setMouseTracking(true);
@@ -403,7 +404,7 @@ QPen sstQt01PathPaintWidgetCls::randomItemPen()
   return oPen;
 }
 //=============================================================================
-int sstQt01PathPaintWidgetCls::ItemsLoadFromFile3 (int iKey)
+int sstQt01PathPaintWidgetCls::updateTooltips (int iKey)
 //-----------------------------------------------------------------------------
 {
   QPoint oPnt(0,0);

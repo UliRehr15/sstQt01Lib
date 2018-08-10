@@ -13,7 +13,7 @@
  **********************************************************************/
 // main.cpp   18.08.17  Re.   23.02.17  Re.
 //
-// This testtool combines map and table with refreshing in both direction
+// This testtool combines map and table widget with refreshing in both direction
 // when editing qt painter path data.
 
 

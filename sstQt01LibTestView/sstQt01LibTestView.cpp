@@ -13,7 +13,7 @@
  **********************************************************************/
 // sstQt01LibTestView.cpp    14.08.16  Re.    14.08.16  Re.
 //
-// Testtool open PainterPath data file and call map widget.
+// Testtool open PainterPath Csv data file and call map widget.
 
 #include <assert.h>
 
@@ -44,7 +44,8 @@ Dialog::Dialog()
   iStat = this->poPrt->SST_PrtAuf(1,(char*)"sstQt01LibTestView.log");
   assert(iStat == 0);
 
-  this->poPathStorage = new sstQt01PathStorageCls(this->poPrt);
+  // this->poPathStorage = new sstQt01PathStorageCls(this->poPrt);
+  this->poPathStorage = new sstQt01PathStoreViewCls (this->poPrt);
   iStat = this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
   // assert(iStat == 0);
 

@@ -62,7 +62,8 @@ private:
     QMenu *fileMenu;
     QAction *exitAction;
     sstMisc01PrtFilCls *poPrt;  // sst Protocoll
-    sstQt01PathStorageCls *poPathStorage;  // sst Painter Path storage
+    // sstQt01PathStorageCls *poPathStorage;  // sst Painter Path storage
+    sstQt01PathStoreViewCls *poPathStorage;  // sst Painter Path storage
     sstQt01PathPaintWidgetCls *poPathWidget;  // sst Painter path widget
 };
 

@@ -2732,7 +2732,7 @@ class sstQt01PathStoreViewCls
      * @return int number of actual stored shape items
      */
      // ----------------------------------------------------------------------------
-     int countItems();
+     unsigned int countItems();
      //==============================================================================
      /**
      * @brief // create in empty path storage circle, square and triangel sst item <BR>
@@ -3257,7 +3257,8 @@ public:
   */
   // ----------------------------------------------------------------------------
   sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poPrt,
-                            sstQt01PathStorageCls *poPathStorage);
+                            // sstQt01PathStorageCls *poPathStorage);
+                            sstQt01PathStoreViewCls *poPathStorage);
   ~sstQt01PathPaintWidgetCls();
 
 protected:
@@ -3385,7 +3386,7 @@ private:
                          const sstQt01ShapeType_enum eShapeType);
     int itemAt(const QPoint &pos);
     void moveItemTo(const QPoint &pos);
-    int ItemsLoadFromFile3 (int iKey);
+    int updateTooltips (int iKey);
     // int ItemsCreate (int iKey);
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
@@ -3422,7 +3423,8 @@ private:
     QToolButton *newPolyLineButton;
     QToolButton *newArcButton;
     QToolButton *newTextButton;
-    sstQt01PathStorageCls *oPathStorage;
+    // sstQt01PathStorageCls *oPathStorage;
+    sstQt01PathStoreViewCls *oPathStorage;
     sstMisc01PrtFilCls *poPrt;
 };
 //==============================================================================

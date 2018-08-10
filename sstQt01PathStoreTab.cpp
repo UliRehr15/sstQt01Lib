@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathStorage.cpp    19.02.18  Re.    02.09.16  Re.
+// sstQt01PathStoreTab.cpp    27.07.18  Re.    02.09.16  Re.
 //
 
 #include <stdio.h>
@@ -650,13 +650,18 @@ QPainterPath sstQt01PathStorageCls::getPath(dREC04RECNUMTYP index)
 sstQt01ShapeItem sstQt01PathStorageCls::getShapeItem(dREC04RECNUMTYP index)
 {
   sstQt01ShapeItem oItem;
+  sstQt01ShapeType_enum eShapeType;
   QPainterPath oPath = this->getPath(index);
+  int iPathEleNum = oPath.elementCount();
+  assert(iPathEleNum >= 2);
   QColor oCol = this->getColor(index);
   dREC04RECNUMTYP dID = this->getExternId(index);
-  oItem.setExternId(dID);
+  eShapeType = this->getShapeType(index);
 
+  oItem.setExternId(dID);
   oItem.setColor(oCol);
   oItem.setPath(oPath);
+  oItem.setShapeType(eShapeType);
 
   return oItem;
 }

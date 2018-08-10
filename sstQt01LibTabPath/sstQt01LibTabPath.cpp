@@ -13,7 +13,7 @@
  **********************************************************************/
 // sstQt01LibTabPath.cpp    17.01.17 Re.    17.01.17  Re.
 //
-// testframe for editing PainterPath Csv data in sst qt table
+// testframe for editing PainterPath Csv data in sst qt table widget.
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QTableView>
