@@ -43,6 +43,7 @@ QT_END_NAMESPACE
 class sstQt01PathTabMdlCls;
 class TstRec1ModelCls;
 class TstRec2ModelCls;
+class sstQt01PathStoreViewCls;
 
 // Structures and Classes ------------------------------------------------------
 
@@ -1935,6 +1936,21 @@ class sstQt01PathStorageCls
      int setPosition(dREC04RECNUMTYP index, QPoint oPosition);
      //==============================================================================
      /**
+     * @brief // set extern id to shape item in main table <BR>
+     * iStat = oPathStorage.setExternID( index, dExternID);
+     *
+     * @param index     [in] record number in main table
+     * @param dExternID [in] Extern ID of ShapeItem
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int setExternID(dREC04RECNUMTYP index, dREC04RECNUMTYP dExternID);
+     //==============================================================================
+     /**
      * @brief // Get color of shape item <BR>
      * oPosition = oPathStorage.getPosition(index);
      *
@@ -2168,6 +2184,35 @@ class sstQt01PathStorageCls
      // ----------------------------------------------------------------------------
      dREC04RECNUMTYP getExternId(dREC04RECNUMTYP index);
      //==============================================================================
+     /**
+     * @brief // Get Path View Storage from Path Table Storage <BR>
+     * iStat = oPathStorage.getViewStoreData( iKey, &poPathViewStore);
+     *
+     * @param iKey            [in] For the moment 0
+     * @param poPathViewStore [in out] Fill Path View Storage
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int getViewStoreData( int iKey, sstQt01PathStoreViewCls *poPathViewStore);
+     //==============================================================================
+     /**
+     * @brief // Write Tooltips to all ShapeItems <BR>
+     * iStat = oPathStorage.updateTooltips( iKey);
+     *
+     * @param iKey [in] For the moment 0
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int updateTooltips (int iKey);
+     //==============================================================================
 
   private:  // Private functions
      //==============================================================================
@@ -2326,7 +2371,6 @@ class sstQt01PathStorageCls
      unsigned int uiVersion;             /**< found format Version in csv file */
 };
 //==============================================================================
-//==============================================================================
 /**
 * @brief storage class for painter path objects <BR>
 *
@@ -2481,69 +2525,6 @@ class sstQt01PathStoreViewCls
      */
      // ----------------------------------------------------------------------------
      unsigned int ColumnCount() const;
-     //==============================================================================
-     /**
-     * @brief // read QPainterPath record from sst table object.  <BR>
-     * iStat = oPathStorage.ReadRecPos (iKey, dRecNo, vRecAdr);
-     *
-     * @param iKey    [in]  For the moment 0
-     * @param dRecNo  [in]  Record number
-     * @param vRecAdr [out] return Path record at adress
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     // int ReadRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr) const;
-     //==============================================================================
-     /**
-     * @brief // write QPainterPath record to sst table object.  <BR>
-     * iStat = oPathStorage.WriteRecPos (iKey, dRecNo, vRecAdr);
-     *
-     * @param iKey    [in] For the moment 0
-     * @param dRecNo  [out] record number
-     * @param vRecAdr [out] write path record from adress
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     // int WriteRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr);
-     //==============================================================================
-     /**
-     * @brief // mark deleted QPainterPath record in Path element sst table.  <BR>
-     * iStat = oPathStorage.DeleteRecPos (iKey, dRecNo);
-     *
-     * @param iKey   [in] For the moment 0
-     * @param dRecNo [in] record number
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     // int DeleteRecPos (int iKey, dREC04RECNUMTYP dRecNo);
-     //==============================================================================
-     /**
-     * @brief // write next QPainterPath record into sst table object.  <BR>
-     * iStat = oPathStorage.WriteNew (iKey, &dRecNo, vRecAdr);
-     *
-     * @param iKey    [in] For the moment 0
-     * @param dRecNo  [out] new record number
-     * @param vRecAdr [in] path record at adress for writing
-     *
-     * @return Errorstate
-     *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
-     */
-     // ----------------------------------------------------------------------------
-     // int WriteNew (int iKey, dREC04RECNUMTYP *dRecNo, void* vRecAdr);
      //==============================================================================
      /**
      * @brief // Get Tooltip string for index path <BR>
@@ -2835,6 +2816,7 @@ class sstQt01PathStoreViewCls
      // ----------------------------------------------------------------------------
      dREC04RECNUMTYP getExternId(dREC04RECNUMTYP index);
      //==============================================================================
+     int writeShapeItem(int index, sstQt01ShapeItem oItem);
 
   private:  // Private functions
      //==============================================================================
@@ -3057,7 +3039,7 @@ public slots:
     * @brief Slot -Table data changed- direction table to map
     */
     // ----------------------------------------------------------------------------
-    void sstSlotChangeTab();
+    void sstSlotChangeTab(sstQt01ShapeItem oShapeItem);
     //==============================================================================
     /**
     * @brief // slot: sst begin inserting rocords in path storage  <BR>
@@ -3097,7 +3079,7 @@ signals:
     * @brief Signal -Table data changed- direction table to map
     */
     // ----------------------------------------------------------------------------
-    void sstSgnlTabChanged();
+    void sstSgnlTabChanged(sstQt01ShapeItem oShapeItem);
     //==============================================================================
     /**
     * @brief Signal -Table data changed- direction map to table
@@ -3318,7 +3300,7 @@ public slots:
     * @brief // slot function: sst paint event: map content is changed  <BR>
     */
     // ----------------------------------------------------------------------------
-    void sstPaintEvent();
+    void sstPaintEvent(sstQt01ShapeItem oShapeItem);
     //==============================================================================
 private slots:
     void createNewCircle();

@@ -182,18 +182,27 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
     }
 }
 //=============================================================================
-void sstQt01PathPaintWidgetCls::sstPaintEvent()
+void sstQt01PathPaintWidgetCls::sstPaintEvent(sstQt01ShapeItem oShapeItem)
 {
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-    int iPathCount = (int) this->oPathStorage->countItems();
-    for (int ii=1; ii <= iPathCount; ii++)
-    {
-        painter.translate(this->oPathStorage->getPosition(ii));
-        painter.setBrush(this->oPathStorage->getColor(ii));
-        painter.drawPath(this->oPathStorage->getPath(ii));
-        painter.translate(-this->oPathStorage->getPosition(ii));
-    }
+  dREC04RECNUMTYP dItemNo = oShapeItem.getExternId();
+  if(dItemNo <= 0 || dItemNo > this->oPathStorage->countItems())
+  {
+    assert(0);
+  }
+  // this->oPathStorage->appendShapeItem(oShapeItem);
+  this->oPathStorage->writeShapeItem(dItemNo,oShapeItem);
+  this->update();
+  // emit this->paintEvent(this->e);
+//  QPainter painter(this);
+//    painter.setRenderHint(QPainter::Antialiasing);
+//    int iPathCount = (int) this->oPathStorage->countItems();
+//    for (int ii=1; ii <= iPathCount; ii++)
+//    {
+//        painter.translate(this->oPathStorage->getPosition(ii));
+//        painter.setBrush(this->oPathStorage->getColor(ii));
+//        painter.drawPath(this->oPathStorage->getPath(ii));
+//        painter.translate(-this->oPathStorage->getPosition(ii));
+//    }
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::mousePressEvent(QMouseEvent *event)
@@ -462,27 +471,6 @@ int sstQt01PathPaintWidgetCls::updateTooltips (int iKey)
 
   return iRet;
 }
-//=============================================================================
-//int sstQt01PathPaintWidgetCls::ItemsCreate (int iKey)
-////-----------------------------------------------------------------------------
-//{
-//  QColor oColor;
-//  QPoint oPos;
-//  int iRet  = 0;
-//  //-----------------------------------------------------------------------------
-//  if ( iKey != 0) return -1;
-
-//  createShapeItem(circlePath, tr("Circle"), initialItemPosition(circlePath),
-//                  initialItemColor(), initialItemPen(),eSstQt01PathCircle);
-//  createShapeItem(squarePath, tr("Square"), initialItemPosition(squarePath),
-//                  initialItemColor(), initialItemPen(),eSstQt01PathArea);
-//  createShapeItem(trianglePath, tr("Triangle"),
-//                  initialItemPosition(trianglePath), initialItemColor(), initialItemPen(),eSstQt01PathArea);
-//  createShapeItem(linePath, tr("Line"),
-//                  initialItemPosition(linePath), initialItemColor(), initialItemPen(),eSstQt01PathLine);
-
-//  return iRet;
-//}
 //=============================================================================
 QSize sstQt01PathPaintWidgetCls::minimumSizeHint() const
 {

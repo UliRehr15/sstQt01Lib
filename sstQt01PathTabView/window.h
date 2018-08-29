@@ -58,7 +58,8 @@ private:
     sstQt01PathPaintWidgetCls *poPathMapWidget;
 
     sstMisc01PrtFilCls *oPrt;
-    sstQt01PathStorageCls *poPathStorage;  // sst Painter Path storage
+    sstQt01PathStorageCls *poPathTabStorage;     // sst Painter Path Table storage
+    sstQt01PathStoreViewCls *poPathViewStorage;  // sst Painter Path Map View storage
 
     // QLabel *shapeLabel;
     // QLabel *penWidthLabel;

@@ -38,24 +38,29 @@ Window::Window()
 
   oPrt->SST_PrtAuf(1,(char*)"sstQt01PathTabView.log");
 
-  this->poPathStorage = new sstQt01PathStorageCls( oPrt);
-  this->poPathStorage->LoadAllPathFromFile(0,"Paint.csv");
+  this->poPathTabStorage = new sstQt01PathStorageCls( oPrt);
+  this->poPathTabStorage->LoadAllPathFromFile(0,"Paint.csv");
   // assert(iStat == 0);
 
-  if (poPathStorage->countItems() <= 0)
+  if (poPathTabStorage->countItems() <= 0)
   {
     oPrt->SST_PrtWrtChar(1,(char*)"Is Empty",(char*)"File Paint.csv: ");
 
-    poPathStorage->createDefaultItems(0);
+    poPathTabStorage->createDefaultItems(0);
   }
 
+  //Open new PainterPath Map View Storage with QList inside
+  this->poPathViewStorage = new sstQt01PathStoreViewCls( oPrt);
+
+  // Fill View Storage from Tab Storage
+  this->poPathTabStorage->getViewStoreData( 0, this->poPathViewStorage);
 
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
 
-  poPathTabWidget = new sstQt01PathTabViewCls( oPrt, this->poPathStorage);
+  poPathTabWidget = new sstQt01PathTabViewCls( oPrt, this->poPathTabStorage);
 
-  poPathMapWidget = new sstQt01PathPaintWidgetCls(oPrt,this->poPathStorage);
+  poPathMapWidget = new sstQt01PathPaintWidgetCls(oPrt,this->poPathViewStorage);
 
     QGridLayout *mainLayout = new QGridLayout;
 //! [9] //! [10]
@@ -75,7 +80,8 @@ Window::Window()
     setWindowTitle(tr("Basic Drawing"));
 
     // For refreshing map from table
-    connect(poPathTabWidget, SIGNAL(sstSgnlTabChanged()), poPathMapWidget, SLOT(update()));
+    // connect(poPathTabWidget, SIGNAL(sstSgnlTabChanged()), poPathMapWidget, SLOT(update()));
+    connect(poPathTabWidget, SIGNAL(sstSgnlTabChanged(sstQt01ShapeItem)), poPathMapWidget, SLOT(sstPaintEvent(sstQt01ShapeItem)));
     // for refreshing table from map
     connect(poPathMapWidget, SIGNAL(sstPathMoveReleaseSgnl()), poPathTabWidget, SLOT(sstSlotUpdateTab()));
 
@@ -88,9 +94,10 @@ Window::Window()
 Window::~Window()
 {
   int iStat = 0;
-  iStat = this->poPathStorage->StoreAllPathToFile(0,"Paint.csv");
+  iStat = this->poPathTabStorage->StoreAllPathToFile(0,"Paint.csv");
   assert (iStat == 0);
-  delete this->poPathStorage;
+  delete this->poPathViewStorage;
+  delete this->poPathTabStorage;
   this->oPrt->SST_PrtZu(1);
 }
 

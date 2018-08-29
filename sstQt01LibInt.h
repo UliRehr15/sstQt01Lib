@@ -490,7 +490,7 @@ signals:
     * @brief Signal -Table data changed- table to map
     */
     // ----------------------------------------------------------------------------
-    void sstSgnlTabChanged();
+    void sstSgnlTabChanged(sstQt01ShapeItem oShapeItem);
     //==============================================================================
     /**
     * @brief Signal -Table data changed- map to table

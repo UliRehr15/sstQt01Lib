@@ -76,4 +76,5 @@ Structure of coding projects should be:
 27.07.2018: Version 1.37: New ShapeItem storage with QList for showing ShapeItems in MapView. <BR>
                           First Works, not in Use. <BR>
 10.08.2018: Version 1.38: Lot of corrections. QListViewStore for ShapeItems use in LibTestView. <BR>
+30.08.2018: Version 1.39: First works connect PainterPath Tab store (TabView) and QList Store (MapView). <BR>
 

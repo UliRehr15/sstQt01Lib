@@ -748,4 +748,9 @@ dREC04RECNUMTYP sstQt01PathStoreViewCls::getExternId(dREC04RECNUMTYP index)
   return oShapeItem.getExternId();
 }
 //=============================================================================
-
+int sstQt01PathStoreViewCls::writeShapeItem(int index, sstQt01ShapeItem oItem)
+{
+  this->shapeItems.insert(index,oItem);
+  return 0;
+}
+//=============================================================================

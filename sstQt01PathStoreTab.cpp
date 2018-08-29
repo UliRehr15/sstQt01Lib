@@ -79,6 +79,9 @@ int sstQt01PathStorageCls::LoadAllPathFromFile (int iKey, std::string oFilNam)
     break;
   }
 
+  // Update all Tooltips
+  iStat = this->updateTooltips(0);
+
   return iStat;
 }
 //=============================================================================
@@ -554,6 +557,17 @@ int sstQt01PathStorageCls::setPosition(dREC04RECNUMTYP index, QPoint oPosition)
   sstQt01PathMainRecCls oMainRec;
   iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
   oMainRec.setPosition(oPosition);
+  iStat = this->poShapeItemMainTable->Writ(0,&oMainRec,index);
+  return iStat;
+}
+//=============================================================================
+int sstQt01PathStorageCls::setExternID(dREC04RECNUMTYP index, dREC04RECNUMTYP dID)
+{
+  // assert(0);
+  int iStat = 0;
+  sstQt01PathMainRecCls oMainRec;
+  iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
+  oMainRec.setExternId(dID);
   iStat = this->poShapeItemMainTable->Writ(0,&oMainRec,index);
   return iStat;
 }
@@ -1122,6 +1136,94 @@ dREC04RECNUMTYP sstQt01PathStorageCls::getExternId(dREC04RECNUMTYP index)
   int iStat = this->poShapeItemMainTable->Read(0,index,&oMainRec);
   assert(iStat >= 0);
   return oMainRec.getExternId();
+}
+//=============================================================================
+int sstQt01PathStorageCls::getViewStoreData( int                      iKey,
+                                             sstQt01PathStoreViewCls *poPathViewStore)
+{
+  if ( iKey != 0) return -1;
+
+  int iStat = 0;
+
+  for (int ll = 1; ll <= this->countItems(); ll++)
+  {
+    sstQt01ShapeItem oShapeItem = this->getShapeItem(ll);
+    poPathViewStore->appendShapeItem(oShapeItem);
+  }
+  return iStat;
+}
+//=============================================================================
+int sstQt01PathStorageCls::updateTooltips (int iKey)
+//-----------------------------------------------------------------------------
+{
+  // QPoint oPnt(0,0);
+  QPainterPath *poPath;
+  QColor oColor;
+  int iPathNo = 0;
+  // sstQt01ShapeItem oShapeItem;
+
+  int iRet  = 0;
+  int iStat = 0;
+  int iStat1 = 0;
+  //-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
+//  for (int ii=1; ii <= this->countItems(); ii++)
+//  {
+//    oShapeItem = this->getShapeItem(ii);
+
+//  }
+
+  // Reset actual read positon
+  this->dActualReadPos = 1;
+
+  // read next path from shape item table
+  poPath = new (QPainterPath);
+  iStat1 = this->ReadNextPath( 0, poPath, &oColor);
+
+  while (iStat1 >= 0)
+  {
+    iPathNo++;
+    int iElements = poPath->elementCount();
+    assert(iElements > 0);
+
+    switch (iElements)
+    {
+    case 2:
+      this->setToolTip( iPathNo, (std::string) "Line");
+      break;
+    case 4:
+      this->setToolTip( iPathNo, (std::string) "Triangle");
+      break;
+    case 5:
+      this->setToolTip( iPathNo, (std::string) "Square");
+      break;
+    case 13:
+      this->setToolTip( iPathNo, (std::string) "Circle");
+      break;
+    default:
+      this->setToolTip( iPathNo, (std::string) "Object");
+      // assert(0);
+      break;
+    }
+
+    // Set Extern ID to ShapeItems in Storage
+    this->setExternID(iPathNo,iPathNo);
+
+
+    delete poPath;
+    poPath = new (QPainterPath);
+    iStat1 = this->ReadNextPath( 0, poPath, &oColor);
+  }
+
+  delete poPath;
+
+  assert(iRet >= 0);
+
+  // Small Errors will given back
+  iRet = iStat;
+
+  return iRet;
 }
 //=============================================================================
 

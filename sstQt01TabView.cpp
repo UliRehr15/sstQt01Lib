@@ -91,9 +91,9 @@ void sstQt01TabViewCls::actionRowsInsert()
   this->model()->insertRows(row,count,index);
 }
 //=============================================================================
-void sstQt01TabViewCls::sstSlotChangeTab()
+void sstQt01TabViewCls::sstSlotChangeTab(sstQt01ShapeItem oShapeItem)
 {
-  emit this->sstSgnlTabChanged();
+  emit this->sstSgnlTabChanged(oShapeItem);
 }
 //=============================================================================
 void sstQt01TabViewCls::sstSlotBeginInsertRows(int first, int last)

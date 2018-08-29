@@ -164,8 +164,16 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
     // Update color, pen in main tab from element table
     this->poPathStorage->UpdateMainAttribFromElemTab(0);
 
+    sstQt01ShapeItem oShapeItem;
+    dREC04RECNUMTYP dIndex = 0;
+
+    int iStat = this->poPathStorage->SearchPathItem(0, index.row()+1, &dIndex);
+    assert(iStat == 0);
+
+    oShapeItem = this->poPathStorage->getShapeItem(dIndex);
+
     // For refreshing map
-    emit this->sstSgnlTabChanged();
+    emit this->sstSgnlTabChanged( oShapeItem);
 
     return true;
 }
@@ -222,7 +230,9 @@ bool sstQt01PathTabMdlCls::removeRows(int position, int rows, const QModelIndex 
     endRemoveRows();
   }
 
-  this->sstSgnlTabChanged();
+  sstQt01ShapeItem oShapeItem;
+
+  this->sstSgnlTabChanged( oShapeItem);
 
   return true;
 }
@@ -255,7 +265,8 @@ bool sstQt01PathTabMdlCls::insertRows(int position, int rows, const QModelIndex 
 //=============================================================================
 void sstQt01PathTabMdlCls::sstSlotChangeTab()
 {
-  emit this->sstSgnlTabChanged();
+  sstQt01ShapeItem oShapeItem;
+  emit this->sstSgnlTabChanged( oShapeItem);
 }
 //=============================================================================
 void sstQt01PathTabMdlCls::sstSlotUpdateTab()
