@@ -748,9 +748,24 @@ dREC04RECNUMTYP sstQt01PathStoreViewCls::getExternId(dREC04RECNUMTYP index)
   return oShapeItem.getExternId();
 }
 //=============================================================================
-int sstQt01PathStoreViewCls::writeShapeItem(int index, sstQt01ShapeItem oItem)
+int sstQt01PathStoreViewCls::writeShapeItem(int iKey, dREC04RECNUMTYP index, sstQt01ShapeItem oItem)
 {
+  int iRet  = 0;
+  int iStat = 0;
+//-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
+
   this->shapeItems.insert(index,oItem);
-  return 0;
+  // Fatal Errors goes to an assert
+  if (iRet < 0)
+  {
+    // Expression (iRet >= 0) has to be fullfilled
+    assert(0);
+  }
+
+  // Small Errors will given back
+  iRet = iStat;
+
+  return iRet;
 }
 //=============================================================================

@@ -189,20 +189,8 @@ void sstQt01PathPaintWidgetCls::sstPaintEvent(sstQt01ShapeItem oShapeItem)
   {
     assert(0);
   }
-  // this->oPathStorage->appendShapeItem(oShapeItem);
-  this->oPathStorage->writeShapeItem(dItemNo,oShapeItem);
+  this->oPathStorage->writeShapeItem( 0, dItemNo,oShapeItem);
   this->update();
-  // emit this->paintEvent(this->e);
-//  QPainter painter(this);
-//    painter.setRenderHint(QPainter::Antialiasing);
-//    int iPathCount = (int) this->oPathStorage->countItems();
-//    for (int ii=1; ii <= iPathCount; ii++)
-//    {
-//        painter.translate(this->oPathStorage->getPosition(ii));
-//        painter.setBrush(this->oPathStorage->getColor(ii));
-//        painter.drawPath(this->oPathStorage->getPath(ii));
-//        painter.translate(-this->oPathStorage->getPosition(ii));
-//    }
 }
 //=============================================================================
 void sstQt01PathPaintWidgetCls::mousePressEvent(QMouseEvent *event)

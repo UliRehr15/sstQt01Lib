@@ -1226,4 +1226,25 @@ int sstQt01PathStorageCls::updateTooltips (int iKey)
   return iRet;
 }
 //=============================================================================
+int sstQt01PathStorageCls::WriteShape(int iKey, dREC04RECNUMTYP dIndex, sstQt01ShapeItem oShapeItem)
+{
+  int iRet  = 0;
+  int iStat = 0;
+//-----------------------------------------------------------------------------
+  if ( iKey != 0) return -1;
 
+  QPainterPath oPath = oShapeItem.getPath();
+
+  // Fatal Errors goes to an assert
+  if (iRet < 0)
+  {
+    // Expression (iRet >= 0) has to be fullfilled
+    assert(0);
+  }
+
+  // Small Errors will given back
+  iRet = iStat;
+
+  return iRet;
+}
+//=============================================================================

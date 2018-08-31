@@ -77,4 +77,5 @@ Structure of coding projects should be:
                           First Works, not in Use. <BR>
 10.08.2018: Version 1.38: Lot of corrections. QListViewStore for ShapeItems use in LibTestView. <BR>
 30.08.2018: Version 1.39: First works connect PainterPath Tab store (TabView) and QList Store (MapView). <BR>
+31.08.2018: Version 1.40: small extensions. <BR>
 

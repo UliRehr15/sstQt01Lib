@@ -2213,6 +2213,22 @@ class sstQt01PathStorageCls
      // ----------------------------------------------------------------------------
      int updateTooltips (int iKey);
      //==============================================================================
+     /**
+     * @brief // Write ShapeItem into PathStorage <BR>
+     * iStat = oPathStorage.writeShape( iKey, dIndex, oShapeItem);
+     *
+     * @param iKey       [in] For the moment 0
+     * @param dIndex     [in] Position in PathStorage
+     * @param oShapeItem [in] ShapeItem Object for writing
+     *
+     * @return Errorstate
+     *
+     * @retval   = 0: OK
+     * @retval   < 0: Unspecified Error
+     */
+     // ----------------------------------------------------------------------------
+     int WriteShape(int iKey, dREC04RECNUMTYP dIndex, sstQt01ShapeItem oShapeItem);
+     //==============================================================================
 
   private:  // Private functions
      //==============================================================================
@@ -2809,14 +2825,26 @@ class sstQt01PathStoreViewCls
      * @brief // Get ID of extern object, for example dxf <BR>
      * dID = oPathStorage.getId(index);
      *
-     * @param index   [in] Path number
+     * @param index       [in] Path number
      *
      * @return dID
      */
      // ----------------------------------------------------------------------------
      dREC04RECNUMTYP getExternId(dREC04RECNUMTYP index);
      //==============================================================================
-     int writeShapeItem(int index, sstQt01ShapeItem oItem);
+     /**
+     * @brief // Write Shape Item into Storage <BR>
+     * dID = oPathStorage.writeShapeItem(iKey, dIndex, oShapeItem);
+     *
+     * @param iKey        [in] For the moment 0
+     * @param index       [in] Path number
+     * @param oShapeItem  [in] Shape Item for writing
+     *
+     * @return dID
+     */
+     // ----------------------------------------------------------------------------
+     int writeShapeItem(int iKey, dREC04RECNUMTYP index, sstQt01ShapeItem oShapeItem);
+     //==============================================================================
 
   private:  // Private functions
      //==============================================================================
