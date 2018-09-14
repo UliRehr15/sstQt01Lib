@@ -48,7 +48,8 @@ sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent,
     this->sstTabVector.push_back(ll);;
   }
 
-  connect(this,SIGNAL(sstSgnlTabUpdated()),this,SLOT(sstSlotUpdateTab()));
+  // connect(this,SIGNAL(sstSgnlTabUpdated()),this,SLOT(sstSlotUpdateTab()));
+  connect(this,SIGNAL(sstSgnlTabUpdated(sstQt01ShapeItem)),this,SLOT(sstSlotUpdateTab(sstQt01ShapeItem)));
 
   // Fatal Errors goes to an assert
   if (iStat < 0)
@@ -81,6 +82,11 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
   case Qt::DisplayRole:
     {
     sstQt01PathElementCsv3Cls oTestRec1;
+    int row = index.row();
+    if (row >= 18)
+    {
+        iStat =0;
+    }
     iStat = poPathStorage->ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
     assert(iStat == 0);
 
@@ -171,6 +177,12 @@ bool sstQt01PathTabMdlCls::setData(const QModelIndex & index, const QVariant & v
     assert(iStat == 0);
 
     oShapeItem = this->poPathStorage->getShapeItem(dIndex);
+
+    QColor oCol = oShapeItem.getColor();
+    int iRed = 0;
+    int iBlue = 0;
+    int iGreen = 0;
+    oCol.getRgb(&iRed,&iGreen,&iBlue);
 
     // For refreshing map
     emit this->sstSgnlTabChanged( oShapeItem);
@@ -269,8 +281,12 @@ void sstQt01PathTabMdlCls::sstSlotChangeTab()
   emit this->sstSgnlTabChanged( oShapeItem);
 }
 //=============================================================================
-void sstQt01PathTabMdlCls::sstSlotUpdateTab()
+void sstQt01PathTabMdlCls::sstSlotUpdateTab(sstQt01ShapeItem oShapeItem)
 {
+
+  // Update path storage with shapeitem at index position
+  int iStat = this->poPathStorage->ReplaceShape( 0, oShapeItem.getExternId(), oShapeItem);
+  assert(iStat >= 0);
 
   // Get actual size of path data table
   int iRow = (int) this->poPathStorage->RecordCount();
@@ -280,7 +296,7 @@ void sstQt01PathTabMdlCls::sstSlotUpdateTab()
   QModelIndex oIndex1 = this->index(0,0);
   QModelIndex oIndex2 = this->index(iRow-1,iCol-1);
 
-  // emit system signal -dataChanged- is nessasary, because
+  // emit system signal -dataChanged- is necessary, because
   // data are changed outside of Table Model in map.
   emit this->dataChanged(oIndex1,oIndex2);
 }

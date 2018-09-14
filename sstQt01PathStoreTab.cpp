@@ -671,11 +671,13 @@ sstQt01ShapeItem sstQt01PathStorageCls::getShapeItem(dREC04RECNUMTYP index)
   QColor oCol = this->getColor(index);
   dREC04RECNUMTYP dID = this->getExternId(index);
   eShapeType = this->getShapeType(index);
+  QString qStr = this->getToolTip(index);
 
   oItem.setExternId(dID);
   oItem.setColor(oCol);
   oItem.setPath(oPath);
   oItem.setShapeType(eShapeType);
+  oItem.setToolTip(qStr);
 
   return oItem;
 }
@@ -824,7 +826,10 @@ int sstQt01PathStorageCls::createDefaultItems(int iKey)
                   initialItemPosition(trianglePath), initialItemColor(),eSstQt01PathArea);
   this->appendShapeItem(oItem);
 
-  return 0;
+  // Update all Tooltips
+  int iStat = this->updateTooltips(0);
+
+  return iStat;
 }
 //=============================================================================
 QPoint sstQt01PathStorageCls::initialItemPosition(const QPainterPath &path)
@@ -1138,7 +1143,7 @@ dREC04RECNUMTYP sstQt01PathStorageCls::getExternId(dREC04RECNUMTYP index)
   return oMainRec.getExternId();
 }
 //=============================================================================
-int sstQt01PathStorageCls::getViewStoreData( int                      iKey,
+int sstQt01PathStorageCls::setViewStoreData( int                      iKey,
                                              sstQt01PathStoreViewCls *poPathViewStore)
 {
   if ( iKey != 0) return -1;
@@ -1226,14 +1231,48 @@ int sstQt01PathStorageCls::updateTooltips (int iKey)
   return iRet;
 }
 //=============================================================================
-int sstQt01PathStorageCls::WriteShape(int iKey, dREC04RECNUMTYP dIndex, sstQt01ShapeItem oShapeItem)
+int sstQt01PathStorageCls::ReplaceShape(int iKey, dREC04RECNUMTYP dIndex, sstQt01ShapeItem oShapeItem)
 {
   int iRet  = 0;
   int iStat = 0;
 //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
-  QPainterPath oPath = oShapeItem.getPath();
+  QPainterPath oPath1 = oShapeItem.getPath();
+  sstQt01ShapeType_enum eShapeType1 =  oShapeItem.getShapeType();
+  int iShapeSize1 = oShapeItem.getSize();
+  dREC04RECNUMTYP dShapeID1 =  oShapeItem.getExternId();
+
+  QPainterPath oPathStore = this->getPath( dIndex);
+  sstQt01ShapeType_enum eShapeTypeStore =  this->getShapeType( dIndex);
+  int iShapeSizeStore = this->countShapeElements(dIndex);
+  dREC04RECNUMTYP dShapeIdStore = this->getExternId(dIndex);
+
+  if (eShapeType1 != eShapeTypeStore) return -2;
+  if (iShapeSize1 != iShapeSizeStore) return -3;
+  if (dShapeID1 != dShapeIdStore) return -4;
+
+  sstQt01PathMainRecCls oMainRec;
+
+  // Read main record for actual shapeitem object
+  iStat = this->poShapeItemMainTable->Read( 0, dIndex, &oMainRec);
+
+  // int iNumElements = 0;
+  for (int ii = 1; ii <= iShapeSizeStore;ii++)
+  {
+    sstQt01PathElementCsv3Cls oElementRec;
+    QPainterPath::Element oElement = oPath1.elementAt(ii-1);
+    dREC04RECNUMTYP dRecNo = oMainRec.getStartElementRecNo();
+    dRecNo = dRecNo + ii -1;
+    QColor oCol;
+    QPen oPen;
+    QPoint oPnt = oShapeItem.getPosition();
+    oCol = oMainRec.getQCol();
+    oPen = oMainRec.getQPen();
+    oElementRec.setAll(oElement.type,oElement.x+oPnt.rx(),oElement.y+oPnt.ry(),oCol,oPen);
+    if (oElement.type == 0) oElementRec.setShapeType(eShapeTypeStore);
+    this->poShapeItemRecTable->Writ( 0, &oElementRec, dRecNo);
+  }
 
   // Fatal Errors goes to an assert
   if (iRet < 0)
@@ -1246,5 +1285,12 @@ int sstQt01PathStorageCls::WriteShape(int iKey, dREC04RECNUMTYP dIndex, sstQt01S
   iRet = iStat;
 
   return iRet;
+}
+//=============================================================================
+int sstQt01PathStorageCls::countShapeElements(dREC04RECNUMTYP dIndex)
+{
+    sstQt01PathMainRecCls oMainRec;
+    this->poShapeItemMainTable->Read( 0, dIndex, &oMainRec);
+    return oMainRec.getNumElements();
 }
 //=============================================================================

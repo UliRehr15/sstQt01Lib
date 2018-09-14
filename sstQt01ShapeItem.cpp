@@ -116,3 +116,8 @@ void sstQt01ShapeItem::setExternId(const dREC04RECNUMTYP &value)
   dExternID = value;
 }
 //=============================================================================
+int sstQt01ShapeItem::getSize()
+{
+  return this->myPath.elementCount();
+}
+//=============================================================================

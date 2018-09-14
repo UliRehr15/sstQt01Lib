@@ -164,6 +164,13 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
         // painter.setBrush();
         QBrush oBrush;
         oBrush.setColor(oShapeItem.getColor());
+
+        QColor oCol = oShapeItem.getColor();
+        int iRed = 0;
+        int iBlue = 0;
+        int iGreen = 0;
+        oCol.getRgb(&iRed,&iGreen,&iBlue);
+
         switch (oShapeItem.getShapeType())
         {
           case eSstQt01PathArea:
@@ -189,7 +196,7 @@ void sstQt01PathPaintWidgetCls::sstPaintEvent(sstQt01ShapeItem oShapeItem)
   {
     assert(0);
   }
-  this->oPathStorage->writeShapeItem( 0, dItemNo,oShapeItem);
+  this->oPathStorage->replaceShapeItem( 0, dItemNo,oShapeItem);
   this->update();
 }
 //=============================================================================
@@ -226,9 +233,10 @@ void sstQt01PathPaintWidgetCls::mouseReleaseEvent(QMouseEvent *event)
         moveItemTo(event->pos());
         this->oPathStorage->addPosition(this->iActualItemIndex);
         iItemInMotionIndex = 0;
-        // sstQt01ShapeItem oPathItem;
+        sstQt01ShapeItem oShapeItem;
         dREC04RECNUMTYP dExtId = this->oPathStorage->getExternId(this->iActualItemIndex);
-        emit sstPathMoveReleaseSgnl();
+        oShapeItem = this->oPathStorage->getShapeItem(this->iActualItemIndex);
+        emit sstPathMoveReleaseSgnl(oShapeItem);
         emit sstExtPathMoveReleaseSgnl(dExtId);
     }
 }
@@ -404,7 +412,7 @@ QPen sstQt01PathPaintWidgetCls::randomItemPen()
 int sstQt01PathPaintWidgetCls::updateTooltips (int iKey)
 //-----------------------------------------------------------------------------
 {
-  QPoint oPnt(0,0);
+  // QPoint oPnt(0,0);
   QPainterPath *poPath;
   QColor oColor;
   int iPathNo = 0;

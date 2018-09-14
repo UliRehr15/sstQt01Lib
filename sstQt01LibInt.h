@@ -446,9 +446,10 @@ public slots:
     //==============================================================================
     /**
     * @brief Slot -Table data changed- direction map to table
+    * @param oShapeItem [in] ShapeItem for update
     */
     // ----------------------------------------------------------------------------
-    void sstSlotUpdateTab();
+    void sstSlotUpdateTab(sstQt01ShapeItem oShapeItem);
     //==============================================================================
     /**
     * @brief // slot: sst begin inserting records in PathStorage and TabVector  <BR>
@@ -496,7 +497,7 @@ signals:
     * @brief Signal -Table data changed- map to table
     */
     // ----------------------------------------------------------------------------
-    void sstSgnlTabUpdated();
+    void sstSgnlTabUpdated(sstQt01ShapeItem oShapeItem);
     //==============================================================================
 
     //==============================================================================

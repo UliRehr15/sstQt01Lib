@@ -344,6 +344,15 @@ public:
     // ----------------------------------------------------------------------------
     void setExternId(const dREC04RECNUMTYP &value);
     //==============================================================================
+    /**
+    * @brief // Get Number of elements of PainterPath <BR>
+    * iSize = PathItem.getSize();
+    *
+    * @return iSize
+    */
+    // ----------------------------------------------------------------------------
+    int getSize();
+    //==============================================================================
 
 private:
     QPainterPath myPath;
@@ -2185,8 +2194,8 @@ class sstQt01PathStorageCls
      dREC04RECNUMTYP getExternId(dREC04RECNUMTYP index);
      //==============================================================================
      /**
-     * @brief // Get Path View Storage from Path Table Storage <BR>
-     * iStat = oPathStorage.getViewStoreData( iKey, &poPathViewStore);
+     * @brief // Set Path View Storage from Path Table Storage <BR>
+     * iStat = oPathStorage.setViewStoreData( iKey, &poPathViewStore);
      *
      * @param iKey            [in] For the moment 0
      * @param poPathViewStore [in out] Fill Path View Storage
@@ -2197,7 +2206,7 @@ class sstQt01PathStorageCls
      * @retval   < 0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
-     int getViewStoreData( int iKey, sstQt01PathStoreViewCls *poPathViewStore);
+     int setViewStoreData( int iKey, sstQt01PathStoreViewCls *poPathViewStore);
      //==============================================================================
      /**
      * @brief // Write Tooltips to all ShapeItems <BR>
@@ -2214,20 +2223,34 @@ class sstQt01PathStorageCls
      int updateTooltips (int iKey);
      //==============================================================================
      /**
-     * @brief // Write ShapeItem into PathStorage <BR>
-     * iStat = oPathStorage.writeShape( iKey, dIndex, oShapeItem);
+     * @brief // Replace existing ShapeItem in PathStorage with new one, if possible <BR>
+     * iStat = oPathStorage.ReplaceShape( iKey, dIndex, oShapeItem);
      *
      * @param iKey       [in] For the moment 0
      * @param dIndex     [in] Position in PathStorage
-     * @param oShapeItem [in] ShapeItem Object for writing
+     * @param oShapeItem [in] ShapeItem Object for replacing
      *
      * @return Errorstate
      *
      * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   = -1: Wrong Key
+     * @retval   = -2: Shape Type wrong
+     * @retval   = -2: Shape Size wrong
+     * @retval   <  0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
-     int WriteShape(int iKey, dREC04RECNUMTYP dIndex, sstQt01ShapeItem oShapeItem);
+     int ReplaceShape(int iKey, dREC04RECNUMTYP dIndex, sstQt01ShapeItem oShapeItem);
+     //==============================================================================
+     /**
+     * @brief // Count elements from stored shape at position index. <BR>
+     * dID = oPathStorage.countShapeElements(index);
+     *
+     * @param dIndex   [in] Path number
+     *
+     * @return iNumElements
+     */
+     // ----------------------------------------------------------------------------
+     int countShapeElements(dREC04RECNUMTYP dIndex);
      //==============================================================================
 
   private:  // Private functions
@@ -2833,8 +2856,8 @@ class sstQt01PathStoreViewCls
      dREC04RECNUMTYP getExternId(dREC04RECNUMTYP index);
      //==============================================================================
      /**
-     * @brief // Write Shape Item into Storage <BR>
-     * dID = oPathStorage.writeShapeItem(iKey, dIndex, oShapeItem);
+     * @brief // Replace Shape Item in list Storage <BR>
+     * dID = oPathStorage.replaceShapeItem(iKey, dIndex, oShapeItem);
      *
      * @param iKey        [in] For the moment 0
      * @param index       [in] Path number
@@ -2843,7 +2866,7 @@ class sstQt01PathStoreViewCls
      * @return dID
      */
      // ----------------------------------------------------------------------------
-     int writeShapeItem(int iKey, dREC04RECNUMTYP index, sstQt01ShapeItem oShapeItem);
+     int replaceShapeItem(int iKey, dREC04RECNUMTYP index, sstQt01ShapeItem oShapeItem);
      //==============================================================================
 
   private:  // Private functions
@@ -3190,7 +3213,7 @@ public slots:
   * @brief Slot -Table data changed- direction map to table
   */
   // ----------------------------------------------------------------------------
-  void sstSlotUpdateTab();
+  void sstSlotUpdateTab(sstQt01ShapeItem oShapeItem);
      //==============================================================================
      /**
      * @brief actionRowsInsert
@@ -3344,7 +3367,7 @@ signals:
     * @brief // signal: sst painterpath move release event: map content is changed  <BR>
     */
     // ----------------------------------------------------------------------------
-    void sstPathMoveReleaseSgnl();
+    void sstPathMoveReleaseSgnl(sstQt01ShapeItem oPathItem);
     //==============================================================================
     /**
     * @brief // signal: sst painterpath move release event: map content is changed  <BR>
@@ -3387,6 +3410,7 @@ signals:
 
 
 private:
+
     int updateButtonGeometry(QToolButton *button, int x, int y);
     void createShapeItem(const QPainterPath &path,
                          // const QString &toolTip,
@@ -3398,8 +3422,9 @@ private:
     void moveItemTo(const QPoint &pos);
     int updateTooltips (int iKey);
     // int ItemsCreate (int iKey);
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
+    // using QWidget::minimumSizeHint;
+    QSize minimumSizeHint() const override;
+    QSize sizeHint() const override;
 
 
     QPoint initialItemPosition(const QPainterPath &path);

@@ -13,11 +13,11 @@ INCLUDEPATH +=  ../../sst_rec04_lib/Header
 
 debug{
   LIBS        += ../../libs/libsstQt01Lib_d.a
-  LIBS        += ../../libs/libsst_dxf02_lib_d.a
+  # LIBS        += ../../libs/libsst_dxf02_lib_d.a
   LIBS        += ../../libs/libsst_rec04_lib_d.a
   LIBS        += ../../libs/libsst_misc01_lib_d.a
   LIBS        += ../../libs/libsst_str01_lib_d.a
-  LIBS        += ../../libs/libdxflib_d.a
+  # LIBS        += ../../libs/libdxflib_d.a
 }
 
 release{
@@ -27,11 +27,11 @@ release{
   win32-g++:QMAKE_LFLAGS_EXCEPTIONS_ON -= -mthreads
   win32-g++:QMAKE_CXXFLAGS_EXCEPTIONS_ON -= -mthreads
 
-  LIBS        += ../../libs/libsst_dxf02_lib_r.a
+  # LIBS        += ../../libs/libsst_dxf02_lib_r.a
   LIBS        += ../../libs/libsst_rec04_lib_r.a
   LIBS        += ../../libs/libsst_misc01_lib_r.a
   LIBS        += ../../libs/libsst_str01_lib_r.a
-  LIBS        += ../../libs/libdxflib_r.a
+  # LIBS        += ../../libs/libdxflib_r.a
 }
 
 HEADERS       = \

@@ -451,11 +451,14 @@ int sstQt01PathStoreViewCls::getShapeItem2(int iKey, dREC04RECNUMTYP index,sstQt
 int sstQt01PathStoreViewCls::appendShapeItem(sstQt01ShapeItem oItem)
 {
   // Append to element table
-  QPainterPath oPath = oItem.getPath();
-  int iStat = this->AppendPath(0,oPath,oItem.getShapeType(), oItem.getColor(),oItem.getPen());
-  assert(iStat >= 0);
+  // QPainterPath oPath = oItem.getPath();
+  // int iStat = this->AppendPath(0,oPath,oItem.getShapeType(), oItem.getColor(),oItem.getPen());
+  // int iStat = this->appendShapeItem(oItem);
+  this->shapeItems.append( oItem);
 
-  return iStat;
+  // assert(iStat >= 0);
+
+  return 0;
 }
 //=============================================================================
 int sstQt01PathStoreViewCls::appendItemSymbol(sstQt01ShapeItem oItem)
@@ -748,14 +751,15 @@ dREC04RECNUMTYP sstQt01PathStoreViewCls::getExternId(dREC04RECNUMTYP index)
   return oShapeItem.getExternId();
 }
 //=============================================================================
-int sstQt01PathStoreViewCls::writeShapeItem(int iKey, dREC04RECNUMTYP index, sstQt01ShapeItem oItem)
+int sstQt01PathStoreViewCls::replaceShapeItem(int iKey, dREC04RECNUMTYP index, sstQt01ShapeItem oItem)
 {
   int iRet  = 0;
   int iStat = 0;
 //-----------------------------------------------------------------------------
   if ( iKey != 0) return -1;
 
-  this->shapeItems.insert(index,oItem);
+  this->shapeItems.replace(index-1,oItem);
+
   // Fatal Errors goes to an assert
   if (iRet < 0)
   {

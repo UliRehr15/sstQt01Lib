@@ -18,7 +18,7 @@ Licence model:
 * by the Free Software Foundation.
 * See the COPYING file for more information.
 
-Compile with QT 5.5 and QTCreator 3.5.1
+This Library is created with QT 5.9.5, QtCreator 4.5.2 and gcc 7.3.0.
 
 Structure of coding projects should be:
 
@@ -78,4 +78,6 @@ Structure of coding projects should be:
 10.08.2018: Version 1.38: Lot of corrections. QListViewStore for ShapeItems use in LibTestView. <BR>
 30.08.2018: Version 1.39: First works connect PainterPath Tab store (TabView) and QList Store (MapView). <BR>
 31.08.2018: Version 1.40: small extensions. <BR>
+14.09.2018: Version 1.41: C++ 11 override warnings fixed. <BR>
+                          Inserted functions for update Tab Store from View Store and vice versa. <BR>
 

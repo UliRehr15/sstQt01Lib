@@ -51,9 +51,9 @@ sstQt01PathTabViewCls::~sstQt01PathTabViewCls()
   delete this->poTabMdl;
 }
 //=============================================================================
-void sstQt01PathTabViewCls::sstSlotUpdateTab()
+void sstQt01PathTabViewCls::sstSlotUpdateTab(sstQt01ShapeItem oShapeItem)
 {
-  emit this->poTabMdl->sstSgnlTabUpdated();
+  emit this->poTabMdl->sstSgnlTabUpdated(oShapeItem);
   this->resizeRowsToContents();
 }
 //=============================================================================

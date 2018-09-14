@@ -27,7 +27,7 @@
 #include <QtWidgets>
 
 //! [0]
-const int IdRole = Qt::UserRole;
+// const int IdRole = Qt::UserRole;
 //! [0]
 
 //! [1]
@@ -53,7 +53,7 @@ Window::Window()
   this->poPathViewStorage = new sstQt01PathStoreViewCls( oPrt);
 
   // Fill View Storage from Tab Storage
-  this->poPathTabStorage->getViewStoreData( 0, this->poPathViewStorage);
+  this->poPathTabStorage->setViewStoreData( 0, this->poPathViewStorage);
 
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
@@ -83,7 +83,8 @@ Window::Window()
     // connect(poPathTabWidget, SIGNAL(sstSgnlTabChanged()), poPathMapWidget, SLOT(update()));
     connect(poPathTabWidget, SIGNAL(sstSgnlTabChanged(sstQt01ShapeItem)), poPathMapWidget, SLOT(sstPaintEvent(sstQt01ShapeItem)));
     // for refreshing table from map
-    connect(poPathMapWidget, SIGNAL(sstPathMoveReleaseSgnl()), poPathTabWidget, SLOT(sstSlotUpdateTab()));
+    // connect(poPathMapWidget, SIGNAL(sstPathMoveReleaseSgnl()), poPathTabWidget, SLOT(sstSlotUpdateTab()));
+    connect(poPathMapWidget, SIGNAL(sstPathMoveReleaseSgnl(sstQt01ShapeItem)), poPathTabWidget, SLOT(sstSlotUpdateTab(sstQt01ShapeItem)));
 
     connect(poPathMapWidget,SIGNAL(sstSgnlBeginInsertRows(int,int)),poPathTabWidget,SLOT(sstSlotBeginInsertRows(int,int)));
     connect(poPathMapWidget,SIGNAL(sstSgnlEndInsertRows()),poPathTabWidget,SLOT(sstSlotEndInsertRows()));
