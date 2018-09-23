@@ -201,10 +201,19 @@ public:
     * @brief // set tooltip <BR>
     * iStat = oPathItem.setToolTip(ToolTip);
     *
-    * @param ToolTip [in] ToolTip string
+    * @param ToolTip [in] ToolTip QString
     */
     // ----------------------------------------------------------------------------
     void setToolTip(const QString &ToolTip);
+    //==============================================================================
+    /**
+    * @brief // set tooltip <BR>
+    * iStat = oPathItem.setToolTip(ToolTip);
+    *
+    * @param ToolTip [in] ToolTip std::string
+    */
+    // ----------------------------------------------------------------------------
+    void setToolTip(const std::string &ToolTip);
     //==============================================================================
     /**
     * @brief // set Position <BR>

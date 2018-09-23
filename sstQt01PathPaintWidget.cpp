@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathPaintWidgetCls.cpp    26.04.17  Re.    14.08.16  Re.
+// sstQt01PathPaintWidgetCls.cpp    23.09.18  Re.    14.08.16  Re.
 
 #include <QtWidgets>
 
@@ -24,8 +24,7 @@
 #include <sstQt01Lib.h>
 
 //=============================================================================
-sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTmpPrt,
-                                                     // sstQt01PathStorageCls *poTmpPathStorage)
+sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls      *poTmpPrt,
                                                      sstQt01PathStoreViewCls *poTmpPathStorage)
 {
 
@@ -36,12 +35,6 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTm
 
   this->oPathStorage = poTmpPathStorage;
   this->poPrt = poTmpPrt;
-
-  int iStat = 0;
-
-  // Write tooltip strings to path items
-  iStat = this->updateTooltips(0);
-  assert(iStat == 0);
 
   setMouseTracking(true);
     setBackgroundRole(QPalette::Base);
@@ -61,12 +54,15 @@ sstQt01PathPaintWidgetCls::sstQt01PathPaintWidgetCls(sstMisc01PrtFilCls    *poTm
     newLineButton = createToolButton(tr("New Line"),
                                          QIcon(":/images/line.png"),
                                          SLOT(createNewLine()));
+
     newPolyLineButton = createToolButton(tr("New PolyLine"),
                                          QIcon(":/images/polyline.png"),
                                          SLOT(createNewPolyLine()));
+
     newArcButton = createToolButton(tr("New Arc"),
                                          QIcon(":/images/arc.png"),
                                          SLOT(createNewArc()));
+
     newTextButton = createToolButton(tr("New Text"),
                                          QIcon(":/images/text.png"),
                                          SLOT(createNewText()));

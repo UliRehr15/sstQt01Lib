@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01ShapeItem.cpp    26.01.17  Re.    14.08.16  Re.
+// sstQt01ShapeItem.cpp    23.09.18  Re.    14.08.16  Re.
 
 #include <QtWidgets>
 
@@ -67,6 +67,13 @@ void sstQt01ShapeItem::setPath(const QPainterPath &path)
 void sstQt01ShapeItem::setToolTip(const QString &toolTip)
 {
     myToolTip = toolTip;
+}
+//=============================================================================
+void sstQt01ShapeItem::setToolTip(const std::string &toolTip)
+{
+    QString oLocQStr;
+    oLocQStr = QString::fromStdString(toolTip);
+    myToolTip = oLocQStr;
 }
 //=============================================================================
 void sstQt01ShapeItem::setPosition(const QPoint &position)
