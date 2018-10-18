@@ -58,17 +58,16 @@ Window::Window()
   sstQt01TestPaintWidgetCls1 = new sstQt01TestPaintWidgetCls;
   sstQt01TestPaintWidgetCls2 = new sstQt01TestPaintWidgetCls;
 
+  // Create Painter Path Tab Widget
   poPathTabWidget = new sstQt01PathTabViewCls( oPrt, this->poPathTabStorage);
 
+  // Create Painter Path Map Widget
   poPathMapWidget = new sstQt01PathPaintWidgetCls(oPrt,this->poPathViewStorage);
 
     QGridLayout *mainLayout = new QGridLayout;
-//! [9] //! [10]
     mainLayout->setColumnStretch(0, 1);
     mainLayout->setColumnStretch(3, 1);
-    // mainLayout->addWidget(sstQt01TestPaintWidgetCls1, 0, 0, 1, 4);
     mainLayout->addWidget(poPathMapWidget, 0, 0, 1, 4);
-    // mainLayout->addWidget(sstQt01TestPaintWidgetCls2, 2, 0, 1, 4);
     mainLayout->addWidget(poPathTabWidget, 1, 0, 1, 4);
 
     setLayout(mainLayout);
@@ -80,10 +79,8 @@ Window::Window()
     setWindowTitle(tr("Basic Drawing"));
 
     // For refreshing map from table
-    // connect(poPathTabWidget, SIGNAL(sstSgnlTabChanged()), poPathMapWidget, SLOT(update()));
     connect(poPathTabWidget, SIGNAL(sstSgnlTabChanged(sstQt01ShapeItem)), poPathMapWidget, SLOT(sstPaintEvent(sstQt01ShapeItem)));
     // for refreshing table from map
-    // connect(poPathMapWidget, SIGNAL(sstPathMoveReleaseSgnl()), poPathTabWidget, SLOT(sstSlotUpdateTab()));
     connect(poPathMapWidget, SIGNAL(sstPathMoveReleaseSgnl(sstQt01ShapeItem)), poPathTabWidget, SLOT(sstSlotUpdateTab(sstQt01ShapeItem)));
 
     connect(poPathMapWidget,SIGNAL(sstSgnlBeginInsertRows(int,int)),poPathTabWidget,SLOT(sstSlotBeginInsertRows(int,int)));

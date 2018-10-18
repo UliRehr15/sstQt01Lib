@@ -21,6 +21,12 @@
 
 #include <string>
 
+#include <QtWidgets>
+#include <QTreeView>
+#include <QStandardItemModel>
+#include <QItemSelectionModel>
+#include <QTextBrowser>
+
 #include <sstStr01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>

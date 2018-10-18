@@ -23,6 +23,11 @@
  * @defgroup sstQt01Lib sst Qt01 library
  */
 
+#include <QtWidgets>
+#include <QTreeView>
+#include <QStandardItemModel>
+#include <QItemSelectionModel>
+#include <QTextBrowser>
 #include <QPen>
 #include <QTableView>
 
@@ -3187,9 +3192,9 @@ private:  // Private functions
 };
 //==============================================================================
 /**
-* @brief Definition Class sstQt01PathTabViewCls
+* @brief Painter Path Table View Widget Class
 *
-* More Comment
+* Show Painter Path Data as one Table
 *
 * Changed: 19.02.10  Re.
 *
@@ -3212,8 +3217,8 @@ class sstQt01PathTabViewCls : public sstQt01TabViewCls
   * @param poPathStorage [in out] Pointer to Path Storage object
   */
   // ----------------------------------------------------------------------------
-  sstQt01PathTabViewCls(sstMisc01PrtFilCls    *poPrt,
-                    sstQt01PathStorageCls *poPathStorage);    // Constructor
+    sstQt01PathTabViewCls(sstMisc01PrtFilCls    *poPrt,
+                      sstQt01PathStorageCls *poPathStorage);    // Constructor
   ~sstQt01PathTabViewCls();   // Destructor
 // ----------------------------------------------------------------------------
 public slots:
@@ -3676,6 +3681,51 @@ private:  // Private functions
   TstRec2ModelCls  *pTstRec2Model; /**< Dummy */
 };
 //==============================================================================
+/**
+* @brief TestGroupBoxWidget for 2 Tables TestRec1View and TestRec2View
+*
+* Changed: 18.10.18  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 18.10.18
+*/
+// ----------------------------------------------------------------------------
+class sstQt01TestGroupBoxCls : public QGroupBox
+{
+    Q_OBJECT
+
+public:
+  //==============================================================================
+  /**
+  * @brief // Constructor for TestGroupBox <BR>
+  * sstQt01TestGroupBoxCls oTestGroupBox( poPrt);
+  *
+  * @param poPrt [in] Pointer to Protocol object
+  */
+  // ----------------------------------------------------------------------------
+    sstQt01TestGroupBoxCls(sstMisc01PrtFilCls *poPrt);
+    ~sstQt01TestGroupBoxCls();
+
+private slots:
+    void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
+
+private:
+    QStackedWidget        *stackedWidget;
+    QTextBrowser          *poTextWidget1;
+    sstQt01TstRec1ViewCls *poTab1View;
+    sstQt01TstRec2ViewCls *poTab2View;
+    QTreeView             *treeView;
+    QStandardItemModel    *standardModel;
+    QStandardItem *rootItem;
+    QStandardItem *tabItem1;
+    QStandardItem *tabItem2;
+
+};
+//==============================================================================
+
 
 #endif
 

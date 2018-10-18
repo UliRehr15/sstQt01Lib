@@ -46,15 +46,19 @@ TstRec2ModelCls::TstRec2ModelCls(QObject *parent)
   if (iStat == -2)
   {  // File not found
     iStat = oLocTestRec.SetAll(1,1,2,2,1.1,2.2,true,(char*)"Test2");
-
     iStat = oTestRec2Table.WriteNew(0,&dLocRecNo,&oLocTestRec);
     assert(iStat == 0);
-
   }
 
-
   dREC04RECNUMTYP dRecNum = oTestRec2Table.RecordCount();
+  if (dRecNum == 0)
+  {  // File found, but empty
+    iStat = oLocTestRec.SetAll(1,1,2,2,1.1,2.2,true,(char*)"Test2");
+    iStat = oTestRec2Table.WriteNew(0,&dLocRecNo,&oLocTestRec);
+    assert(iStat == 0);
+  }
 
+  dRecNum = oTestRec2Table.RecordCount();
   for (dREC04RECNUMTYP ll=1; ll<=dRecNum; ++ll)
   {
     this->sstTabVector.push_back(ll);;

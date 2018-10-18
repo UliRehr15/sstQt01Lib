@@ -81,4 +81,5 @@ Structure of coding projects should be:
 14.09.2018: Version 1.41: C++ 11 override warnings fixed. <BR>
                           Inserted functions for update Tab Store from View Store and vice versa. <BR>
 23.09.2018: Version 1.42: Fix problem with writing Tooltip string to ShapeItem. <BR>
+18.10.2018: Version 1.43: Create TestGroupBoxWidget for editing more Tables parallel. <BR>
 

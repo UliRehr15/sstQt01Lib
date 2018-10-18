@@ -16,6 +16,11 @@
 
 #include <string>
 
+#include <QtWidgets>
+#include <QTreeView>
+#include <QStandardItemModel>
+#include <QItemSelectionModel>
+#include <QTextBrowser>
 #include <QPen>
 #include <QPainter>
 

@@ -31,6 +31,8 @@
 #include <sstRec04Lib.h>
 #include <sstQt01Lib.h>
 
+#include "sstQt01LibTestTab2.h"
+
 QT_BEGIN_NAMESPACE
 class QAction;
 class QDialogButtonBox;
@@ -43,6 +45,7 @@ class QPushButton;
 class QTextEdit;
 QT_END_NAMESPACE
 
+
 class Dialog : public QDialog
 {
     Q_OBJECT
@@ -52,32 +55,33 @@ public:
     ~Dialog();
 
 private slots:
-    void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
+    // void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
 
 private:
     void createMenu();
-    void createHorizontalGroupBox();
 
     enum { NumGridRows = 3, NumButtons = 2 };
 
     QMenuBar *menuBar;
-    QGroupBox *horizontalGroupBox;
+    // QGroupBox *horizontalGroupBox;
+    sstQt01TestGroupBoxCls *oSstGroupBox;
     QTextEdit *bigEditor;
     QDialogButtonBox *buttonBox;
 
     QMenu *fileMenu;
     QAction *exitAction;
 
-    QTreeView *treeView;
-    QStandardItemModel *standardModel;
-    QTextBrowser *poTextWidget1;
+    // QTreeView *treeView;
+    // QStandardItemModel *standardModel;
+    // QTextBrowser *poTextWidget1;
     QVBoxLayout *mainLayout;
-    QStackedWidget *stackedWidget;
+    // QStackedWidget *stackedWidget;
 
-    sstQt01TstRec1ViewCls *poTab1View;
-    sstQt01TstRec2ViewCls *poTab2View;
+    // sstQt01TstRec1ViewCls *poTab1View;
+    // sstQt01TstRec2ViewCls *poTab2View;
     sstMisc01PrtFilCls *poPrt;
 
 };
+
 
 #endif // DIALOG_H
