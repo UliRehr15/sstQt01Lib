@@ -128,3 +128,10 @@ int sstQt01ShapeItem::getSize()
   return this->myPath.elementCount();
 }
 //=============================================================================
+void sstQt01ShapeItem::updatePosition()
+{
+  this->myPath.translate(this->getPosition());
+  QPoint oPoint(0,0);
+  this->setPosition(oPoint);
+}
+//=============================================================================

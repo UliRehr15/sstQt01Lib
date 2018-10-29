@@ -48,7 +48,6 @@ sstQt01PathTabMdlCls::sstQt01PathTabMdlCls(QObject *parent,
     this->sstTabVector.push_back(ll);;
   }
 
-  // connect(this,SIGNAL(sstSgnlTabUpdated()),this,SLOT(sstSlotUpdateTab()));
   connect(this,SIGNAL(sstSgnlTabUpdated(sstQt01ShapeItem)),this,SLOT(sstSlotUpdateTab(sstQt01ShapeItem)));
 
   // Fatal Errors goes to an assert

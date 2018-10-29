@@ -367,6 +367,7 @@ public:
     // ----------------------------------------------------------------------------
     int getSize();
     //==============================================================================
+    void updatePosition();
 
 private:
     QPainterPath myPath;
@@ -3711,6 +3712,7 @@ public:
 
 private slots:
     void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
+
 
 private:
     QStackedWidget        *stackedWidget;

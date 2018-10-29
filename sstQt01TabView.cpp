@@ -34,12 +34,9 @@
 sstQt01TabViewCls::sstQt01TabViewCls(sstMisc01PrtFilCls    *poTmpPrt)
                                      // sstQt01PathStorageCls *poTmpPathStorage)
 {
-  // this->poTabMdl = new sstQt01PathTabMdlCls(0,poTmpPrt,poTmpPathStorage);
-  // this->setModel( this->poTabMdl);
   this->poTmpPrt = poTmpPrt;
-    createActions();
-    setupContextMenu();
-    // connect(this->poTabMdl,SIGNAL(TabChanged()),this,SLOT(ChangeTab()));
+  createActions();
+  setupContextMenu();
 }
 //=============================================================================
 sstQt01TabViewCls::~sstQt01TabViewCls()

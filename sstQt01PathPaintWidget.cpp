@@ -232,6 +232,7 @@ void sstQt01PathPaintWidgetCls::mouseReleaseEvent(QMouseEvent *event)
         sstQt01ShapeItem oShapeItem;
         dREC04RECNUMTYP dExtId = this->oPathStorage->getExternId(this->iActualItemIndex);
         oShapeItem = this->oPathStorage->getShapeItem(this->iActualItemIndex);
+        oShapeItem.updatePosition();
         emit sstPathMoveReleaseSgnl(oShapeItem);
         emit sstExtPathMoveReleaseSgnl(dExtId);
     }
