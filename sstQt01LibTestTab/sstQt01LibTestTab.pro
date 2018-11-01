@@ -5,6 +5,7 @@ CONFIG       += c++11
 
 QT += widgets
 
+# CONFIG    -= debug    # RELEASE is active
 CONFIG    -= release  # ist DEBUG aktiv
 
 INCLUDEPATH += ../../sst_str01_lib/Header

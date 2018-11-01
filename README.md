@@ -83,4 +83,6 @@ Structure of coding projects should be:
 23.09.2018: Version 1.42: Fix problem with writing Tooltip string to ShapeItem. <BR>
 18.10.2018: Version 1.43: Create TestGroupBoxWidget for editing more Tables parallel. <BR>
 29.10.2018: Version 1.44: New function updatePosition for ShapeItem Class. <BR>
+30.10.2018: Version 1.45: Documentation added to repository. <BR>
+01.11.2018: Version 1.46: Better "in cell" editing for all tables. <BR>
 

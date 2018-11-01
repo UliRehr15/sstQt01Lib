@@ -34,9 +34,10 @@
 // #include "sst_qt_lib_test_tab.h"
 
 //=============================================================================
-TstRec2ModelCls::TstRec2ModelCls(QObject *parent)
+TstRec2ModelCls::TstRec2ModelCls(QObject *parent, sstMisc01PrtFilCls    *poTmpPrt)
     :sstQt01TabMdlCls(parent)
 {
+  this->poPrt = poTmpPrt;
   int iStat = 0;
   dREC04RECNUMTYP dLocRecNo = 0;
   sstRec04TestRec2Cls oLocTestRec;
@@ -49,6 +50,8 @@ TstRec2ModelCls::TstRec2ModelCls(QObject *parent)
     iStat = oTestRec2Table.WriteNew(0,&dLocRecNo,&oLocTestRec);
     assert(iStat == 0);
   }
+
+  this->poPrt->SST_PrtWrt(1,(char*)"File opened");
 
   dREC04RECNUMTYP dRecNum = oTestRec2Table.RecordCount();
   if (dRecNum == 0)
@@ -75,6 +78,8 @@ TstRec2ModelCls::TstRec2ModelCls(QObject *parent)
 TstRec2ModelCls::~TstRec2ModelCls()
 {
   oTestRec2Table.CloseCsvFile(0,(char*) "test_rec2.csv");
+  this->poPrt->SST_PrtWrt(1,(char*)"File closed");
+
 }
 //=============================================================================
 int TstRec2ModelCls::rowCount(const QModelIndex & /*parent*/) const
@@ -93,6 +98,7 @@ QVariant TstRec2ModelCls::data(const QModelIndex &index, int role) const
   int col = index.column();
 
   switch(role){
+  case Qt::EditRole:
   case Qt::DisplayRole:
     {
       sstRec04TestRec2Cls oTestRec2;

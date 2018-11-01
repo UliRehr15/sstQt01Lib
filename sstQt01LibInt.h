@@ -190,10 +190,11 @@ public:
   * @brief // Constructor TstRec2ModelCls <BR>
   * TstRec2ModelCls oTstRec2TabMdl(parent);
   *
-  * @param parent [in] parent
+  * @param parent   [in] parent
+  * @param poTmpPrt [in] Pointer of protocol object
   */
   // ----------------------------------------------------------------------------
-  TstRec2ModelCls(QObject *parent);
+  TstRec2ModelCls(QObject *parent, sstMisc01PrtFilCls    *poTmpPrt);
   ~TstRec2ModelCls();
   //==============================================================================
   /**
@@ -295,6 +296,7 @@ public:
     //==============================================================================
 
 private:
+    sstMisc01PrtFilCls    *poPrt;
     sstRec04TestRec2FncCls oTestRec2Table;   /**< oTestRec2Table */
     // std::vector<unsigned long int> sstTabVector;    /**< Vector maps table record positions when deleting */
 };

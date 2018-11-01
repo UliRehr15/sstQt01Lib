@@ -78,6 +78,7 @@ QVariant sstQt01PathTabMdlCls::data(const QModelIndex &index, int role) const
   int col = index.column();
 
   switch(role){
+  case Qt::EditRole:
   case Qt::DisplayRole:
     {
     sstQt01PathElementCsv3Cls oTestRec1;

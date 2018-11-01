@@ -32,7 +32,7 @@
 //=============================================================================
 sstQt01TstRec2ViewCls::sstQt01TstRec2ViewCls(sstMisc01PrtFilCls    *poTmpPrt) : sstQt01TabViewCls(poTmpPrt)
 {
-  pTstRec2Model = new TstRec2ModelCls(0);
+  pTstRec2Model = new TstRec2ModelCls(0, poTmpPrt);
   this->setModel( pTstRec2Model );
 }
 //=============================================================================

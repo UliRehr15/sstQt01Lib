@@ -96,22 +96,25 @@ QVariant TstRec1ModelCls::data(const QModelIndex &index, int role) const
   // int row = index.row();
   int col = index.column();
 
-  switch(role){
+  switch(role)
+  {
+  case Qt::EditRole:
   case Qt::DisplayRole:
+  {
+    sstRec04TestRec1Cls oTestRec1;
+
+    int iStat = oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+    assert (iStat == 0);
+
+    switch (index.column())
     {
-      sstRec04TestRec1Cls oTestRec1;
-
-      int iStat = oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
-      assert (iStat == 0);
-
-      switch (index.column())
-      {
-      // case 0:  return QString::number(oTestRec1.dVal, 'f', 4); break;
-      case 0:  return oTestRec1.iVal;
-      case 1:  return QString::fromUtf8( oTestRec1.cVal); break;
-      default: return QString("Row%1, Column%2").arg(index.row() + 1).arg(index.column() +1); break;
-      }
-    }
+    // case 0:  return QString::number(oTestRec1.dVal, 'f', 4); break;
+    case 0:  return oTestRec1.iVal; break;
+    case 1:  return QString::fromUtf8( oTestRec1.cVal); break;
+    default: return QString("Row%1, Column%2").arg(index.row() + 1).arg(index.column() +1); break;
+    } // end switch
+    break;
+  } // End case Display role
   case Qt::FontRole:
       if (col == 5) //change font only for cell(0,0)
       {
@@ -119,8 +122,26 @@ QVariant TstRec1ModelCls::data(const QModelIndex &index, int role) const
           boldFont.setBold(true);
           return boldFont;
       }
-      break;
-    }
+//  case Qt::EditRole:
+//  {
+//    {
+//      sstRec04TestRec1Cls oTestRec1;
+
+//      int iStat = oTestRec1Table.ReadRecPos ( 0, this->sstTabVector[index.row()], &oTestRec1);
+//      assert (iStat == 0);
+
+//      switch (index.column())
+//      {
+//      // case 0:  return QString::number(oTestRec1.dVal, 'f', 4); break;
+//      case 0:  return oTestRec1.iVal;
+//      case 1:  return QString::fromUtf8( oTestRec1.cVal); break;
+//      default: return QString("Row%1, Column%2").arg(index.row() + 1).arg(index.column() +1); break;
+//      }
+//    }
+    break;
+  }
+  // }
+
     return QVariant();
 }
 //=============================================================================
