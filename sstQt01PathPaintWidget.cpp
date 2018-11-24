@@ -157,28 +157,34 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
       // Get delete state of record dRecNo
       if (iStat >= 0)
       {
-        // painter.setBrush();
+        // Set Area painting attributes
         QBrush oBrush;
         oBrush.setColor(oShapeItem.getColor());
+        oBrush.setStyle(Qt::SolidPattern);
 
-        QColor oCol = oShapeItem.getColor();
-        int iRed = 0;
-        int iBlue = 0;
-        int iGreen = 0;
-        oCol.getRgb(&iRed,&iGreen,&iBlue);
+        // Set Line painting attributes
+        QPen oPen(oShapeItem.getColor(),Qt::SolidLine);
+
+//        QColor oCol = oShapeItem.getColor();
+//        int iRed = 0;
+//        int iBlue = 0;
+//        int iGreen = 0;
+//        oCol.getRgb(&iRed,&iGreen,&iBlue);
 
         switch (oShapeItem.getShapeType())
         {
           case eSstQt01PathArea:
           case eSstQt01PathCircle: oBrush.setStyle(Qt::SolidPattern);break;
-          default: oBrush.setStyle(Qt::NoBrush); break;
+          // default: oBrush.setStyle(Qt::NoBrush); break;
+          default: break;
         }
 
         // oBrush.setStyle(Qt::NoBrush);
         painter.translate(this->oPathStorage->getPosition(ii));
         // painter.setBrush(oShapeItem.getColor(),Qt::NoBrush);
         painter.setBrush(oBrush);
-        painter.setPen(oShapeItem.getPen());
+        painter.setPen(oPen);
+        // painter.setPen(oShapeItem.getPen());
         painter.drawPath(oShapeItem.getPath());
         painter.translate(-this->oPathStorage->getPosition(ii));
       }

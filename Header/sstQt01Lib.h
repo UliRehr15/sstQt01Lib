@@ -51,6 +51,89 @@ class TstRec2ModelCls;
 class sstQt01PathStoreViewCls;
 
 // Structures and Classes ------------------------------------------------------
+//==============================================================================
+/**
+* @brief Cls send informations from map to tab
+*
+* More Comment
+*
+* Changed: 19.11.18  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.11.18
+*/
+// ----------------------------------------------------------------------------
+class sstQt01MapSignalCls
+{
+  public:   // Public functions
+     sstQt01MapSignalCls();   // Constructor
+   // ~X();   // Destructor
+     //==============================================================================
+     /**
+     * @brief // getShapeItemListRecNo <BR>
+     * dItemRecNo = oMapSignal.getShapeItemListRecNo();
+     *
+     * @return Shape Item List Record Number
+     */
+     // ----------------------------------------------------------------------------
+     dREC04RECNUMTYP getShapeItemListRecNo() const;
+     //==============================================================================
+     /**
+     * @brief // setShapeItemListRecNo <BR>
+     * oMapSignal.setShapeItemListRecNo ( value);
+     *
+     * @param value [in] value
+     */
+     // ----------------------------------------------------------------------------
+     void setShapeItemListRecNo(const dREC04RECNUMTYP &value);
+     //==============================================================================
+     /**
+     * @brief // getExternTypeStr <BR>
+     * oTypeStr = oMapSignal.getExternTypeStr();
+     *
+     * @return Extern Type String
+     */
+     // ----------------------------------------------------------------------------
+     std::string getExternTypeStr() const;
+     //==============================================================================
+     /**
+     * @brief // setExternTypeStr <BR>
+     * oMapSignal.setExternTypeStr ( value);
+     *
+     * @param value [in] Extern Type String
+     */
+     // ----------------------------------------------------------------------------
+     void setExternTypeStr(const std::string &value);
+     //==============================================================================
+     /**
+     * @brief // getExternTypeTabRecNo <BR>
+     * dItemRecNo = oMapSignal.getExternTypeTabRecNo();
+     *
+     * @return Extern Type Table record number
+     */
+     // ----------------------------------------------------------------------------
+     dREC04RECNUMTYP getExternTypeTabRecNo() const;
+     //==============================================================================
+     /**
+     * @brief // setExternTypeTabRecNo <BR>
+     * oMapSignal.setExternTypeTabRecNo ( value);
+     *
+     * @param value [in] Extern Type Table record number
+     */
+     // ----------------------------------------------------------------------------
+     void setExternTypeTabRecNo(const dREC04RECNUMTYP &value);
+     //==============================================================================
+
+private:  // Private functions
+     dREC04RECNUMTYP dShapeItemListRecNo;  /**< Index No of ShapeItem in Vector list of map */
+     std::string     oExternTypeStr;       /**< Type String of extern system */
+     dREC04RECNUMTYP dExternTypeTabRecNo;  /**< Type Table record no of extern system */
+};
+//-----------------------------------------------------------------------------
+
 
 //==============================================================================
 /**
@@ -374,15 +457,34 @@ public:
     // ----------------------------------------------------------------------------
     void updatePosition();
     //==============================================================================
+    /**
+    * @brief // Get extern Type string <BR>
+    * oPen = PathItem.getExternStr();
+    *
+    * @return oTypeString
+    */
+    // ----------------------------------------------------------------------------
+    std::string getExternStr() const;
+    //==============================================================================
+    /**
+    * @brief // set extern Type string <BR>
+    * iStat = oPathItem.setExternStr(value);
+    *
+    * @param value [in] o Type String
+    */
+    // ----------------------------------------------------------------------------
+    void setExternStr(const std::string &value);
+    //==============================================================================
 
 private:
     QPainterPath myPath;
     QPoint  myPosition;
     QColor  myColor;
     QPen    myPen;  // Width and Style
-    QString myToolTip;
-    sstQt01ShapeType_enum eShapeType;  // Area, Circle, Line ...
-    dREC04RECNUMTYP dExternID;         /**< Identifier of extern object, for example dxf */
+    QString myToolTip;  // Normally set from outside system
+    sstQt01ShapeType_enum eShapeType;  // Painter Path Area, Circle, Line ...
+    dREC04RECNUMTYP dExternID;    /**< Record Identifier of extern object, for example dxf */
+    std::string oExternStr;       /**< String Type Identifier of extern object, for example dxf "LINE" entity string */
 };
 //==============================================================================
 /**
@@ -3738,3 +3840,4 @@ private:
 #endif
 
 // --------------------------------------------------------------- File End ----
+

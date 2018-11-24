@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01ShapeItem.cpp    23.09.18  Re.    14.08.16  Re.
+// sstQt01ShapeItem.cpp    24.11.18  Re.    14.08.16  Re.
 
 #include <QtWidgets>
 
@@ -133,5 +133,15 @@ void sstQt01ShapeItem::updatePosition()
   this->myPath.translate(this->getPosition());
   QPoint oPoint(0,0);
   this->setPosition(oPoint);
+}
+//=============================================================================
+std::string sstQt01ShapeItem::getExternStr() const
+{
+return oExternStr;
+}
+//=============================================================================
+void sstQt01ShapeItem::setExternStr(const std::string &value)
+{
+oExternStr = value;
 }
 //=============================================================================

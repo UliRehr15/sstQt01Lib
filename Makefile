@@ -65,7 +65,8 @@ SOURCES       = sstQt01Tab.cpp \
 		sstQt01ShapeType.cpp \
 		sstQt01PathStoreView.cpp \
 		sstQt01PathStoreTab.cpp \
-		sstQt01TestTabGroupBox.cpp qrc_tooltips.cpp \
+		sstQt01TestTabGroupBox.cpp \
+		sstQt01MapSignal.cpp qrc_tooltips.cpp \
 		moc_sstQt01Lib.cpp \
 		moc_sstQt01LibInt.cpp
 OBJECTS       = sstQt01Tab.o \
@@ -87,6 +88,7 @@ OBJECTS       = sstQt01Tab.o \
 		sstQt01PathStoreView.o \
 		sstQt01PathStoreTab.o \
 		sstQt01TestTabGroupBox.o \
+		sstQt01MapSignal.o \
 		qrc_tooltips.o \
 		moc_sstQt01Lib.o \
 		moc_sstQt01LibInt.o
@@ -183,7 +185,8 @@ DIST          = sstQt01Lib.odt \
 		sstQt01ShapeType.cpp \
 		sstQt01PathStoreView.cpp \
 		sstQt01PathStoreTab.cpp \
-		sstQt01TestTabGroupBox.cpp
+		sstQt01TestTabGroupBox.cpp \
+		sstQt01MapSignal.cpp
 QMAKE_TARGET  = sstQt01Lib_d
 DESTDIR       = ../libs/
 TARGET        = libsstQt01Lib_d.a
@@ -374,7 +377,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents tooltips.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents Header/sstQt01Lib.h sstQt01LibInt.h $(DISTDIR)/
-	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp sstQt01PathTabView.cpp sstQt01_tstrec1_TabMdl.cpp sstQt01_tstrec1_TabView.cpp sstQt01_tstrec2_TabMdl.cpp sstQt01_tstrec2_TabView.cpp sstQt01BaseTabMdl.cpp sstQt01PathElementCsv1.cpp sstQt01PathElementCsv2.cpp sstQt01PathElementCsv3.cpp sstQt01ShapeType.cpp sstQt01PathStoreView.cpp sstQt01PathStoreTab.cpp sstQt01TestTabGroupBox.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp sstQt01PathTabView.cpp sstQt01_tstrec1_TabMdl.cpp sstQt01_tstrec1_TabView.cpp sstQt01_tstrec2_TabMdl.cpp sstQt01_tstrec2_TabView.cpp sstQt01BaseTabMdl.cpp sstQt01PathElementCsv1.cpp sstQt01PathElementCsv2.cpp sstQt01PathElementCsv3.cpp sstQt01ShapeType.cpp sstQt01PathStoreView.cpp sstQt01PathStoreTab.cpp sstQt01TestTabGroupBox.cpp sstQt01MapSignal.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -579,6 +582,13 @@ sstQt01TestTabGroupBox.o: sstQt01TestTabGroupBox.cpp ../sst_str01_lib/Header/sst
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		Header/sstQt01Lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01TestTabGroupBox.o sstQt01TestTabGroupBox.cpp
+
+sstQt01MapSignal.o: sstQt01MapSignal.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01MapSignal.o sstQt01MapSignal.cpp
 
 qrc_tooltips.o: qrc_tooltips.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_tooltips.o qrc_tooltips.cpp

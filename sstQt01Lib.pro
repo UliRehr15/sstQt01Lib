@@ -37,7 +37,8 @@ SOURCES		+= sstQt01Tab.cpp \
     sstQt01ShapeType.cpp \
     sstQt01PathStoreView.cpp \
     sstQt01PathStoreTab.cpp \
-    sstQt01TestTabGroupBox.cpp
+    sstQt01TestTabGroupBox.cpp \
+    sstQt01MapSignal.cpp
 #    sstStr01DefType.cpp \
 
 OTHER_FILES += README.md

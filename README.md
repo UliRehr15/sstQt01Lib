@@ -85,4 +85,5 @@ Structure of coding projects should be:
 29.10.2018: Version 1.44: New function updatePosition for ShapeItem Class. <BR>
 30.10.2018: Version 1.45: Documentation added to repository. <BR>
 01.11.2018: Version 1.46: Better "in cell" editing for all tables. <BR>
+24.11.2018: Version 1.47: New Class SignalInfosMapUpdate. <BR>
 
