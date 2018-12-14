@@ -27,6 +27,7 @@ sstQt01ShapeItem::sstQt01ShapeItem()
 {
   this->eShapeType = eSstQt01PathNoObj;
   this->dExternID = 0;
+  this->dInternID = 0;
 }
 //=============================================================================
 QPainterPath sstQt01ShapeItem::getPath() const
@@ -143,5 +144,15 @@ return oExternStr;
 void sstQt01ShapeItem::setExternStr(const std::string &value)
 {
 oExternStr = value;
+}
+//=============================================================================
+dREC04RECNUMTYP sstQt01ShapeItem::getInternId() const
+{
+  return dInternID;
+}
+//=============================================================================
+void sstQt01ShapeItem::setInternId(const dREC04RECNUMTYP &value)
+{
+  dInternID = value;
 }
 //=============================================================================

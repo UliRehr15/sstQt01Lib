@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01PathPaintWidgetCls.cpp    23.09.18  Re.    14.08.16  Re.
+// sstQt01PathPaintWidgetCls.cpp    14.12.18  Re.    14.08.16  Re.
 
 #include <QtWidgets>
 
@@ -193,7 +193,7 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
 //=============================================================================
 void sstQt01PathPaintWidgetCls::sstPaintEvent(sstQt01ShapeItem oShapeItem)
 {
-  dREC04RECNUMTYP dItemNo = oShapeItem.getExternId();
+  dREC04RECNUMTYP dItemNo = oShapeItem.getInternId();
   if(dItemNo <= 0 || dItemNo > this->oPathStorage->countItems())
   {
     assert(0);
@@ -236,11 +236,15 @@ void sstQt01PathPaintWidgetCls::mouseReleaseEvent(QMouseEvent *event)
         this->oPathStorage->addPosition(this->iActualItemIndex);
         iItemInMotionIndex = 0;
         sstQt01ShapeItem oShapeItem;
-        dREC04RECNUMTYP dExtId = this->oPathStorage->getExternId(this->iActualItemIndex);
+        // dREC04RECNUMTYP dExtId = this->oPathStorage->getExternId(this->iActualItemIndex);
         oShapeItem = this->oPathStorage->getShapeItem(this->iActualItemIndex);
         oShapeItem.updatePosition();
         emit sstPathMoveReleaseSgnl(oShapeItem);
-        emit sstExtPathMoveReleaseSgnl(dExtId);
+//        sstQt01MapSignalCls oMapChangedSignal;
+//        oMapChangedSignal.setExternTypeStr(oShapeItem.getExternStr());
+//        oMapChangedSignal.setExternTypeTabRecNo( oShapeItem.getExternId());
+//        oMapChangedSignal.setShapeItemListRecNo( this->iActualItemIndex);
+//        emit sstExtPathMoveReleaseSgnl(oMapChangedSignal);
     }
 }
 //=============================================================================

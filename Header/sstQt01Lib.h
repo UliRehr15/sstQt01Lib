@@ -475,6 +475,24 @@ public:
     // ----------------------------------------------------------------------------
     void setExternStr(const std::string &value);
     //==============================================================================
+    /**
+    * @brief // Get Position in intern ShapeDisplayList <BR>
+    * dID = oPathItem.getInternId();
+    *
+    * @return dID
+    */
+    // ----------------------------------------------------------------------------
+    dREC04RECNUMTYP getInternId() const;
+    //==============================================================================
+    /**
+    * @brief // set Position in intern ShapeDisplayList <BR>
+    * iStat = oPathItem.setInternId(value);
+    *
+    * @param value [in] dID
+    */
+    // ----------------------------------------------------------------------------
+    void setInternId(const dREC04RECNUMTYP &value);
+    //==============================================================================
 
 private:
     QPainterPath myPath;
@@ -484,6 +502,7 @@ private:
     QString myToolTip;  // Normally set from outside system
     sstQt01ShapeType_enum eShapeType;  // Painter Path Area, Circle, Line ...
     dREC04RECNUMTYP dExternID;    /**< Record Identifier of extern object, for example dxf */
+    dREC04RECNUMTYP dInternID;    /**< Record Identifier in intern Shape List */
     std::string oExternStr;       /**< String Type Identifier of extern object, for example dxf "LINE" entity string */
 };
 //==============================================================================
@@ -3496,7 +3515,8 @@ signals:
     * @brief // signal: sst painterpath move release event: map content is changed  <BR>
     */
     // ----------------------------------------------------------------------------
-    void sstExtPathMoveReleaseSgnl(dREC04RECNUMTYP dId);
+    // void sstExtPathMoveReleaseSgnl(dREC04RECNUMTYP dId);
+    // void sstExtPathMoveReleaseSgnl(sstQt01MapSignalCls oMapSignal);
     //==============================================================================
     /**
     * @brief // signal: sst begin inserting records in path storage  <BR>
@@ -3840,4 +3860,3 @@ private:
 #endif
 
 // --------------------------------------------------------------- File End ----
-
