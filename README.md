@@ -86,6 +86,7 @@ Structure of coding projects should be:
 30.10.2018: Version 1.45: Documentation added to repository. <BR>
 01.11.2018: Version 1.46: Better "in cell" editing for all tables. <BR>
 24.11.2018: Version 1.47: New Class MapSignal for update. <BR>
-14.12.2018: Verison 1.48: ShapeItems knows its position in display list / ShapeItem Storage.<BR>
+14.12.2018: Version 1.48: ShapeItems knows its position in display list / ShapeItem Storage.<BR>
                           Message Update map from Tab with MapSignal. <BR>
+21.12.2018: Version 1.49: Fixed problems with writing into closed protocol file. <BR>
 

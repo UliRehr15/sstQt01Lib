@@ -11,9 +11,9 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// dialog.cpp    12.11.14  Re.    26.02.15  Re.
+// dialog.cpp    20.12.18  Re.    26.02.15  Re.
 //
-// widget opens two tables for editing with test record 1 and 2 from sstRec04
+// widget opens two table views for editing with test record 1 and 2 from sstRec04
 
 #include <QtWidgets>
 
@@ -49,6 +49,8 @@ Dialog::Dialog()
 //=============================================================================
 Dialog::~Dialog()
 {
+  delete this->pTstRec2View;
+  delete this->pTstRec1View;
   this->poPrt->SST_PrtZu(1);
   delete this->poPrt;
 }

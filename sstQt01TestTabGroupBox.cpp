@@ -11,7 +11,7 @@
  * See the COPYING file for more information.
  *
  **********************************************************************/
-// sstQt01TestTabGroupBox.cpp    17.10.18  Re.   11.10.18  Re.
+// sstQt01TestTabGroupBox.cpp    20.12.18  Re.   11.10.18  Re.
 //
 // Tree View Widget for editing group of sst tables, here TestRec1 and TestRec2.
 
@@ -85,8 +85,9 @@ sstQt01TestGroupBoxCls::~sstQt01TestGroupBoxCls()
   delete this->tabItem2;
   delete this->tabItem1;
   delete this->rootItem;
+  delete this->standardModel;
   delete this->treeView;
-  delete this->stackedWidget;
+  delete this->stackedWidget; // delete view 1+2 too
 }
 //=============================================================================
 void sstQt01TestGroupBoxCls::selectionChangedSlot(const QItemSelection & /*newSelection*/, const QItemSelection & /*oldSelection*/)
