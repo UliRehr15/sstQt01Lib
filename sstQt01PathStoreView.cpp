@@ -456,12 +456,16 @@ int sstQt01PathStoreViewCls::getShapeItem2(int iKey, dREC04RECNUMTYP index,sstQt
 int sstQt01PathStoreViewCls::appendShapeItem(sstQt01ShapeItem oItem)
 {
   // Append to element table
-  // QPainterPath oPath = oItem.getPath();
-  // int iStat = this->AppendPath(0,oPath,oItem.getShapeType(), oItem.getColor(),oItem.getPen());
-  // int iStat = this->appendShapeItem(oItem);
-  this->shapeItems.append( oItem);
 
-  // assert(iStat >= 0);
+  // Store Init Position before interactive
+  // Moving,Scaling,Rotating PainterPath Object
+  QPainterPath::Element oElement;
+  sstMath01dPnt2Cls oInitPos;
+  oItem.getFirstPathElement(&oElement);
+  oInitPos.Set((double)oElement.x,(double)oElement.y);
+  oItem.setInitPos(oInitPos);
+
+  this->shapeItems.append( oItem);
 
   return 0;
 }

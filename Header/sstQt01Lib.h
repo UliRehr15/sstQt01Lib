@@ -32,6 +32,7 @@
 #include <QTableView>
 
 #include <sstStr01Lib.h>
+#include <sstMath01Lib.h>
 #include <sstMisc01Lib.h>
 #include <sstRec04Lib.h>
 
@@ -493,6 +494,34 @@ public:
     // ----------------------------------------------------------------------------
     void setInternId(const dREC04RECNUMTYP &value);
     //==============================================================================
+    /**
+    * @brief // get first path element of intern painter path <BR>
+    * iStat = oPathItem.getFirstPathElement(value);
+    *
+    * @param oElement [out] return first path element
+    *
+    * @return iStat
+    */
+    // ----------------------------------------------------------------------------
+    bool getFirstPathElement(QPainterPath::Element *oElement) const;
+    //==============================================================================
+    /**
+    * @brief // Get Initial position of path when storing <BR>
+    * oInitPos = oPathItem.getInitPos();
+    *
+    * @return InitPosition
+    */
+    // ----------------------------------------------------------------------------
+    sstMath01dPnt2Cls getInitPos() const;
+    //==============================================================================
+    /**
+    * @brief // Set Initial position with storing <BR>
+    * oPathItem.setInitPos( oInitPos);
+    *
+    * @param oInitPos [in] Initial Position of Path
+    */
+    // ----------------------------------------------------------------------------
+    void setInitPos(const sstMath01dPnt2Cls &oInitPos);
 
 private:
     QPainterPath myPath;
@@ -504,6 +533,8 @@ private:
     dREC04RECNUMTYP dExternID;    /**< Record Identifier of extern object, for example dxf */
     dREC04RECNUMTYP dInternID;    /**< Record Identifier in intern Shape List */
     std::string oExternStr;       /**< String Type Identifier of extern object, for example dxf "LINE" entity string */
+    // QPoint oInitPos;              /**< Intertial Position */
+    sstMath01dPnt2Cls oInitPos;              /**< Intertial Position */
 };
 //==============================================================================
 /**

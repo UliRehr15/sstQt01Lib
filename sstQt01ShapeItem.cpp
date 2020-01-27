@@ -156,3 +156,20 @@ void sstQt01ShapeItem::setInternId(const dREC04RECNUMTYP &value)
   dInternID = value;
 }
 //=============================================================================
+bool sstQt01ShapeItem::getFirstPathElement(QPainterPath::Element *oElement) const
+{
+  if (this->myPath.elementCount() == 0) return false;
+  *oElement = this->myPath.elementAt(0);
+  return true;
+}
+//=============================================================================
+sstMath01dPnt2Cls sstQt01ShapeItem::getInitPos() const
+{
+return oInitPos;
+}
+//=============================================================================
+void sstQt01ShapeItem::setInitPos(const sstMath01dPnt2Cls &value)
+{
+oInitPos = value;
+}
+//=============================================================================

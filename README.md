@@ -89,4 +89,5 @@ Structure of coding projects should be:
 14.12.2018: Version 1.48: ShapeItems knows its position in display list / ShapeItem Storage.<BR>
                           Message Update map from Tab with MapSignal. <BR>
 21.12.2018: Version 1.49: Fixed problems with writing into closed protocol file. <BR>
+27.01.2020: Version 1.50: ShapeItem: New feature InitPosition before Moving of Object.  <BR>
 

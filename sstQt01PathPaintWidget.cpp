@@ -172,19 +172,17 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
 //        oCol.getRgb(&iRed,&iGreen,&iBlue);
 
         switch (oShapeItem.getShapeType())
-        {
-          case eSstQt01PathArea:
-          case eSstQt01PathCircle: oBrush.setStyle(Qt::SolidPattern);break;
-          // default: oBrush.setStyle(Qt::NoBrush); break;
+        {  // Set Area Fill Style
+          case eSstQt01PathArea: oBrush.setStyle(Qt::SolidPattern);break;
+          case eSstQt01PathCircle: oBrush.setStyle(Qt::NoBrush);break;
+          case eSstQt01PathLine: oBrush.setStyle(Qt::NoBrush);break;
+          case eSstQt01PathPLine: oBrush.setStyle(Qt::NoBrush);break;
           default: break;
         }
 
-        // oBrush.setStyle(Qt::NoBrush);
         painter.translate(this->oPathStorage->getPosition(ii));
-        // painter.setBrush(oShapeItem.getColor(),Qt::NoBrush);
         painter.setBrush(oBrush);
         painter.setPen(oPen);
-        // painter.setPen(oShapeItem.getPen());
         painter.drawPath(oShapeItem.getPath());
         painter.translate(-this->oPathStorage->getPosition(ii));
       }
