@@ -227,8 +227,8 @@ class sstQt01ShapeTypeCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int Str2Enm (int                   iKey,
@@ -245,8 +245,8 @@ class sstQt01ShapeTypeCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int Enm2Str (int                    iKey,
@@ -397,8 +397,8 @@ public:
     *
     * @return Errorstate
     *
-    * @retval   = 0: OK
-    * @retval   < 0: Unspecified Error
+    * @retval   =0: OK
+    * @retval   <0: Unspecified Error
     */
     // ----------------------------------------------------------------------------
     void createShapeItem(const QPainterPath &path,
@@ -570,8 +570,8 @@ class sstQt01PathElementCsv1Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr);
@@ -586,8 +586,8 @@ class sstQt01PathElementCsv1Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr);
@@ -621,8 +621,8 @@ class sstQt01PathElementCsv1Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      void setAll(int iType,int iXX, int iYY, QColor oColor);
@@ -814,8 +814,8 @@ class sstQt01PathElementCsv2Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr);
@@ -830,8 +830,8 @@ class sstQt01PathElementCsv2Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr);
@@ -865,8 +865,8 @@ class sstQt01PathElementCsv2Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      void setAll(int iType,int iXX, int iYY, QColor oColor);
@@ -883,8 +883,8 @@ class sstQt01PathElementCsv2Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      void setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol, QPen oTmpPen);
@@ -1123,8 +1123,8 @@ class sstQt01PathElementCsv3Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr);
@@ -1139,8 +1139,8 @@ class sstQt01PathElementCsv3Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr);
@@ -1174,8 +1174,8 @@ class sstQt01PathElementCsv3Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      void setAll(int iType,int iXX, int iYY, QColor oColor);
@@ -1192,8 +1192,8 @@ class sstQt01PathElementCsv3Cls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      void setAll(int iTmpType,int iTmpXX, int iTmpYY, QColor oTmpCol, QPen oTmpPen);
@@ -1482,8 +1482,8 @@ class sstQt01PathMainRecCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadFromCsv(int iKey, std::string oCsvStr, std::string *oErrStr);
@@ -1498,8 +1498,8 @@ class sstQt01PathMainRecCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int WriteToCsv(int iKey, std::string *oCsvStr, std::string *oErrStr);
@@ -1524,8 +1524,8 @@ class sstQt01PathMainRecCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      void setAll(int iType,int iXX, int iYY, QColor oColor);
@@ -1881,11 +1881,11 @@ class sstQt01PathStorageCls
   *
   * @return Errorstate
   *
-  * @retval   =  0: OK
-  * @retval   = -1: Wrong Key
-  * @retval   = -2: File not found
-  * @retval   = -3: Wrong File Header
-  * @retval   < 0: Unspecified Error
+  * @retval   =0:  OK
+  * @retval   =-1: Wrong Key
+  * @retval   =-2: File not found
+  * @retval   =-3: Wrong File Header
+  * @retval   <0:  Unspecified Error
   */
   // ----------------------------------------------------------------------------
   int LoadAllPathFromFile (int iKey, std::string oFilNam);
@@ -1898,8 +1898,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int StoreAllPathToFile (int iKey, std::string oFilNam);
@@ -1908,7 +1908,7 @@ class sstQt01PathStorageCls
      * @brief // append one QPainterPath at end of sst table object  <BR>
      * iStat = oPathStorage.AppendPath (iKey, oPath, ePathType, oColor, oPen);
      *
-     * @param iKey      [in] For the moment 0
+     * @param iKey     [in] For the moment 0
      * @param oPath     [in] QPainterPath object to store
      * @param ePathType [in] Color of Path
      * @param oColor    [in] Color of Path
@@ -1916,8 +1916,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int AppendPath(int                   iKey,
@@ -1938,8 +1938,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int AppendPathSymbol(int                   iKey,
@@ -1958,8 +1958,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadNextPath(int iKey,  QPainterPath *oPath, QColor *oColor);
@@ -1974,8 +1974,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadPath(int iKey, dREC04RECNUMTYP dStartElementRecNo, QPainterPath *oPath);
@@ -2008,8 +2008,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr) const;
@@ -2024,8 +2024,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int WriteRecPos (int iKey, dREC04RECNUMTYP dRecNo, void* vRecAdr);
@@ -2039,8 +2039,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int DeleteRecPos (int iKey, dREC04RECNUMTYP dRecNo);
@@ -2055,8 +2055,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int WriteNew (int iKey, dREC04RECNUMTYP *dRecNo, void* vRecAdr);
@@ -2081,8 +2081,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int setToolTip(dREC04RECNUMTYP index, QString oTooltip);
@@ -2096,8 +2096,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int setToolTip(dREC04RECNUMTYP index, std::string oTooltip);
@@ -2111,8 +2111,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int setPosition(dREC04RECNUMTYP index, QPoint oPosition);
@@ -2126,8 +2126,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int setExternID(dREC04RECNUMTYP index, dREC04RECNUMTYP dExternID);
@@ -2151,8 +2151,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int addPosition(dREC04RECNUMTYP index);
@@ -2165,8 +2165,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int addPositionSym(dREC04RECNUMTYP index);
@@ -2236,8 +2236,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int appendShapeItem(sstQt01ShapeItem oItem);
@@ -2250,8 +2250,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int appendItemSymbol(sstQt01ShapeItem oItem);
@@ -2273,8 +2273,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int createDefaultItems(int iKey);
@@ -2289,8 +2289,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int SearchPathItem(int iKey, dREC04RECNUMTYP dRowNum, dREC04RECNUMTYP *dItemNum);
@@ -2304,8 +2304,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int DeletePathItem(int iKey, dREC04RECNUMTYP dItemNum);
@@ -2319,8 +2319,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int UpdatePathItem (int iKey, dREC04RECNUMTYP dItemNum);
@@ -2335,8 +2335,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int UpdateTabElement(int iKey);
@@ -2349,8 +2349,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int UpdateMainAttribFromElemTab(int iKey);
@@ -2375,8 +2375,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int setViewStoreData( int iKey, sstQt01PathStoreViewCls *poPathViewStore);
@@ -2389,8 +2389,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int updateTooltips (int iKey);
@@ -2405,11 +2405,10 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: Shape Type wrong
-     * @retval   = -2: Shape Size wrong
-     * @retval   <  0: Unspecified Error
+     * @retval   =0:  OK
+     * @retval   =-1: Wrong Key
+     * @retval   =-2: Shape Type wrong
+     * @retval   <0:  Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReplaceShape(int iKey, dREC04RECNUMTYP dIndex, sstQt01ShapeItem oShapeItem);
@@ -2436,8 +2435,8 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      QPoint initialItemPosition(const QPainterPath &path);
@@ -2459,11 +2458,11 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   > 0: Format version in file
-     * @retval   = 0: Unknown format
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: File Open Error
-     * @retval   < 0: Unspecified Error
+     * @retval   >0:  Format version in file
+     * @retval   =0:  Unknown format
+     * @retval   =-1: Wrong Key
+     * @retval   =-2: File Open Error
+     * @retval   <0:  Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int FindCsvFileVersion(int iKey, const std::string sFilNam);
@@ -2479,11 +2478,11 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   =  0: OK
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: File not found
-     * @retval   = -3: Wrong File Header
-     * @retval   < 0: Unspecified Error
+     * @retval   =0:  OK
+     * @retval   =-1: Wrong Key
+     * @retval   =-2: File not found
+     * @retval   =-3: Wrong File Header
+     * @retval   <0:  Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int LoadAllPathFromFile3 (int iKey, std::string oFilNam);
@@ -2499,11 +2498,11 @@ class sstQt01PathStorageCls
      *
      * @return Errorstate
      *
-     * @retval   =  0: OK
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: File not found
-     * @retval   = -3: Wrong File Header
-     * @retval   < 0: Unspecified Error
+     * @retval   =0:  OK
+     * @retval   =-1: Wrong Key
+     * @retval   =-2: File not found
+     * @retval   =-3: Wrong File Header
+     * @retval   <0:  Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int LoadAllPathFromFile2 (int iKey, std::string oFilNam);
@@ -2519,11 +2518,11 @@ class sstQt01PathStorageCls
         *
         * @return Errorstate
         *
-        * @retval   =  0: OK
-        * @retval   = -1: Wrong Key
-        * @retval   = -2: File not found
-        * @retval   = -3: Wrong File Header
-        * @retval   < 0: Unspecified Error
+        * @retval   =0:  OK
+        * @retval   =-1: Wrong Key
+        * @retval   =-2: File not found
+        * @retval   =-3: Wrong File Header
+        * @retval   <0:  Unspecified Error
         */
      // ----------------------------------------------------------------------------
      int LoadAllPathFromFile1 (int iKey, std::string oFilNam);
@@ -2536,8 +2535,8 @@ class sstQt01PathStorageCls
         *
         * @return Errorstate
         *
-        * @retval   = 0: OK
-        * @retval   < 0: Unspecified Error
+        * @retval   =0: OK
+        * @retval   <0: Unspecified Error
         */
      // ----------------------------------------------------------------------------
      int UpdateMainPathSizeFromEleTab (int iKey);
@@ -2553,8 +2552,8 @@ class sstQt01PathStorageCls
         *
         * @return Errorstate
         *
-        * @retval   = 0: OK
-        * @retval   < 0: Unspecified Error
+        * @retval   =0: OK
+        * @retval   <0: Unspecified Error
         */
      // ----------------------------------------------------------------------------
      int NewMainWithElement (int iKey, sstQt01PathElementCsv3Cls *oShapeItemCsv3);
@@ -2621,11 +2620,11 @@ class sstQt01PathStoreViewCls
   *
   * @return Errorstate
   *
-  * @retval   =  0: OK
-  * @retval   = -1: Wrong Key
-  * @retval   = -2: File not found
-  * @retval   = -3: Wrong File Header
-  * @retval   < 0: Unspecified Error
+  * @retval   =0:  OK
+  * @retval   =-1: Wrong Key
+  * @retval   =-2: File not found
+  * @retval   =-3: Wrong File Header
+  * @retval   <0:  Unspecified Error
   */
   // ----------------------------------------------------------------------------
   int LoadAllPathFromFile (int iKey, std::string oFilNam);
@@ -2638,8 +2637,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int StoreAllPathToFile (int iKey, std::string oFilNam);
@@ -2656,8 +2655,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int AppendPath(int                   iKey,
@@ -2678,8 +2677,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int AppendPathSymbol(int                   iKey,
@@ -2698,8 +2697,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadNextPath(int iKey,  QPainterPath *oPath, QColor *oColor);
@@ -2714,8 +2713,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int ReadPath(int iKey, dREC04RECNUMTYP dStartElementRecNo, QPainterPath *oPath);
@@ -2758,8 +2757,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int setToolTip(dREC04RECNUMTYP index, QString oTooltip);
@@ -2773,8 +2772,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int setToolTip(dREC04RECNUMTYP index, std::string oTooltip);
@@ -2788,8 +2787,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int setPosition(dREC04RECNUMTYP index, QPoint oPosition);
@@ -2813,8 +2812,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int addPosition(dREC04RECNUMTYP index);
@@ -2827,8 +2826,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int addPositionSym(dREC04RECNUMTYP index);
@@ -2898,8 +2897,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int appendShapeItem(sstQt01ShapeItem oItem);
@@ -2912,8 +2911,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int appendItemSymbol(sstQt01ShapeItem oItem);
@@ -2935,8 +2934,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int createDefaultItems(int iKey);
@@ -2951,8 +2950,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int SearchPathItem(int iKey, dREC04RECNUMTYP dRowNum, dREC04RECNUMTYP *dItemNum);
@@ -2966,8 +2965,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int DeletePathItem(int iKey, dREC04RECNUMTYP dItemNum);
@@ -2981,8 +2980,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int UpdatePathItem (int iKey, dREC04RECNUMTYP dItemNum);
@@ -2997,8 +2996,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int UpdateTabElement(int iKey);
@@ -3011,8 +3010,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int UpdateMainAttribFromElemTab(int iKey);
@@ -3052,8 +3051,8 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
      QPoint initialItemPosition(const QPainterPath &path);
@@ -3075,11 +3074,11 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   > 0: Format version in file
-     * @retval   = 0: Unknown format
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: File Open Error
-     * @retval   < 0: Unspecified Error
+     * @retval   >0:  Format version in file
+     * @retval   =0:  Unknown format
+     * @retval   =-1: Wrong Key
+     * @retval   =-2: File Open Error
+     * @retval   <0:  Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int FindCsvFileVersion(int iKey, const std::string sFilNam);
@@ -3095,11 +3094,11 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   =  0: OK
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: File not found
-     * @retval   = -3: Wrong File Header
-     * @retval   < 0: Unspecified Error
+     * @retval   =0:  OK
+     * @retval   =-1: Wrong Key
+     * @retval   =-2: File not found
+     * @retval   =-3: Wrong File Header
+     * @retval   <0:  Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int LoadAllPathFromFile3 (int iKey, std::string oFilNam);
@@ -3115,11 +3114,11 @@ class sstQt01PathStoreViewCls
      *
      * @return Errorstate
      *
-     * @retval   =  0: OK
-     * @retval   = -1: Wrong Key
-     * @retval   = -2: File not found
-     * @retval   = -3: Wrong File Header
-     * @retval   < 0: Unspecified Error
+     * @retval   =0:  OK
+     * @retval   =-1: Wrong Key
+     * @retval   =-2: File not found
+     * @retval   =-3: Wrong File Header
+     * @retval   <0:  Unspecified Error
      */
      // ----------------------------------------------------------------------------
      int LoadAllPathFromFile2 (int iKey, std::string oFilNam);
@@ -3135,11 +3134,11 @@ class sstQt01PathStoreViewCls
         *
         * @return Errorstate
         *
-        * @retval   =  0: OK
-        * @retval   = -1: Wrong Key
-        * @retval   = -2: File not found
-        * @retval   = -3: Wrong File Header
-        * @retval   < 0: Unspecified Error
+        * @retval   =0:  OK
+        * @retval   =-1: Wrong Key
+        * @retval   =-2: File not found
+        * @retval   =-3: Wrong File Header
+        * @retval   <0:  Unspecified Error
         */
      // ----------------------------------------------------------------------------
      int LoadAllPathFromFile1 (int iKey, std::string oFilNam);
@@ -3152,8 +3151,8 @@ class sstQt01PathStoreViewCls
         *
         * @return Errorstate
         *
-        * @retval   = 0: OK
-        * @retval   < 0: Unspecified Error
+        * @retval   =0: OK
+        * @retval   <0: Unspecified Error
         */
      // ----------------------------------------------------------------------------
      int UpdateMainPathSizeFromEleTab (int iKey);
@@ -3169,8 +3168,8 @@ class sstQt01PathStoreViewCls
         *
         * @return Errorstate
         *
-        * @retval   = 0: OK
-        * @retval   < 0: Unspecified Error
+        * @retval   =0: OK
+        * @retval   <0: Unspecified Error
         */
      // ----------------------------------------------------------------------------
      int NewMainWithElement (int iKey, sstQt01PathElementCsv3Cls *oShapeItemCsv3);
@@ -3788,8 +3787,8 @@ class sstQt01TstRec1ViewCls : public sstQt01TabViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
     // int Func_1(int iKey);
@@ -3831,8 +3830,8 @@ class sstQt01TstRec2ViewCls : public sstQt01TabViewCls
      *
      * @return Errorstate
      *
-     * @retval   = 0: OK
-     * @retval   < 0: Unspecified Error
+     * @retval   =0: OK
+     * @retval   <0: Unspecified Error
      */
      // ----------------------------------------------------------------------------
     // int Func_1(int iKey);

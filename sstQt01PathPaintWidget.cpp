@@ -174,6 +174,7 @@ void sstQt01PathPaintWidgetCls::paintEvent(QPaintEvent * /* event */)
         switch (oShapeItem.getShapeType())
         {  // Set Area Fill Style
           case eSstQt01PathArea: oBrush.setStyle(Qt::SolidPattern);break;
+          case eSstQt01PathArc: oBrush.setStyle(Qt::NoBrush);break;
           case eSstQt01PathCircle: oBrush.setStyle(Qt::NoBrush);break;
           case eSstQt01PathLine: oBrush.setStyle(Qt::NoBrush);break;
           case eSstQt01PathPLine: oBrush.setStyle(Qt::NoBrush);break;

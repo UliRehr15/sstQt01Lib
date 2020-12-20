@@ -8,6 +8,7 @@ QT += widgets
 CONFIG    -= release  # ist DEBUG aktiv
 
 INCLUDEPATH += ../../sst_str01_lib/Header
+INCLUDEPATH += ../../sstMath01Lib/Header
 INCLUDEPATH += ../../sst_misc01_lib/Header
 INCLUDEPATH += ../../sst_rec04_lib/Header
 INCLUDEPATH += ../../sstQt01Lib/Header
@@ -16,6 +17,7 @@ debug{
   LIBS        += ../../libs/libsstQt01Lib_d.a
   LIBS        += ../../libs/libsst_rec04_lib_d.a
   LIBS        += ../../libs/libsst_misc01_lib_d.a
+  LIBS        += ../../libs/libsstMath01Lib_d.a
   LIBS        += ../../libs/libsst_str01_lib_d.a
 }
 
@@ -29,6 +31,7 @@ release{
   LIBS        += ../../libs/libsstQt01Lib_r.a
   LIBS        += ../../libs/libsst_rec04_lib_r.a
   LIBS        += ../../libs/libsst_misc01_lib_r.a
+  LIBS        += ../../libs/libsstMath01Lib_r.a
   LIBS        += ../../libs/libsst_str01_lib_r.a
 }
 

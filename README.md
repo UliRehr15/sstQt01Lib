@@ -1,4 +1,4 @@
-# sstQt01Lib
+﻿# sstQt01Lib
 sst Qt classes and functions
 
 Read/Write Csv Data to Qt Spreadsheet-Table and edit this data.
@@ -90,4 +90,5 @@ Structure of coding projects should be:
                           Message Update map from Tab with MapSignal. <BR>
 21.12.2018: Version 1.49: Fixed problems with writing into closed protocol file. <BR>
 27.01.2020: Version 1.50: ShapeItem: New feature InitPosition before Moving of Object.  <BR>
+20.12.2020: Version 1.51: Some Doxygen warnings fixed.  <BR>
 
