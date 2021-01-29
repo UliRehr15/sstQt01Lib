@@ -50,8 +50,136 @@ class sstQt01PathTabMdlCls;
 class TstRec1ModelCls;
 class TstRec2ModelCls;
 class sstQt01PathStoreViewCls;
+class sstQt01View;
 
 // Structures and Classes ------------------------------------------------------
+//==============================================================================
+/**
+* @brief Definition Class sstQt01ExPath
+*
+* Extent Qt PainterPath object with color, line type, line width, area pattern type aso.
+*
+* Changed: 18.08.20  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 18.08.20
+*/
+// ----------------------------------------------------------------------------
+class sstQt01ExPath
+{
+  public:   // Public functions
+  //==============================================================================
+  /**
+  * @brief // Constructor <BR>
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01ExPath();   // Constructor
+  //==============================================================================
+  /**
+  * @brief // Copy constructor <BR>
+  *
+  * @param oExPath [in] oExPath
+  */
+  // ----------------------------------------------------------------------------
+
+     sstQt01ExPath(const sstQt01ExPath& oExPath);  // Copy Constructor
+     //==============================================================================
+     /**
+     * @brief // Equal operator <BR>
+     *
+     * @param right [in] right
+     */
+     // ----------------------------------------------------------------------------
+     sstQt01ExPath operator=(const sstQt01ExPath& right);
+     //==============================================================================
+     /**
+     * @brief // destructor <BR>
+     */
+     // ----------------------------------------------------------------------------
+    ~sstQt01ExPath();   // Destructor
+     //==============================================================================
+     /**
+     * @brief // Get Path from object <BR>
+     * pPath = oSstExPath.getPath();
+     *
+     * @return PainterPath object
+     */
+     // ----------------------------------------------------------------------------
+     QPainterPath getPath() const;
+     //==============================================================================
+     /**
+     * @brief // Set Path to object <BR>
+     * oSstExPath.setPath( &oPath);
+     *
+     * @param oPath [in] Painter Path object
+     */
+     // ----------------------------------------------------------------------------
+     void setPath(const QPainterPath &oPath);
+     //==============================================================================
+     /**
+     * @brief // Get color from object <BR>
+     * pPath = oSstExPath.getColor();
+     *
+     * @return PainterPath color
+     */
+     // ----------------------------------------------------------------------------
+     QColor getColor() const;
+     //==============================================================================
+     /**
+     * @brief // Set Color to object <BR>
+     * oSstExPath.setColor( &oColor);
+     *
+     * @param value [in] Set Color to object
+     */
+     // ----------------------------------------------------------------------------
+     void setColor(const QColor &value);
+     //==============================================================================
+     /**
+     * @brief // Get color from object <BR>
+     * pPath = oSstExPath.getColor();
+     *
+     * @return PainterPath color
+     */
+     // ----------------------------------------------------------------------------
+     QBrush getBrush() const;
+     //==============================================================================
+     /**
+     * @brief // Set Color to object <BR>
+     * oSstExPath.setColor( &oColor);
+     *
+     * @param value [in] Set Color to object
+     */
+     // ----------------------------------------------------------------------------
+     void setBrush(const QBrush &value);
+     //==============================================================================
+     /**
+     * @brief // Get color from object <BR>
+     * pPath = oSstExPath.getColor();
+     *
+     * @return PainterPath color
+     */
+     // ----------------------------------------------------------------------------
+     QPen getPen() const;
+     //==============================================================================
+     /**
+     * @brief // Set Color to object <BR>
+     * oSstExPath.setColor( &oColor);
+     *
+     * @param value [in] Set Color to object
+     */
+     // ----------------------------------------------------------------------------
+     void setPen(const QPen &value);
+
+private:  // Private functions
+  QPainterPath oPath;  /**< PainterPath Object */
+  QColor       oColor; /**< Color of PainterPath Object */
+  QBrush       oBrush; /**< Area Fill of PainterPath Object */
+  QPen         oPen;   /**< Pen Width of PainterPath Object */
+};
+
 //==============================================================================
 /**
 * @brief Cls send informations from map to tab
@@ -258,9 +386,10 @@ class sstQt01ShapeTypeCls
 };
 //==============================================================================
 /**
-* @brief sst extended QPainterPath shape class
+* @brief sst extended QPainterPath shape class (do no more use)
 *
 * one Path object Extended with color and string tooltip <BR>
+* Replaced by sstQt01ShapeItem2 Class
 *
 * Changed: 26.01.17  Re.
 *
@@ -535,6 +664,445 @@ private:
     std::string oExternStr;       /**< String Type Identifier of extern object, for example dxf "LINE" entity string */
     // QPoint oInitPos;              /**< Intertial Position */
     sstMath01dPnt2Cls oInitPos;              /**< Intertial Position */
+};
+//==============================================================================
+/**
+* @brief sst extended QPainterPath shape class
+*
+* one Path object Extended with color and string tooltip <BR>
+*
+* Changed: 26.01.17  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 26.01.17
+*/
+// ----------------------------------------------------------------------------
+class sstQt01ShapeItem2
+{
+public:
+  //==============================================================================
+  /**
+  * @brief // constructor <BR>
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01ShapeItem2();
+  //==============================================================================
+  // Copy Constructor
+  //==============================================================================
+  /**
+  * @brief // Copy constructor <BR>
+  *
+  * @param oItem2 [in] oItem2
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01ShapeItem2(const sstQt01ShapeItem2& oItem2);
+  //==============================================================================
+  /**
+  * @brief // Equal operator <BR>
+  *
+  * @param right [in] right
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01ShapeItem2 operator=(const sstQt01ShapeItem2& right);
+  //==============================================================================
+  /**
+  * @brief // set path object <BR>
+  * iStat = oPathItem.setPath(Path);
+  *
+  * @param oExPath [in] Extended QPainterPath object
+  */
+  // ----------------------------------------------------------------------------
+    void setPath(const sstQt01ExPath &oExPath);
+    //==============================================================================
+    /**
+    * @brief // set tooltip <BR>
+    * iStat = oPathItem.setToolTip(ToolTip);
+    *
+    * @param ToolTip [in] ToolTip QString
+    */
+    // ----------------------------------------------------------------------------
+    void setToolTip(const QString &ToolTip);
+    //==============================================================================
+    /**
+    * @brief // set tooltip <BR>
+    * iStat = oPathItem.setToolTip(ToolTip);
+    *
+    * @param ToolTip [in] ToolTip std::string
+    */
+    // ----------------------------------------------------------------------------
+    void setToolTip(const std::string &ToolTip);
+    //==============================================================================
+    /**
+    * @brief // set Position <BR>
+    * iStat = oPathItem.setPosition(Position);
+    *
+    * @param Position [in] QPainterPath object
+    */
+    // ----------------------------------------------------------------------------
+    void setPosition(const QPoint &Position);
+    //==============================================================================
+    /**
+    * @brief // set color <BR>
+    * iStat = oPathItem.setColor(Path);
+    *
+    * @param Color [in] QColor
+    */
+    // ----------------------------------------------------------------------------
+    void setColor(const QColor &Color);
+    //==============================================================================
+    /**
+    * @brief // set pen <BR>
+    * iStat = oPathItem.setPen(Pen);
+    *
+    * @param oPen [in] QPen
+    */
+    // ----------------------------------------------------------------------------
+    void setPen(const QPen &oPen);
+    //==============================================================================
+    /**
+    * @brief // Get QPainterPath <BR>
+    * oPath = PathItem.getPath();
+    *
+    * @return QPainterPath
+    */
+    // ----------------------------------------------------------------------------
+    QPainterPath getPath() const;
+    //==============================================================================
+    /**
+    * @brief // Return Bounding Box of QPainterPath Object <BR>
+    * oPath = PathItem.getBoundingBox();
+    *
+    * @return QRectF
+    */
+    // ----------------------------------------------------------------------------
+    QRectF getBoundingBox() const;
+    //==============================================================================
+    /**
+    * @brief // Get Position <BR>
+    * oPosition = PathItem.getPosition();
+    *
+    * @return QPoint
+    */
+    // ----------------------------------------------------------------------------
+    QPoint getPosition() const;
+    //==============================================================================
+    /**
+    * @brief // Get Color <BR>
+    * oColor = PathItem.getColor();
+    *
+    * @return QColor
+    */
+    // ----------------------------------------------------------------------------
+    QColor getColor() const;
+    //==============================================================================
+    /**
+    * @brief // Get Pen <BR>
+    * oPen = PathItem.getPen();
+    *
+    * @return QColor
+    */
+    // ----------------------------------------------------------------------------
+    QPen getPen() const;
+    //==============================================================================
+    /**
+    * @brief // Get ToolTip string <BR>
+    * oToolTip = oShapeItem.getToolTip();
+    *
+    * @return QString
+    */
+    // ----------------------------------------------------------------------------
+    QString getToolTip() const;
+    //==============================================================================
+    /**
+    * @brief // createShapeItem
+    * iStat = oShapeItem.createShapeItem( path, toolTip, pos, color, eShapeType);
+    *
+    * @param oExPath         [in] path
+    * @param toolTip      [in] tooltip
+    * @param pos          [in] pos
+    * @param color        [in] color
+    * @param eShapeType   [in] Type
+    *
+    * @return Errorstate
+    *
+    * @retval   = 0: OK
+    * @retval   < 0: Unspecified Error
+    */
+    // ----------------------------------------------------------------------------
+    void createShapeItem(const sstQt01ExPath &oExPath,
+                         const QString &toolTip, const QPoint &pos,
+                         const QColor &color,
+                         sstQt01ShapeType_enum eShapeType);
+    //==============================================================================
+    /**
+    * @brief // Get ShapeType <BR>
+    * oPen = PathItem.getShapeType();
+    *
+    * @return eShapeType
+    */
+    // ----------------------------------------------------------------------------
+    sstQt01ShapeType_enum getShapeType() const;
+    //==============================================================================
+    /**
+    * @brief // set ShapeType <BR>
+    * iStat = oPathItem.setShapeType(value);
+    *
+    * @param value [in] eShapeType
+    */
+    // ----------------------------------------------------------------------------
+    void setShapeType(const sstQt01ShapeType_enum &value);
+    //==============================================================================
+    /**
+    * @brief // Get ID of extern object, for example dxf <BR>
+    * dID = PathItem.getExternId();
+    *
+    * @return dID
+    */
+    // ----------------------------------------------------------------------------
+    dREC04RECNUMTYP getExternId() const;
+    //==============================================================================
+    /**
+    * @brief // set ID of extern object, for example dxf <BR>
+    * iStat = oPathItem.setExternId(value);
+    *
+    * @param value [in] dID
+    */
+    // ----------------------------------------------------------------------------
+    void setExternId(const dREC04RECNUMTYP &value);
+    //==============================================================================
+    /**
+    * @brief // Get Number of elements of PainterPath <BR>
+    * iSize = PathItem.getSize();
+    *
+    * @return iSize
+    */
+    // ----------------------------------------------------------------------------
+    int getSize();
+    //==============================================================================
+    /**
+    * @brief // add position to path and set position to null <BR>
+    * iStat = oPathItem.updatePosition();
+    */
+    // ----------------------------------------------------------------------------
+    void updatePosition();
+    //==============================================================================
+    /**
+    * @brief // Get extern Type string <BR>
+    * oPen = PathItem.getExternStr();
+    *
+    * @return oTypeString
+    */
+    // ----------------------------------------------------------------------------
+    std::string getExternStr() const;
+    //==============================================================================
+    /**
+    * @brief // set extern Type string <BR>
+    * iStat = oPathItem.setExternStr(value);
+    *
+    * @param value [in] o Type String
+    */
+    // ----------------------------------------------------------------------------
+    void setExternStr(const std::string &value);
+    //==============================================================================
+    /**
+    * @brief // Get Position in intern ShapeDisplayList <BR>
+    * dID = oPathItem.getInternId();
+    *
+    * @return dID
+    */
+    // ----------------------------------------------------------------------------
+    dREC04RECNUMTYP getInternId() const;
+    //==============================================================================
+    /**
+    * @brief // set Position in intern ShapeDisplayList <BR>
+    * iStat = oPathItem.setInternId(value);
+    *
+    * @param value [in] dID
+    */
+    // ----------------------------------------------------------------------------
+    void setInternId(const dREC04RECNUMTYP &value);
+    //==============================================================================
+    /**
+    * @brief // get first path element of intern painter path <BR>
+    * iStat = oPathItem.getFirstPathElement(value);
+    *
+    * @param oElement [out] return first path element
+    *
+    * @return iStat
+    */
+    // ----------------------------------------------------------------------------
+    bool getFirstPathElement(QPainterPath::Element *oElement) const;
+    //==============================================================================
+    /**
+    * @brief // Get Initial position of path when storing <BR>
+    * oInitPos = oPathItem.getInitPos();
+    *
+    * @return InitPosition
+    */
+    // ----------------------------------------------------------------------------
+    sstMath01dPnt2Cls getInitPos() const;
+    //==============================================================================
+    /**
+    * @brief // Set Initial position with storing <BR>
+    * oPathItem.setInitPos( oInitPos);
+    *
+    * @param oInitPos [in] Initial Position of Path
+    */
+    // ----------------------------------------------------------------------------
+    void setInitPos(const sstMath01dPnt2Cls &oInitPos);
+    //==============================================================================
+    /**
+    * @brief // resetReading <BR>
+    * iStat = oTest.resetReading();
+    */
+    // ----------------------------------------------------------------------------
+    void resetReading();
+    //==============================================================================
+    /**
+    * @brief // readNext <BR>
+    * iStat = oTest.readNext( oMyExtPath);
+    *
+    * @param oMyExtPath [in] oMyExtPath
+    *
+    * @return Errorstate
+    *
+    * @retval   true  Reading OK
+    * @retval   false Reading with Error
+    */
+    // ----------------------------------------------------------------------------
+    bool readNext(sstQt01ExPath *oMyExtPath);
+    //==============================================================================
+    /**
+    * @brief // Shortstory <BR>
+    * iStat = oTest.Func_1( iKey);
+    *
+    * @param iKey [in] For the moment 0
+    *
+    * @return Errorstate
+    *
+    * @retval   = 0: OK
+    * @retval   < 0: Unspecified Error
+    */
+    // ----------------------------------------------------------------------------
+    std::list <sstQt01ExPath> getList();
+
+
+private:
+    QPoint  myPosition;
+    QString myToolTip;  // Normally set from outside system
+    sstQt01ShapeType_enum eShapeType;  // Painter Path Area, Circle, Line ...
+    dREC04RECNUMTYP dExternID;    /**< Record Identifier of extern object, for example dxf */
+    dREC04RECNUMTYP dInternID;    /**< Record Identifier in intern Shape List */
+    std::string oExternStr;       /**< String Type Identifier of extern object, for example dxf "LINE" entity string */
+    sstMath01dPnt2Cls oInitPos;              /**< Intertial Position */
+    std::list <sstQt01ExPath> oExtPathList;  /**< List of extended Painter Path objects */
+    QRectF oBoundingBox;                     /**< Bounding Box of Shape Item */
+    std::list<sstQt01ExPath>::iterator pos;
+};
+//==============================================================================
+/**
+* @brief Definition sstQt01MapPath
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class sstQt01MapPath : public QGraphicsItem
+{
+public:
+  //==============================================================================
+  /**
+  * @brief // constructor <BR>
+  *
+  * @param color       [in] color
+  * @param x           [in] x
+  * @param y           [in] y
+  * @param oExtPathList [in] oExtPathList
+  */
+  // ----------------------------------------------------------------------------
+    sstQt01MapPath(const QColor &color, int x, int y, const sstQt01ShapeItem2 oExtPathList);
+    //==============================================================================
+    /**
+    * @brief // Return bounding rectangle <BR>
+    * iStat = oTest.boundingRect();
+    *
+    * @return Bounding Rectangle
+    */
+    // ----------------------------------------------------------------------------
+    QRectF boundingRect() const override;
+    //==============================================================================
+    /**
+    * @brief // shape <BR>
+    * iStat = oTest.shape( iKey);
+    *
+    * @return outer shape
+    */
+    // ----------------------------------------------------------------------------
+    QPainterPath shape() const override;
+    //==============================================================================
+    /**
+    * @brief // paint <BR>
+    * iStat = oTest.paint( iKey);
+    *
+    * @param painter [in] painter
+    * @param item    [in] item
+    * @param widget  [in] widget
+    *
+    * @return Errorstate
+    *
+    * @retval   = 0: OK
+    * @retval   < 0: Unspecified Error
+    */
+    // ----------------------------------------------------------------------------
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+protected:
+    //==============================================================================
+    /**
+    * @brief // mousePressEvent <BR>
+    * iStat = oTest.mousePressEvent(event);
+    *
+    * @param event [in] event
+    */
+    // ----------------------------------------------------------------------------
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    //==============================================================================
+    /**
+    * @brief // mouseMoveEvent <BR>
+    * iStat = oTest.mouseMoveEvent(event);
+    *
+    * @param event [in] event
+    */
+    // ----------------------------------------------------------------------------
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    //==============================================================================
+    /**
+    * @brief // mouseReleaseEvent <BR>
+    * iStat = oTest.mouseReleaseEvent(event);
+    *
+    * @param event [in] event
+    */
+    // ----------------------------------------------------------------------------
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+
+private:
+    int x;  // for calculating height and text number
+    int y;
+    QColor color;
+    QVector<QPointF> stuff;
+    // std::list <sstQt01ExPath> oExtPathList;
+    sstQt01ShapeItem2 oExtPathList;
+    QRectF oBoundingRect;
 };
 //==============================================================================
 /**
@@ -3885,7 +4453,128 @@ private:
 
 };
 //==============================================================================
+/**
+* @brief Definition Class sstQt01GraphicsView
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class sstQt01GraphicsView : public QGraphicsView
+{
+    Q_OBJECT
+public:
+  //==============================================================================
+  /**
+  * @brief // constructor <BR>
+  */
+  // ----------------------------------------------------------------------------
+  sstQt01GraphicsView(sstQt01View *v) : QGraphicsView(), view(v) { }
 
+protected:
+#if QT_CONFIG(wheelevent)
+    //==============================================================================
+    /**
+    * @brief // wheelEvent <BR>
+    */
+    // ----------------------------------------------------------------------------
+    void wheelEvent(QWheelEvent *) override;
+#endif
+
+private:
+    sstQt01View *view;
+};
+//==============================================================================
+/**
+* @brief Definition Class sstQt01View
+*
+* More Comment
+*
+* Changed: 19.02.10  Re.
+*
+* @ingroup sstQt01Lib
+*
+* @author Re.
+*
+* @date 19.02.10
+*/
+// ----------------------------------------------------------------------------
+class sstQt01View : public QFrame
+{
+    Q_OBJECT
+public:
+  //==============================================================================
+  /**
+  * @brief // constructor <BR>
+  * iStat = oTest.sstQt01View( name, parent);
+  *
+  * @param name   [in] name
+  * @param parent [in] parent
+  */
+  // ----------------------------------------------------------------------------
+    explicit sstQt01View(const QString &name, QWidget *parent = 0);
+  //==============================================================================
+  /**
+  * @brief // view <BR>
+  * iStat = oTest.view();
+  *
+  * @return Return view
+  */
+  // ----------------------------------------------------------------------------
+
+    QGraphicsView *view() const;
+
+public slots:
+    //==============================================================================
+    /**
+    * @brief // zoomIn <BR>
+    * iStat = oTest.zoomIn( level);
+    *
+    * @param level [in] level
+    */
+    // ----------------------------------------------------------------------------
+    void zoomIn(int level = 1);
+    //==============================================================================
+    /**
+    * @brief // zoomOut <BR>
+    * iStat = oTest.zoomOut( level);
+    *
+    * @param level [in] level
+    */
+    // ----------------------------------------------------------------------------
+    void zoomOut(int level = 1);
+
+private slots:
+    void resetView();
+    void setResetButtonEnabled();
+    void setupMatrix();
+    void togglePointerMode();
+    void toggleOpenGL();
+    void toggleAntialiasing();
+    void print();
+    void rotateLeft();
+    void rotateRight();
+
+private:
+    sstQt01GraphicsView *graphicsView;
+    QLabel *label;
+    QLabel *label2;
+    QToolButton *selectModeButton;
+    QToolButton *dragModeButton;
+    QToolButton *openGlButton;
+    QToolButton *antialiasButton;
+    QToolButton *printButton;
+    QToolButton *resetButton;
+    QSlider *zoomSlider;
+    QSlider *rotateSlider;
+};
 
 #endif
 

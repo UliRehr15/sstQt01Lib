@@ -39,3 +39,6 @@ SOURCES       = main.cpp \
 # RESOURCES     = basicdrawing.qrc
 
 TARGET = sstQt01PathTabView
+
+qtHaveModule(printsupport): QT += printsupport
+qtHaveModule(opengl): QT += opengl

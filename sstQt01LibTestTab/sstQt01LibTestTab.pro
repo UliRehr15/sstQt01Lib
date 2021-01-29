@@ -52,3 +52,6 @@ HEADERS  += \
 
 # install
 TARGET =   sstQt01LibTestTab
+
+qtHaveModule(printsupport): QT += printsupport
+qtHaveModule(opengl): QT += opengl

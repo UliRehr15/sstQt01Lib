@@ -91,4 +91,6 @@ Structure of coding projects should be:
 21.12.2018: Version 1.49: Fixed problems with writing into closed protocol file. <BR>
 27.01.2020: Version 1.50: ShapeItem: New feature InitPosition before Moving of Object.  <BR>
 20.12.2020: Version 1.51: Some Doxygen warnings fixed.  <BR>
+29.01.2021: Version 1.52: First works for next mapping system. <BR>
+                          ShapeItem2, ExPath, View, MapPath Class. <BR>
 

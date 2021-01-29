@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = clang
 CXX           = clang++
-DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_QML_DEBUG
+DEFINES       = -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_QML_DEBUG
 CFLAGS        = -pipe -g -fPIC -D_REENTRANT -Wall -W $(DEFINES)
 CXXFLAGS      = -pipe -g -fPIC -std=gnu++11 -D_REENTRANT -Wall -W $(DEFINES)
-INCPATH       = -I. -I../sst_rec04_lib/Header -I../sst_misc01_lib/Header -I../sstMath01Lib/Header -I../sst_str01_lib/Header -IHeader -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang
+INCPATH       = -I. -I../sst_rec04_lib/Header -I../sst_misc01_lib/Header -I../sstMath01Lib/Header -I../sst_str01_lib/Header -IHeader -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -isystem /usr/include/x86_64-linux-gnu/qt5/QtOpenGL -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -50,12 +50,16 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = sstQt01Tab.cpp \
+		sstQt01ExPath.cpp \
+		sstQt01MapPath.cpp \
+		sstQt01ShapeItem2.cpp \
 		sstQt01TabView.cpp \
 		sstQt01ShapeItem.cpp \
 		sstQt01PathTabModel.cpp \
 		sstQt01PathPaintWidget.cpp \
 		sstQt01TestPaintWidget.cpp \
 		sstQt01PathTabView.cpp \
+		sstQt01View.cpp \
 		sstQt01_tstrec1_TabMdl.cpp \
 		sstQt01_tstrec1_TabView.cpp \
 		sstQt01_tstrec2_TabMdl.cpp \
@@ -69,15 +73,20 @@ SOURCES       = sstQt01Tab.cpp \
 		sstQt01PathStoreTab.cpp \
 		sstQt01TestTabGroupBox.cpp \
 		sstQt01MapSignal.cpp qrc_tooltips.cpp \
+		qrc_images.cpp \
 		moc_sstQt01Lib.cpp \
 		moc_sstQt01LibInt.cpp
 OBJECTS       = sstQt01Tab.o \
+		sstQt01ExPath.o \
+		sstQt01MapPath.o \
+		sstQt01ShapeItem2.o \
 		sstQt01TabView.o \
 		sstQt01ShapeItem.o \
 		sstQt01PathTabModel.o \
 		sstQt01PathPaintWidget.o \
 		sstQt01TestPaintWidget.o \
 		sstQt01PathTabView.o \
+		sstQt01View.o \
 		sstQt01_tstrec1_TabMdl.o \
 		sstQt01_tstrec1_TabView.o \
 		sstQt01_tstrec2_TabMdl.o \
@@ -92,6 +101,7 @@ OBJECTS       = sstQt01Tab.o \
 		sstQt01TestTabGroupBox.o \
 		sstQt01MapSignal.o \
 		qrc_tooltips.o \
+		qrc_images.o \
 		moc_sstQt01Lib.o \
 		moc_sstQt01LibInt.o
 DIST          = sstQt01Lib.odt \
@@ -172,12 +182,16 @@ DIST          = sstQt01Lib.odt \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		sstQt01Lib.pro Header/sstQt01Lib.h \
 		sstQt01LibInt.h sstQt01Tab.cpp \
+		sstQt01ExPath.cpp \
+		sstQt01MapPath.cpp \
+		sstQt01ShapeItem2.cpp \
 		sstQt01TabView.cpp \
 		sstQt01ShapeItem.cpp \
 		sstQt01PathTabModel.cpp \
 		sstQt01PathPaintWidget.cpp \
 		sstQt01TestPaintWidget.cpp \
 		sstQt01PathTabView.cpp \
+		sstQt01View.cpp \
 		sstQt01_tstrec1_TabMdl.cpp \
 		sstQt01_tstrec1_TabView.cpp \
 		sstQt01_tstrec2_TabMdl.cpp \
@@ -283,7 +297,8 @@ Makefile: sstQt01Lib.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang/qmake
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		sstQt01Lib.pro \
-		tooltips.qrc
+		tooltips.qrc \
+		images.qrc
 	$(QMAKE) -o Makefile sstQt01Lib.pro -spec linux-clang CONFIG+=debug CONFIG+=qml_debug
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf:
@@ -362,6 +377,7 @@ Makefile: sstQt01Lib.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang/qmake
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf:
 sstQt01Lib.pro:
 tooltips.qrc:
+images.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile sstQt01Lib.pro -spec linux-clang CONFIG+=debug CONFIG+=qml_debug
 
@@ -376,10 +392,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents tooltips.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents tooltips.qrc images.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents Header/sstQt01Lib.h sstQt01LibInt.h $(DISTDIR)/
-	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp sstQt01PathTabView.cpp sstQt01_tstrec1_TabMdl.cpp sstQt01_tstrec1_TabView.cpp sstQt01_tstrec2_TabMdl.cpp sstQt01_tstrec2_TabView.cpp sstQt01BaseTabMdl.cpp sstQt01PathElementCsv1.cpp sstQt01PathElementCsv2.cpp sstQt01PathElementCsv3.cpp sstQt01ShapeType.cpp sstQt01PathStoreView.cpp sstQt01PathStoreTab.cpp sstQt01TestTabGroupBox.cpp sstQt01MapSignal.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sstQt01Tab.cpp sstQt01ExPath.cpp sstQt01MapPath.cpp sstQt01ShapeItem2.cpp sstQt01TabView.cpp sstQt01ShapeItem.cpp sstQt01PathTabModel.cpp sstQt01PathPaintWidget.cpp sstQt01TestPaintWidget.cpp sstQt01PathTabView.cpp sstQt01View.cpp sstQt01_tstrec1_TabMdl.cpp sstQt01_tstrec1_TabView.cpp sstQt01_tstrec2_TabMdl.cpp sstQt01_tstrec2_TabView.cpp sstQt01BaseTabMdl.cpp sstQt01PathElementCsv1.cpp sstQt01PathElementCsv2.cpp sstQt01PathElementCsv3.cpp sstQt01ShapeType.cpp sstQt01PathStoreView.cpp sstQt01PathStoreTab.cpp sstQt01TestTabGroupBox.cpp sstQt01MapSignal.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -403,9 +419,9 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all: qrc_tooltips.cpp
+compiler_rcc_make_all: qrc_tooltips.cpp qrc_images.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_tooltips.cpp
+	-$(DEL_FILE) qrc_tooltips.cpp qrc_images.cpp
 qrc_tooltips.cpp: tooltips.qrc \
 		/usr/lib/qt5/bin/rcc \
 		images/circle.png \
@@ -416,6 +432,16 @@ qrc_tooltips.cpp: tooltips.qrc \
 		images/square.png \
 		images/triangle.png
 	/usr/lib/qt5/bin/rcc -name tooltips tooltips.qrc -o qrc_tooltips.cpp
+
+qrc_images.cpp: images.qrc \
+		/usr/lib/qt5/bin/rcc \
+		images/zoomout.png \
+		images/rotateleft.png \
+		images/qt4logo.png \
+		images/zoomin.png \
+		images/fileprint.png \
+		images/rotateright.png
+	/usr/lib/qt5/bin/rcc -name images images.qrc -o qrc_images.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
@@ -433,7 +459,7 @@ moc_sstQt01Lib.cpp: Header/sstQt01Lib.h \
 		../sst_rec04_lib/Header/sstRec04Lib.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/uli/Entwicklung/sstQt01Lib/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang -I/home/uli/Entwicklung/sstQt01Lib -I/home/uli/Entwicklung/sst_rec04_lib/Header -I/home/uli/Entwicklung/sst_misc01_lib/Header -I/home/uli/Entwicklung/sstMath01Lib/Header -I/home/uli/Entwicklung/sst_str01_lib/Header -I/home/uli/Entwicklung/sstQt01Lib/Header -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7.3.0 -I/usr/include/x86_64-linux-gnu/c++/7.3.0 -I/usr/include/c++/7.3.0/backward -I/usr/include/clang/6.0.0/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Header/sstQt01Lib.h -o moc_sstQt01Lib.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/uli/Entwicklung/sstQt01Lib/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang -I/home/uli/Entwicklung/sstQt01Lib -I/home/uli/Entwicklung/sst_rec04_lib/Header -I/home/uli/Entwicklung/sst_misc01_lib/Header -I/home/uli/Entwicklung/sstMath01Lib/Header -I/home/uli/Entwicklung/sst_str01_lib/Header -I/home/uli/Entwicklung/sstQt01Lib/Header -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7.3.0 -I/usr/include/x86_64-linux-gnu/c++/7.3.0 -I/usr/include/c++/7.3.0/backward -I/usr/include/clang/6.0.0/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Header/sstQt01Lib.h -o moc_sstQt01Lib.cpp
 
 moc_sstQt01LibInt.cpp: sstQt01LibInt.h \
 		../sst_str01_lib/Header/sstStr01Lib.h \
@@ -443,7 +469,7 @@ moc_sstQt01LibInt.cpp: sstQt01LibInt.h \
 		../sstMath01Lib/Header/sstMath01Lib.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/uli/Entwicklung/sstQt01Lib/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang -I/home/uli/Entwicklung/sstQt01Lib -I/home/uli/Entwicklung/sst_rec04_lib/Header -I/home/uli/Entwicklung/sst_misc01_lib/Header -I/home/uli/Entwicklung/sstMath01Lib/Header -I/home/uli/Entwicklung/sst_str01_lib/Header -I/home/uli/Entwicklung/sstQt01Lib/Header -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7.3.0 -I/usr/include/x86_64-linux-gnu/c++/7.3.0 -I/usr/include/c++/7.3.0/backward -I/usr/include/clang/6.0.0/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include sstQt01LibInt.h -o moc_sstQt01LibInt.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/uli/Entwicklung/sstQt01Lib/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang -I/home/uli/Entwicklung/sstQt01Lib -I/home/uli/Entwicklung/sst_rec04_lib/Header -I/home/uli/Entwicklung/sst_misc01_lib/Header -I/home/uli/Entwicklung/sstMath01Lib/Header -I/home/uli/Entwicklung/sst_str01_lib/Header -I/home/uli/Entwicklung/sstQt01Lib/Header -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7.3.0 -I/usr/include/x86_64-linux-gnu/c++/7.3.0 -I/usr/include/c++/7.3.0/backward -I/usr/include/clang/6.0.0/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include sstQt01LibInt.h -o moc_sstQt01LibInt.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -468,6 +494,30 @@ sstQt01Tab.o: sstQt01Tab.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sstMath01Lib/Header/sstMath01Lib.h \
 		sstQt01LibInt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01Tab.o sstQt01Tab.cpp
+
+sstQt01ExPath.o: sstQt01ExPath.cpp ../sstMath01Lib/Header/sstMath01Lib.h \
+		../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		sstQt01LibInt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01ExPath.o sstQt01ExPath.cpp
+
+sstQt01MapPath.o: sstQt01MapPath.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
+		sstQt01LibInt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01MapPath.o sstQt01MapPath.cpp
+
+sstQt01ShapeItem2.o: sstQt01ShapeItem2.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
+		sstQt01LibInt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01ShapeItem2.o sstQt01ShapeItem2.cpp
 
 sstQt01TabView.o: sstQt01TabView.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
@@ -513,6 +563,14 @@ sstQt01PathTabView.o: sstQt01PathTabView.cpp ../sst_str01_lib/Header/sstStr01Lib
 		../sstMath01Lib/Header/sstMath01Lib.h \
 		sstQt01LibInt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01PathTabView.o sstQt01PathTabView.cpp
+
+sstQt01View.o: sstQt01View.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
+		../sst_misc01_lib/Header/sstMisc01Lib.h \
+		../sst_rec04_lib/Header/sstRec04Lib.h \
+		Header/sstQt01Lib.h \
+		../sstMath01Lib/Header/sstMath01Lib.h \
+		sstQt01LibInt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sstQt01View.o sstQt01View.cpp
 
 sstQt01_tstrec1_TabMdl.o: sstQt01_tstrec1_TabMdl.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 		../sst_misc01_lib/Header/sstMisc01Lib.h \
@@ -618,6 +676,9 @@ sstQt01MapSignal.o: sstQt01MapSignal.cpp ../sst_str01_lib/Header/sstStr01Lib.h \
 
 qrc_tooltips.o: qrc_tooltips.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_tooltips.o qrc_tooltips.cpp
+
+qrc_images.o: qrc_images.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_images.o qrc_images.cpp
 
 moc_sstQt01Lib.o: moc_sstQt01Lib.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sstQt01Lib.o moc_sstQt01Lib.cpp

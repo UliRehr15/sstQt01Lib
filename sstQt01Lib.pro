@@ -21,12 +21,16 @@ HEADERS		+= ./Header/sstQt01Lib.h
 HEADERS		+= sstQt01LibInt.h
 
 SOURCES		+= sstQt01Tab.cpp \
+    sstQt01ExPath.cpp \
+    sstQt01MapPath.cpp \
+    sstQt01ShapeItem2.cpp \
     sstQt01TabView.cpp \
     sstQt01ShapeItem.cpp \
     sstQt01PathTabModel.cpp \
     sstQt01PathPaintWidget.cpp \
     sstQt01TestPaintWidget.cpp \
     sstQt01PathTabView.cpp \
+    sstQt01View.cpp \
     sstQt01_tstrec1_TabMdl.cpp \
     sstQt01_tstrec1_TabView.cpp \
     sstQt01_tstrec2_TabMdl.cpp \
@@ -44,7 +48,8 @@ SOURCES		+= sstQt01Tab.cpp \
 
 OTHER_FILES += README.md
 
-RESOURCES     = tooltips.qrc
+RESOURCES    += tooltips.qrc
+RESOURCES    += images.qrc
 
 debug{
   TARGET		= sstQt01Lib_d
@@ -57,5 +62,8 @@ DESTDIR     = ../libs
 
 DISTFILES += \
     sstQt01Lib.odt
+
+qtHaveModule(printsupport): QT += printsupport
+qtHaveModule(opengl): QT += opengl
 
 

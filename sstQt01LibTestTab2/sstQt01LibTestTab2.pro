@@ -49,3 +49,6 @@ TARGET	  	= sstQt01LibTestTab2
 
 # copy to deployment directory
 # DESTDIR     = ../../../local_deploy
+
+qtHaveModule(printsupport): QT += printsupport
+qtHaveModule(opengl): QT += opengl

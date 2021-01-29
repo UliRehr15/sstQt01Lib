@@ -48,3 +48,6 @@ HEADERS  += \
 
 # install
 TARGET =   sst_qt_lib_test_tab
+
+qtHaveModule(printsupport): QT += printsupport
+qtHaveModule(opengl): QT += opengl

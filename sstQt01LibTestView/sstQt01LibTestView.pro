@@ -44,3 +44,6 @@ SOURCES       = \
     sstQt01LibTestView.cpp
 
 TARGET = sstQt01LibTestView
+
+qtHaveModule(printsupport): QT += printsupport
+qtHaveModule(opengl): QT += opengl
